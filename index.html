@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="yanm1ng&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Kaibao
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/AM_HTMLorMML.js"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Kaibao</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link active">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link mobile-active">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <main class="app-body">
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/11/09/uva11292/">UVA11292-Dragon of Loowater解法</a>
+      </h2>
+      <p class="article-date">November 9, 2018</p>
+      
+        
+  <a href="/tags#Cplusplus">
+    <span class="tag-code">Cplusplus</span>
+  </a>
+
+  <a href="/tags#C">
+    <span class="tag-code">C</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          <h2 id="敘述"><a href="#敘述" class="headerlink" title="敘述"></a>敘述</h2><p>有個王國遭受龍群的侵襲，需要聘請騎士把龍全部消滅掉，否則王國會滅亡。</p>
+<p>騎士身高(int)必須大於等於龍的頭數(int)才能殺掉龍，每聘用一位騎士需要花費其身高的金幣數(e.g 身高為3的騎士，需要花費3金幣)，每位騎士只能殺死一條龍。</p>
+<h2 id="輸入說明"><a href="#輸入說明" class="headerlink" title="輸入說明"></a>輸入說明</h2><p>每行輸入兩個整數n,m，分別代表龍群的數量以及騎士的數量，接下來n行資料分別為龍的頭數，接續下去的m行資料為騎士的身高</p>
+<h2 id="輸出說明"><a href="#輸出說明" class="headerlink" title="輸出說明"></a>輸出說明</h2><p>輸出最小花費金幣數<br>
+        
+      </p></div>
+      <a class="more" href="/2018/11/09/uva11292/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/11/09/uva10189/">UVA10189-Minesweeper解法</a>
+      </h2>
+      <p class="article-date">November 9, 2018</p>
+      
+        
+  <a href="/tags#Cplusplus">
+    <span class="tag-code">Cplusplus</span>
+  </a>
+
+  <a href="/tags#C">
+    <span class="tag-code">C</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          <h2 id="敘述"><a href="#敘述" class="headerlink" title="敘述"></a>敘述</h2><p>計算周遭九宮格的地雷數</p>
+<h2 id="輸入說明"><a href="#輸入說明" class="headerlink" title="輸入說明"></a>輸入說明</h2><p>輸入兩整數n,m，分別為地雷區的row和column<br>接下來n行輸入地雷的位置，輸入 * 代表有地雷，輸入 . 代表無地雷</p>
+<h2 id="輸出說明"><a href="#輸出說明" class="headerlink" title="輸出說明"></a>輸出說明</h2><p>輸出如Windows踩地雷那樣的周圍九宮格地雷數</p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>雖然題目定義最高為100x100的大小，但為了讓邊界處理簡單些，我們宣告102x102大小的二維陣列來處理<br>
+        
+      </p></div>
+      <a class="more" href="/2018/11/09/uva10189/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/11/09/js-spread-operator/">Javascript展開運算元</a>
+      </h2>
+      <p class="article-date">November 9, 2018</p>
+      
+        
+  <a href="/tags#Javascript">
+    <span class="tag-code">Javascript</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          <p>一般來說，如果要將兩個陣列合併，會用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> arr3 = [arr1, arr2];</span><br></pre></td></tr></table></figure>
+<p>但這樣做出來的arr3結果會是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ [1, 2], [3 ,4] ]</span><br></pre></td></tr></table></figure></p>
+<p>直接將陣列當成是陣列中的元素，而不是我們想要的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4]</span><br></pre></td></tr></table></figure></p>
+<p>單純元素存進去就好</p>
+<p>所以使用到一個功能</p>
+<blockquote>
+<p><strong>…</strong></p>
+</blockquote>
+<p>沒有錯，就是<code>...</code></p>
+        
+      </div>
+      <a class="more" href="/2018/11/09/js-spread-operator/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/11/09/uva10591/">UVA10591-Happy Number解法</a>
+      </h2>
+      <p class="article-date">November 9, 2018</p>
+      
+        
+  <a href="/tags#Cplusplus">
+    <span class="tag-code">Cplusplus</span>
+  </a>
+
+  <a href="/tags#C">
+    <span class="tag-code">C</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          <h2 id="敘述"><a href="#敘述" class="headerlink" title="敘述"></a>敘述</h2><p>7 is a Happy number since 7 → 49 → 97 → 130 → 10 → 1<br>4 is an Unhappy number since 4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4</p>
+<h2 id="輸入說明"><a href="#輸入說明" class="headerlink" title="輸入說明"></a>輸入說明</h2><p>一個正整數</p>
+<h2 id="輸出說明"><a href="#輸出說明" class="headerlink" title="輸出說明"></a>輸出說明</h2><p>輸出是否為Happy Number</p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>將執行過的數字記錄下來<code>record[]</code>，每次平方後做一次查表，看看有沒有重複做過的數字，如果有重複數字就不是HappyNumber。</p>
+<p>將一路上執行過的數字紀錄下來，每次跑下一個數字之前先從頭檢查一遍是否重複，如果有重複數字的話，則為UnhappyNumeber<br>
+        
+      </p></div>
+      <a class="more" href="/2018/11/09/uva10591/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/11/09/apache-userdir/">Apache啟用UserDir的方法</a>
+      </h2>
+      <p class="article-date">November 9, 2018</p>
+      
+        
+  <a href="/tags#Linux">
+    <span class="tag-code">Linux</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          UserDIR是什麼?UserDIR是Apache裡的一個模組之一，它可以讓使用者的資料夾都變成一個獨立的網頁環境，方便使用者架設自己的個人網站，使用者的網站會位在http://localhost/~user/
+首先啟用userdir功能1sudo a2enmod userdir
+接下來要調 ...
+        
+      </div>
+      <a class="more" href="/2018/11/09/apache-userdir/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/11/09/hello-world/">Hello World</a>
+      </h2>
+      <p class="article-date">November 9, 2018</p>
+      
+      <div class="article-summary">
+        
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer ...
+        
+      </div>
+      <a class="more" href="/2018/11/09/hello-world/">Read more</a>
+    </article>
+  
+
+  
+</main>
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
