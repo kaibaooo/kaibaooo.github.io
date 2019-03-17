@@ -13,6 +13,7 @@
       Kaibao
     
   </title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
@@ -141,9 +142,33 @@
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/11/09/uva11292/">UVA11292-Dragon of Loowater解法</a>
+        <i class="fas fa-hashtag" style="color:rgb(66,185,131);"></i><a href="/2019/03/17/collapsing-margin-solution/">使用margin-top該注意的坑</a>
       </h2>
-      <p class="article-date">November 9, 2018</p>
+      <p class="article-date">2019年3月17日</p>
+      
+        
+  <a href="/tags#frontend">
+    <span class="tag-code">frontend</span>
+  </a>
+
+       
+      <div class="article-summary">
+        
+          問題最近在切網頁版面的時候，突然很常遇到div無法正確對本身parent元素對齊的狀況，到StackOverFlow上面查了一下，發現這個問題叫做Collapsing margins
+
+問題發生原因引用MDN上的說明
+
+Adjacent siblingsThe margins of adja ...
+        
+      </div>
+      <a class="more" href="/2019/03/17/collapsing-margin-solution/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <i class="fas fa-hashtag" style="color:rgb(66,185,131);"></i><a href="/2018/11/09/uva11292/">UVA11292-Dragon of Loowater解法</a>
+      </h2>
+      <p class="article-date">2018年11月9日</p>
       
         
   <a href="/tags#Cplusplus">
@@ -154,7 +179,7 @@
     <span class="tag-code">C</span>
   </a>
 
-      
+       
       <div class="article-summary">
         
           <h2 id="敘述"><a href="#敘述" class="headerlink" title="敘述"></a>敘述</h2><p>有個王國遭受龍群的侵襲，需要聘請騎士把龍全部消滅掉，否則王國會滅亡。</p>
@@ -168,77 +193,22 @@
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/11/09/uva10189/">UVA10189-Minesweeper解法</a>
+        <i class="fas fa-hashtag" style="color:rgb(66,185,131);"></i><a href="/2018/11/09/js-spread-operator/">Javascript展開運算元</a>
       </h2>
-      <p class="article-date">November 9, 2018</p>
-      
-        
-  <a href="/tags#Cplusplus">
-    <span class="tag-code">Cplusplus</span>
-  </a>
-
-  <a href="/tags#C">
-    <span class="tag-code">C</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          <h2 id="敘述"><a href="#敘述" class="headerlink" title="敘述"></a>敘述</h2><p>計算周遭九宮格的地雷數</p>
-<h2 id="輸入說明"><a href="#輸入說明" class="headerlink" title="輸入說明"></a>輸入說明</h2><p>輸入兩整數n,m，分別為地雷區的row和column<br>接下來n行輸入地雷的位置，輸入 * 代表有地雷，輸入 . 代表無地雷</p>
-<h2 id="輸出說明"><a href="#輸出說明" class="headerlink" title="輸出說明"></a>輸出說明</h2><p>輸出如Windows踩地雷那樣的周圍九宮格地雷數</p>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>雖然題目定義最高為100x100的大小，但為了讓邊界處理簡單些，我們宣告102x102大小的二維陣列來處理<br>
-        
-      </p></div>
-      <a class="more" href="/2018/11/09/uva10189/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/11/09/uva10591/">UVA10591-Happy Number解法</a>
-      </h2>
-      <p class="article-date">November 9, 2018</p>
-      
-        
-  <a href="/tags#Cplusplus">
-    <span class="tag-code">Cplusplus</span>
-  </a>
-
-  <a href="/tags#C">
-    <span class="tag-code">C</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          <h2 id="敘述"><a href="#敘述" class="headerlink" title="敘述"></a>敘述</h2><p>7 is a Happy number since 7 → 49 → 97 → 130 → 10 → 1<br>4 is an Unhappy number since 4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4</p>
-<h2 id="輸入說明"><a href="#輸入說明" class="headerlink" title="輸入說明"></a>輸入說明</h2><p>一個正整數</p>
-<h2 id="輸出說明"><a href="#輸出說明" class="headerlink" title="輸出說明"></a>輸出說明</h2><p>輸出是否為Happy Number</p>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>將執行過的數字記錄下來<code>record[]</code>，每次平方後做一次查表，看看有沒有重複做過的數字，如果有重複數字就不是HappyNumber。</p>
-<p>將一路上執行過的數字紀錄下來，每次跑下一個數字之前先從頭檢查一遍是否重複，如果有重複數字的話，則為UnhappyNumeber<br>
-        
-      </p></div>
-      <a class="more" href="/2018/11/09/uva10591/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/11/09/js-spread-operator/">Javascript展開運算元</a>
-      </h2>
-      <p class="article-date">November 9, 2018</p>
+      <p class="article-date">2018年11月9日</p>
       
         
   <a href="/tags#Javascript">
     <span class="tag-code">Javascript</span>
   </a>
 
-      
+       
       <div class="article-summary">
         
           <p>一般來說，如果要將兩個陣列合併，會用</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> arr3 = [arr1, arr2];</span><br></pre></td></tr></table></figure>
-<p>但這樣做出來的arr3結果會是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ [1, 2], [3 ,4] ]</span><br></pre></td></tr></table></figure></p>
-<p>直接將陣列當成是陣列中的元素，而不是我們想要的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4]</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> arr3 = [arr1, arr2];</span><br></pre></td></tr></table></figure>
+<p>但這樣做出來的arr3結果會是<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ [1, 2], [3 ,4] ]</span><br></pre></td></tr></table></figure></p>
+<p>直接將陣列當成是陣列中的元素，而不是我們想要的<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[1, 2, 3, 4]</span><br></pre></td></tr></table></figure></p>
 <p>單純元素存進去就好</p>
 <p>所以使用到一個功能</p>
 <blockquote>
@@ -252,21 +222,21 @@
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/11/09/apache-userdir/">Apache啟用UserDir的方法</a>
+        <i class="fas fa-hashtag" style="color:rgb(66,185,131);"></i><a href="/2018/11/09/apache-userdir/">Apache啟用UserDir的方法</a>
       </h2>
-      <p class="article-date">November 9, 2018</p>
+      <p class="article-date">2018年11月9日</p>
       
         
   <a href="/tags#Linux">
     <span class="tag-code">Linux</span>
   </a>
 
-      
+       
       <div class="article-summary">
         
           UserDIR是什麼?UserDIR是Apache裡的一個模組之一，它可以讓使用者的資料夾都變成一個獨立的網頁環境，方便使用者架設自己的個人網站，使用者的網站會位在http://localhost/~user/
-首先啟用userdir功能1sudo a2enmod userdir
-接下來要調 ...
+首先啟用userdir功能sudo a2enmod userdir
+接下來要調整 ...
         
       </div>
       <a class="more" href="/2018/11/09/apache-userdir/">Read more</a>
@@ -274,16 +244,57 @@
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/11/09/hello-world/">Hello World</a>
+        <i class="fas fa-hashtag" style="color:rgb(66,185,131);"></i><a href="/2018/11/09/uva10189/">UVA10189-Minesweeper解法</a>
       </h2>
-      <p class="article-date">November 9, 2018</p>
+      <p class="article-date">2018年11月9日</p>
       
+        
+  <a href="/tags#Cplusplus">
+    <span class="tag-code">Cplusplus</span>
+  </a>
+
+  <a href="/tags#C">
+    <span class="tag-code">C</span>
+  </a>
+
+       
       <div class="article-summary">
         
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer ...
+          <h2 id="敘述"><a href="#敘述" class="headerlink" title="敘述"></a>敘述</h2><p>計算周遭九宮格的地雷數</p>
+<h2 id="輸入說明"><a href="#輸入說明" class="headerlink" title="輸入說明"></a>輸入說明</h2><p>輸入兩整數n,m，分別為地雷區的row和column<br>接下來n行輸入地雷的位置，輸入 * 代表有地雷，輸入 . 代表無地雷</p>
+<h2 id="輸出說明"><a href="#輸出說明" class="headerlink" title="輸出說明"></a>輸出說明</h2><p>輸出如Windows踩地雷那樣的周圍九宮格地雷數</p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>雖然題目定義最高為100x100的大小，但為了讓邊界處理簡單些，我們宣告102x102大小的二維陣列來處理<br>
         
-      </div>
-      <a class="more" href="/2018/11/09/hello-world/">Read more</a>
+      </p></div>
+      <a class="more" href="/2018/11/09/uva10189/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <i class="fas fa-hashtag" style="color:rgb(66,185,131);"></i><a href="/2018/11/09/uva10591/">UVA10591-Happy Number解法</a>
+      </h2>
+      <p class="article-date">2018年11月9日</p>
+      
+        
+  <a href="/tags#Cplusplus">
+    <span class="tag-code">Cplusplus</span>
+  </a>
+
+  <a href="/tags#C">
+    <span class="tag-code">C</span>
+  </a>
+
+       
+      <div class="article-summary">
+        
+          <h2 id="敘述"><a href="#敘述" class="headerlink" title="敘述"></a>敘述</h2><p>7 is a Happy number since 7 → 49 → 97 → 130 → 10 → 1<br>4 is an Unhappy number since 4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4</p>
+<h2 id="輸入說明"><a href="#輸入說明" class="headerlink" title="輸入說明"></a>輸入說明</h2><p>一個正整數</p>
+<h2 id="輸出說明"><a href="#輸出說明" class="headerlink" title="輸出說明"></a>輸出說明</h2><p>輸出是否為Happy Number</p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>將執行過的數字記錄下來<code>record[]</code>，每次平方後做一次查表，看看有沒有重複做過的數字，如果有重複數字就不是HappyNumber。</p>
+<p>將一路上執行過的數字紀錄下來，每次跑下一個數字之前先從頭檢查一遍是否重複，如果有重複數字的話，則為UnhappyNumeber<br>
+        
+      </p></div>
+      <a class="more" href="/2018/11/09/uva10591/">Read more</a>
     </article>
   
 
@@ -296,7 +307,7 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
   </p>
@@ -319,7 +330,7 @@
 </script>
 
 <script>
-  var hasLine = 'true';
+  var hasLine = 'false';
   async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
     $('figure pre').each(function(i, block) {
       var figure = $(this).parents('figure');

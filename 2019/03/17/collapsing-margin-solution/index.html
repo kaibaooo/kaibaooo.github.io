@@ -10,9 +10,10 @@
   
   <title>
     
-      Hello World | Kaibao
+      使用margin-top該注意的坑 | Kaibao
     
   </title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
@@ -138,8 +139,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>Hello World</h2>
-  <p class="post-date">2018-11-09</p>
+  <h2>使用margin-top該注意的坑</h2>
+  <p class="post-date">2019-03-17</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -147,17 +148,42 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+    <section class="markdown-content"><h2 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h2><p>最近在切網頁版面的時候，突然很常遇到div無法正確對本身parent元素對齊的狀況，到StackOverFlow上面查了一下，發現這個問題叫做<strong>Collapsing margins</strong></p>
+<p><img src="https://lh3.googleusercontent.com/KEYlHthZdLnfi0SnBfKmYNHF4BCneu3GQY4s1OzalCnXrmgzxWQbLvjEagxM6KhRY8jDQVvVEiw4OxuoA41CtUcpt9yMg6pVg3OjQKlto6BfBcMYG2WskPZjSnx3IM_x8CUQ83YDmsMDKYjfpsYfmHXFEmLvnaYFI5FDMRxo7ED7qMn8pa8qM2WOc2fzW7J2wUfMzsZ07OU0qUtc9uqkLDStV-7c891gzX36aTtqdkCC2yUnNVt1lJe4oNsckIGlNDzCBDOPk0z1x6d_kk67n5MLH7GBlo2e4evfVfLM4FyczcXZ0ziNQm3QaQxnu6WJ0YzHuYDjYE8F5IwQqlcCekiVnisZaPv1koNnW5Uv4hq3aqfTVU5uTIYIBsH53aNK5_0-R6zaFaWO7rEkIPz0wPbPQ7bCyCExdqJOFZZHaL_BXp2cxjTADTJMqdnK_PTyp_f0k6_F4uXi5a4dSbbtvBFXM1Z74XGWMj1iOmT2OHAm8jfZWeEB0lZe4zuHaWJVDnyHtBz91o3sZVth_oZs7qzXNR--I-mGKS2MTCU0n1mAqu-WPrsq-x76srecQxgqTTPynRc5eLApsXQbXL9n6_GIhCFMyoosEO2q9NM0tpB45qtN6uYlv0lO5do8WY4gA6CbSQ544gaBPArw7Fs80Wadjfsn5p-vh21X5CoJlk3y01j9G0hvymEwAOISG6OdgcFbelmrMRHIkTN_gYR-md73=w1245-h511-no" alt=""></p>
+<h2 id="問題發生原因"><a href="#問題發生原因" class="headerlink" title="問題發生原因"></a>問題發生原因</h2><p>引用MDN上的說明</p>
+<blockquote>
+<p><strong>Adjacent siblings</strong><br>The margins of adjacent siblings are collapsed (except when the latter sibling needs to be cleared past floats).<br><strong>Parent and first/last child</strong><br>If there is no border, padding, inline part, block formatting context created, or clearance to separate the margin-top of a block from the margin-top of its first child block; or no border, padding, inline content, height, min-height, or max-height to separate the margin-bottom of a block from the margin-bottom of its last child, then those margins collapse. The collapsed margin ends up outside the parent.<br><strong>Empty blocks</strong><br>If there is no border, padding, inline content, height, or min-height to separate a block’s margin-top from its margin-bottom, then its top and bottom margins collapse.</p>
+</blockquote>
+<p>簡單來說就是</p>
+<ol>
+<li>父元素與子元素都是block，且子元素沒有float屬性</li>
+<li>父元素沒有border、padding、overflow屬性將內外隔開，以至於margin-top和margin-bottom重疊</li>
+</ol>
+<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><h3 id="1-子元素加上float屬性"><a href="#1-子元素加上float屬性" class="headerlink" title="1. 子元素加上float屬性"></a>1. 子元素加上float屬性</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="ZPoZaN" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution4"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/ZPoZaN/" target="_blank" rel="noopener"><br>  margin collapse solution4</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<h3 id="2-子元素更改為inline-block"><a href="#2-子元素更改為inline-block" class="headerlink" title="2. 子元素更改為inline-block"></a>2. 子元素更改為inline-block</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="PLegOE" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution3"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/PLegOE/" target="_blank" rel="noopener"><br>  margin collapse solution3</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<h3 id="3-父元素加上border"><a href="#3-父元素加上border" class="headerlink" title="3. 父元素加上border"></a>3. 父元素加上border</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="vPjMWm" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution2"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/vPjMWm/" target="_blank" rel="noopener"><br>  margin collapse solution2</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<h3 id="4-父元素加上padding"><a href="#4-父元素加上padding" class="headerlink" title="4. 父元素加上padding"></a>4. 父元素加上padding</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="YgLMVN" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution1"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/YgLMVN/" target="_blank" rel="noopener"><br>  margin collapse solution1</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing" target="_blank" rel="noopener">MDN - Mastering margin collapsing</a></p>
 </section>
     <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#frontend">
+    <span class="tag-code">frontend</span>
+  </a>
+
+      </div>
     
     <!-- Tags END -->
     <!-- NAV START -->
@@ -165,13 +191,13 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-    
-      <a class="nav-right" href="/2018/11/09/apache-userdir/">
+      <a class="nav-left" href="/2018/11/09/uva11292/">
+        <span class="nav-arrow">← </span>
         
-          Apache啟用UserDir的方法
+          UVA11292-Dragon of Loowater解法
         
-        <span class="nav-arrow"> →</span>
       </a>
+    
     
   </div>
 
@@ -189,7 +215,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Quick-Start"><span class="toc-nav-text">Quick Start</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Create-a-new-post"><span class="toc-nav-text">Create a new post</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Run-server"><span class="toc-nav-text">Run server</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Generate-static-files"><span class="toc-nav-text">Generate static files</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Deploy-to-remote-sites"><span class="toc-nav-text">Deploy to remote sites</span></a></li></ol></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#問題"><span class="toc-nav-text">問題</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#問題發生原因"><span class="toc-nav-text">問題發生原因</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#解決方法"><span class="toc-nav-text">解決方法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-子元素加上float屬性"><span class="toc-nav-text">1. 子元素加上float屬性</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-子元素更改為inline-block"><span class="toc-nav-text">2. 子元素更改為inline-block</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-父元素加上border"><span class="toc-nav-text">3. 父元素加上border</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-父元素加上padding"><span class="toc-nav-text">4. 父元素加上padding</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#參考資料"><span class="toc-nav-text">參考資料</span></a></li></ol>
     
   </div>
 </aside>
@@ -199,7 +225,7 @@
 
 <script>
   (function () {
-    var url = 'https://kaibaooo.github.io/2018/11/09/hello-world/';
+    var url = 'https://kaibaooo.github.io/2019/03/17/collapsing-margin-solution/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -255,7 +281,7 @@
     var gitmentConfig = "";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "Hello World",
+        id: "使用margin-top該注意的坑",
         owner: "",
         repo: "",
         oauth: {
@@ -283,7 +309,7 @@
 <script>
   var disqus_shortname = 'kaibaogithubpage';
   
-  var disqus_url = 'https://kaibaooo.github.io/2018/11/09/hello-world/';
+  var disqus_url = 'https://kaibaooo.github.io/2019/03/17/collapsing-margin-solution/';
   
   (function(){
     var dsq = document.createElement('script');
@@ -299,7 +325,7 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
   </p>
@@ -322,7 +348,7 @@
 </script>
 
 <script>
-  var hasLine = 'true';
+  var hasLine = 'false';
   async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
     $('figure pre').each(function(i, block) {
       var figure = $(this).parents('figure');
