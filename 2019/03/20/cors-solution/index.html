@@ -18,7 +18,7 @@
   
   <title>
     
-      使用margin-top該注意的坑 | Kaibao
+      喔不！是COR | Kaibao
     
   </title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -147,8 +147,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>使用margin-top該注意的坑</h2>
-  <p class="post-date">2019-03-17</p>
+  <h2>喔不！是COR</h2>
+  <p class="post-date">2019-03-20</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -156,31 +156,26 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><h2 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h2><p>最近在切網頁版面的時候，突然很常遇到div無法正確對本身parent元素對齊的狀況，到StackOverFlow上面查了一下，發現這個問題叫做<strong>Collapsing margins</strong></p>
-<p><img src="https://lh3.googleusercontent.com/KEYlHthZdLnfi0SnBfKmYNHF4BCneu3GQY4s1OzalCnXrmgzxWQbLvjEagxM6KhRY8jDQVvVEiw4OxuoA41CtUcpt9yMg6pVg3OjQKlto6BfBcMYG2WskPZjSnx3IM_x8CUQ83YDmsMDKYjfpsYfmHXFEmLvnaYFI5FDMRxo7ED7qMn8pa8qM2WOc2fzW7J2wUfMzsZ07OU0qUtc9uqkLDStV-7c891gzX36aTtqdkCC2yUnNVt1lJe4oNsckIGlNDzCBDOPk0z1x6d_kk67n5MLH7GBlo2e4evfVfLM4FyczcXZ0ziNQm3QaQxnu6WJ0YzHuYDjYE8F5IwQqlcCekiVnisZaPv1koNnW5Uv4hq3aqfTVU5uTIYIBsH53aNK5_0-R6zaFaWO7rEkIPz0wPbPQ7bCyCExdqJOFZZHaL_BXp2cxjTADTJMqdnK_PTyp_f0k6_F4uXi5a4dSbbtvBFXM1Z74XGWMj1iOmT2OHAm8jfZWeEB0lZe4zuHaWJVDnyHtBz91o3sZVth_oZs7qzXNR--I-mGKS2MTCU0n1mAqu-WPrsq-x76srecQxgqTTPynRc5eLApsXQbXL9n6_GIhCFMyoosEO2q9NM0tpB45qtN6uYlv0lO5do8WY4gA6CbSQ544gaBPArw7Fs80Wadjfsn5p-vh21X5CoJlk3y01j9G0hvymEwAOISG6OdgcFbelmrMRHIkTN_gYR-md73=w1245-h511-no" alt=""></p>
-<h2 id="問題發生原因"><a href="#問題發生原因" class="headerlink" title="問題發生原因"></a>問題發生原因</h2><p>引用MDN上的說明</p>
+    <section class="markdown-content"><h1 id="喔不！是COR"><a href="#喔不！是COR" class="headerlink" title="喔不！是COR"></a>喔不！是COR</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>看到JS地下城5F題目的時候，心裡想「噢，這不就AJAX嗎 簡單!」<br>，到了實際上要抓資料的時候，發現並沒有那麼容易，一開始是透過ES6內建的fetch()來抓資料，但跳出了這個訊息<br><img src="https://i.imgur.com/ukCiIJX.png" alt="">  </p>
+<h2 id="問題所在"><a href="#問題所在" class="headerlink" title="問題所在"></a>問題所在</h2><p>這個訊息說明了行政院環保署的Server端不提供CORS(Cross-Origin Resource Sharing)存取。  </p>
+<p>這時內心又會有另一個問題，CORS是甚麼? 這裡引用一段MDN上的說明  </p>
 <blockquote>
-<p><strong>Adjacent siblings</strong><br>The margins of adjacent siblings are collapsed (except when the latter sibling needs to be cleared past floats).<br><strong>Parent and first/last child</strong><br>If there is no border, padding, inline part, block formatting context created, or clearance to separate the margin-top of a block from the margin-top of its first child block; or no border, padding, inline content, height, min-height, or max-height to separate the margin-bottom of a block from the margin-bottom of its last child, then those margins collapse. The collapsed margin ends up outside the parent.<br><strong>Empty blocks</strong><br>If there is no border, padding, inline content, height, or min-height to separate a block’s margin-top from its margin-bottom, then its top and bottom margins collapse.</p>
+<p>Cross-Origin Resource Sharing (CORS) is a mechanism that uses additional HTTP headers to tell a browser to let a web application running at one origin (domain) have permission to access selected resources from a server at a different origin. A web application executes a cross-origin HTTP request when it requests a resource that has a different origin (domain, protocol, and port) than its own origin.</p>
 </blockquote>
-<p>簡單來說就是</p>
-<ol>
-<li>父元素與子元素都是block，且子元素沒有float屬性</li>
-<li>父元素沒有border、padding、overflow屬性將內外隔開，以至於margin-top和margin-bottom重疊</li>
-</ol>
-<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><h3 id="1-子元素加上float屬性"><a href="#1-子元素加上float屬性" class="headerlink" title="1. 子元素加上float屬性"></a>1. 子元素加上float屬性</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="ZPoZaN" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution4"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/ZPoZaN/" target="_blank" rel="noopener"><br>  margin collapse solution4</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-
-<h3 id="2-子元素更改為inline-block"><a href="#2-子元素更改為inline-block" class="headerlink" title="2. 子元素更改為inline-block"></a>2. 子元素更改為inline-block</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="PLegOE" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution3"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/PLegOE/" target="_blank" rel="noopener"><br>  margin collapse solution3</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-
-<h3 id="3-父元素加上border"><a href="#3-父元素加上border" class="headerlink" title="3. 父元素加上border"></a>3. 父元素加上border</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="vPjMWm" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution2"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/vPjMWm/" target="_blank" rel="noopener"><br>  margin collapse solution2</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-
-<h3 id="4-父元素加上padding"><a href="#4-父元素加上padding" class="headerlink" title="4. 父元素加上padding"></a>4. 父元素加上padding</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="YgLMVN" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution1"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/YgLMVN/" target="_blank" rel="noopener"><br>  margin collapse solution1</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-
-
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing" target="_blank" rel="noopener">MDN - Mastering margin collapsing</a></p>
+<p>簡單來說，<code>XMLHttpRequest</code>和<code>Fetch API</code>兩種AJAX的存取方式都需要遵守same-origin policy，也就是在前端呼叫另一個網域的資源需要在同一個域名下才行，例如fetch()不能在 <a href="http://127.0.0.1/" target="_blank" rel="noopener">http://127.0.0.1/</a> 底下呼叫 <a href="https://www.google.com/" target="_blank" rel="noopener">https://www.google.com/</a> 的資源。<br>雖然這兩個AJAX的呼叫方法都要遵守same-origin policy，但可以透過在伺服器上設定加入回應<code>Access-Control-Allow-Origin</code>的header，讓其他網域能夠存取你伺服器上的資源。(氣象局API不能直接存取的原因就是少了這個header)  </p>
+<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><p>上面有提到前端的AJAX不能直接使用GET存與資料，但後端可以，所以我們的解決方法是透過自己寫的代理server來取得氣象局的AQI資料後，再自己透過HTTP將取得的資料回傳回來。  </p>
+<p>這裡使用了request來GET網頁上的資料，並使用express透過HTTP回傳回來  </p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line">app.get(<span class="regexp">/^\/corskiller\/.*/</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> targetURL = req.originalUrl.slice(<span class="number">12</span>);</span><br><span class="line">    <span class="keyword">await</span> request(targetURL, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">error, response, body</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">await</span> res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>)</span><br><span class="line">        <span class="keyword">await</span> res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>);</span><br><span class="line">        <span class="keyword">await</span> res.send(body);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Waiting for GET'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>架好之後只要透過正常的AJAX抓取<code>https://localhost:3000/corskiller/&lt;API URL&gt;</code>，就能獲得該API上的資料囉~  </p>
+<h4 id="最重要的Access-Control-Allow-Origin"><a href="#最重要的Access-Control-Allow-Origin" class="headerlink" title="最重要的Access-Control-Allow-Origin"></a>最重要的Access-Control-Allow-Origin</h4><p>設定伺服器的可以允許哪些網域來存取，在這裡設為無限制<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">await</span> res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>其他設定參數如下  </p>
+<ul>
+<li>不限制  Access-Control-Allow-Origin : *  </li>
+<li>特定域名才能存取 Access-Control-Allow-Origin : domain  </li>
+<li>不啟用 Access-Control-Allow-Origin : null  </li>
+</ul>
+<h3 id="之後的事情"><a href="#之後的事情" class="headerlink" title="之後的事情"></a>之後的事情</h3><p>弄了這麼一大坨之後，開開心心部屬到GCP上面，結果發現域名沒有SSL憑證，不能直接存取，覺得心好累，覺得heroku會休眠有點小討厭，所以就弄個Google Script來處理這個問題了<em>(:з」∠)</em> </p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p>CORS -<br><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS</a><br>Access-Control-Allow-Origin -<br><a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Server-Side_Access_Control" target="_blank" rel="noopener">https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Server-Side_Access_Control</a></p>
 </section>
     <!-- Tags START -->
     
@@ -191,6 +186,10 @@
     <span class="tag-code">frontend</span>
   </a>
 
+  <a href="/tags#學習筆記">
+    <span class="tag-code">學習筆記</span>
+  </a>
+
       </div>
     
     <!-- Tags END -->
@@ -199,20 +198,13 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2018/11/09/uva11292/">
+      <a class="nav-left" href="/2019/03/17/collapsing-margin-solution/">
         <span class="nav-arrow">← </span>
         
-          UVA11292-Dragon of Loowater解法
+          使用margin-top該注意的坑
         
       </a>
     
-    
-      <a class="nav-right" href="/2019/03/20/cors-solution/">
-        
-          喔不！是COR
-        
-        <span class="nav-arrow"> →</span>
-      </a>
     
   </div>
 
@@ -230,7 +222,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#問題"><span class="toc-nav-text">問題</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#問題發生原因"><span class="toc-nav-text">問題發生原因</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#解決方法"><span class="toc-nav-text">解決方法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-子元素加上float屬性"><span class="toc-nav-text">1. 子元素加上float屬性</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-子元素更改為inline-block"><span class="toc-nav-text">2. 子元素更改為inline-block</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-父元素加上border"><span class="toc-nav-text">3. 父元素加上border</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-父元素加上padding"><span class="toc-nav-text">4. 父元素加上padding</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#參考資料"><span class="toc-nav-text">參考資料</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#喔不！是COR"><span class="toc-nav-text">喔不！是COR</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#前言"><span class="toc-nav-text">前言</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#問題所在"><span class="toc-nav-text">問題所在</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#解決方法"><span class="toc-nav-text">解決方法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#最重要的Access-Control-Allow-Origin"><span class="toc-nav-text">最重要的Access-Control-Allow-Origin</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#之後的事情"><span class="toc-nav-text">之後的事情</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#參考資料"><span class="toc-nav-text">參考資料</span></a></li></ol></li></ol>
     
   </div>
 </aside>
@@ -240,7 +232,7 @@
 
 <script>
   (function () {
-    var url = 'https://kaibaooo.github.io/2019/03/17/collapsing-margin-solution/';
+    var url = 'https://kaibaooo.github.io/2019/03/20/cors-solution/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -296,7 +288,7 @@
     var gitmentConfig = "";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "使用margin-top該注意的坑",
+        id: "喔不！是COR",
         owner: "",
         repo: "",
         oauth: {
@@ -324,7 +316,7 @@
 <script>
   var disqus_shortname = 'kaibaogithubpage';
   
-  var disqus_url = 'https://kaibaooo.github.io/2019/03/17/collapsing-margin-solution/';
+  var disqus_url = 'https://kaibaooo.github.io/2019/03/20/cors-solution/';
   
   (function(){
     var dsq = document.createElement('script');
