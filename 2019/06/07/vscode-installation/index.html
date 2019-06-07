@@ -18,7 +18,7 @@
   
   <title>
     
-      Javascript展開運算元 | Kaibao
+      如何正確安裝VSCode | Kaibao
     
   </title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -147,8 +147,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>Javascript展開運算元</h2>
-  <p class="post-date">2018-11-09</p>
+  <h2>如何正確安裝VSCode</h2>
+  <p class="post-date">2019-06-07</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -156,29 +156,37 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>一般來說，如果要將兩個陣列合併，會用</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> arr3 = [arr1, arr2];</span><br></pre></td></tr></table></figure>
-<p>但這樣做出來的arr3結果會是<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ [1, 2], [3 ,4] ]</span><br></pre></td></tr></table></figure></p>
-<p>直接將陣列當成是陣列中的元素，而不是我們想要的<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[1, 2, 3, 4]</span><br></pre></td></tr></table></figure></p>
-<p>單純元素存進去就好</p>
-<p>所以使用到一個功能</p>
-<blockquote>
-<p><strong>…</strong></p>
-</blockquote>
-<p>沒有錯，就是<code>...</code></p>
-<a id="more"></a>
-<p><code>...</code>的功能稱為展開，會將陣列的理面的每個元素做回傳，例如<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="built_in">console</span>.log(...arr);</span><br><span class="line"></span><br><span class="line"><span class="comment">// output</span></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 4</span></span><br></pre></td></tr></table></figure></p>
-<p>所以如果要將兩個陣列內容元素做合併，可以這樣做<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> arr3 = [...arr1, ...arr2];</span><br></pre></td></tr></table></figure></p>
-<p>輸出結果會是<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[1, 2, 3, 4]</span><br></pre></td></tr></table></figure></p>
-<p>而不再是單純將陣列放進去當元素了!</p>
+    <section class="markdown-content"><h1 id="如何正確安裝VSCode"><a href="#如何正確安裝VSCode" class="headerlink" title="如何正確安裝VSCode"></a>如何正確安裝VSCode</h1><p>這一兩年來，Visual Studio Code透過原生支援Git與豐富的擴充元件生態系，且背後又是微軟爸爸(?，在編輯器大戰中脫穎而出，成為最受各大開發者喜愛的文字編輯器，但許多人正要踏入VSCode的懷抱時，安裝過程總容易少了幾個步驟，所以想透過這篇文章來記錄下VSCode安裝過程該注意的選項。</p>
+<h2 id="下載Visual-Studio-Code"><a href="#下載Visual-Studio-Code" class="headerlink" title="下載Visual Studio Code"></a>下載Visual Studio Code</h2><p><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">https://code.visualstudio.com/</a></p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/vscode-installation%2FCNMjcIl.png?alt=media&amp;token=ed31db7e-69e9-4642-85f5-9348917212a9" alt=""></p>
+<h2 id="安裝過程"><a href="#安裝過程" class="headerlink" title="安裝過程"></a>安裝過程</h2><p>前段安裝過程不太需要動，下一步即可，最重要的是這一步<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/vscode-installation%2FtdTymsp.png?alt=media&amp;token=bc48883a-f405-4bb4-aca4-fc09b4d4d4c9" alt=""></p>
+<h3 id="右鍵選單"><a href="#右鍵選單" class="headerlink" title="右鍵選單"></a>右鍵選單</h3><ul>
+<li>將[以Code開啟]動作加入Windows檔案總管檔案的操作功能表中</li>
+<li>將[以Code開啟]動作加入Windows檔案總管目錄的操作功能表中</li>
+</ul>
+<p>因為VSCode的編輯環境通常以一個<code>工作區(資料夾)</code>為單位，會自動為各個資料夾加入獨立的設定檔，所以將這兩個選項勾起來可以方便以後開啟資料夾快速編輯，建議勾選</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/vscode-installation%2Foo3fKsH.png?alt=media&amp;token=cfac47be-c287-499f-b8af-99e4533388d4" alt=""></p>
+<h3 id="支援附檔名"><a href="#支援附檔名" class="headerlink" title="支援附檔名"></a>支援附檔名</h3><ul>
+<li>針對支援的檔案類型將Code註冊為編輯器<br>VSCode支援大部分的程式檔與設定檔，會針對各個不同的副檔名更換該檔案的圖示，建議勾選</li>
+</ul>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/vscode-installation%2FiKHDmHY.png?alt=media&amp;token=21aaa18a-9e26-4782-a65c-e69924ffeea7" alt=""></p>
+<h3 id="從terminal中執行VSCode"><a href="#從terminal中執行VSCode" class="headerlink" title="從terminal中執行VSCode"></a>從terminal中執行VSCode</h3><ul>
+<li>加入PATH中</li>
+</ul>
+<p>VSCode支援從Terminal中執行，對於常用terminal工作的開發者相當方便，若不常使用terminal可以取消勾選<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/vscode-installation%2FM8Qeh19.gif?alt=media&amp;token=22c67145-babf-4d12-9724-358f901899d3" alt=""></p>
+<p>以上是我認為VSCode安裝過程中比較重要的設定，許多人可能會忽略，造成開發過程中覺得有那麼一點不便。</p>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#Javascript">
-    <span class="tag-code">Javascript</span>
+  <a href="/tags#學習筆記">
+    <span class="tag-code">學習筆記</span>
+  </a>
+
+  <a href="/tags#VSCode">
+    <span class="tag-code">VSCode</span>
   </a>
 
       </div>
@@ -189,20 +197,13 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2018/11/09/uva10591/">
+      <a class="nav-left" href="/2019/03/20/cors-solution/">
         <span class="nav-arrow">← </span>
         
-          UVA10591-Happy Number解法
+          喔不！是CORS
         
       </a>
     
-    
-      <a class="nav-right" href="/2018/11/09/apache-userdir/">
-        
-          Apache啟用UserDir的方法
-        
-        <span class="nav-arrow"> →</span>
-      </a>
     
   </div>
 
@@ -220,7 +221,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="nav">none</ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#如何正確安裝VSCode"><span class="toc-nav-text">如何正確安裝VSCode</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#下載Visual-Studio-Code"><span class="toc-nav-text">下載Visual Studio Code</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#安裝過程"><span class="toc-nav-text">安裝過程</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#右鍵選單"><span class="toc-nav-text">右鍵選單</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#支援附檔名"><span class="toc-nav-text">支援附檔名</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#從terminal中執行VSCode"><span class="toc-nav-text">從terminal中執行VSCode</span></a></li></ol></li></ol></li></ol>
     
   </div>
 </aside>
@@ -230,7 +231,7 @@
 
 <script>
   (function () {
-    var url = 'https://kaibaooo.github.io/2018/11/09/js-spread-operator/';
+    var url = 'https://kaibaooo.github.io/2019/06/07/vscode-installation/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -286,7 +287,7 @@
     var gitmentConfig = "";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "Javascript展開運算元",
+        id: "如何正確安裝VSCode",
         owner: "",
         repo: "",
         oauth: {
@@ -314,7 +315,7 @@
 <script>
   var disqus_shortname = 'kaibaogithubpage';
   
-  var disqus_url = 'https://kaibaooo.github.io/2018/11/09/js-spread-operator/';
+  var disqus_url = 'https://kaibaooo.github.io/2019/06/07/vscode-installation/';
   
   (function(){
     var dsq = document.createElement('script');
