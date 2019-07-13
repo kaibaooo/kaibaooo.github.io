@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113939847-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-113939847-1');
+    </script>    
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Kaibao&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs, kaibao">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Python資料科學學習筆記-Numpy陣列基礎操作 | Kaibao
+    
+  </title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/AM_HTMLorMML.js"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Kaibao</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Python資料科學學習筆記-Numpy陣列基礎操作</h2>
+  <p class="post-date">2019-07-08</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><blockquote>
+<p>本篇文章為筆者的學習筆記，參考書籍為<br>Python資料科學學習手冊<br><a href="https://www.books.com.tw/products/0010774364" target="_blank" rel="noopener">https://www.books.com.tw/products/0010774364</a></p>
+</blockquote>
+<h2 id="建立陣列的各種方式"><a href="#建立陣列的各種方式" class="headerlink" title="建立陣列的各種方式"></a>建立陣列的各種方式</h2><h3 id="內容全為0的陣列"><a href="#內容全為0的陣列" class="headerlink" title="內容全為0的陣列"></a>內容全為0的陣列</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.zeros(<span class="number">10</span>, dtype=np.int)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="內容全為1的陣列"><a href="#內容全為1的陣列" class="headerlink" title="內容全為1的陣列"></a>內容全為1的陣列</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.ones((<span class="number">3</span>,<span class="number">5</span>), dtype=np.int)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">       [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">       [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]])</span><br></pre></td></tr></table></figure>
+<h3 id="填滿同一元素"><a href="#填滿同一元素" class="headerlink" title="填滿同一元素"></a>填滿同一元素</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.full((<span class="number">3</span>,<span class="number">5</span>), <span class="number">3.14</span>, dtype=np.float)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([[<span class="number">3.14</span>, <span class="number">3.14</span>, <span class="number">3.14</span>, <span class="number">3.14</span>, <span class="number">3.14</span>],</span><br><span class="line">       [<span class="number">3.14</span>, <span class="number">3.14</span>, <span class="number">3.14</span>, <span class="number">3.14</span>, <span class="number">3.14</span>],</span><br><span class="line">       [<span class="number">3.14</span>, <span class="number">3.14</span>, <span class="number">3.14</span>, <span class="number">3.14</span>, <span class="number">3.14</span>]])</span><br></pre></td></tr></table></figure>
+<h3 id="依序填滿的矩陣"><a href="#依序填滿的矩陣" class="headerlink" title="依序填滿的矩陣"></a>依序填滿的矩陣</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.arange(<span class="number">0</span>, <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="產生特定間隔數的陣列"><a href="#產生特定間隔數的陣列" class="headerlink" title="產生特定間隔數的陣列"></a>產生特定間隔數的陣列</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.linspace(<span class="number">0</span>,<span class="number">1</span>,<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([<span class="number">0.</span>  , <span class="number">0.25</span>, <span class="number">0.5</span> , <span class="number">0.75</span>, <span class="number">1.</span>  ])</span><br></pre></td></tr></table></figure>
+<h3 id="隨機陣列"><a href="#隨機陣列" class="headerlink" title="隨機陣列"></a>隨機陣列</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.random.random((<span class="number">3</span>,<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([[<span class="number">0.67008401</span>, <span class="number">0.66344056</span>, <span class="number">0.66557893</span>],</span><br><span class="line">       [<span class="number">0.211046</span>  , <span class="number">0.63600443</span>, <span class="number">0.51327634</span>],</span><br><span class="line">       [<span class="number">0.75571898</span>, <span class="number">0.94306233</span>, <span class="number">0.6197861</span> ]])</span><br></pre></td></tr></table></figure>
+<h3 id="隨機常態分佈陣列"><a href="#隨機常態分佈陣列" class="headerlink" title="隨機常態分佈陣列"></a>隨機常態分佈陣列</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.random.normal(<span class="number">0</span>,<span class="number">1</span>(<span class="number">3</span>,<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([[ <span class="number">1.04213031</span>,  <span class="number">0.77624605</span>, <span class="number">-0.42446014</span>],</span><br><span class="line">       [ <span class="number">0.07087546</span>,  <span class="number">0.81222484</span>, <span class="number">-0.52451604</span>],</span><br><span class="line">       [ <span class="number">1.98723693</span>, <span class="number">-0.91196085</span>,  <span class="number">0.78381324</span>]])</span><br></pre></td></tr></table></figure>
+<h3 id="隨機範圍整數矩陣"><a href="#隨機範圍整數矩陣" class="headerlink" title="隨機範圍整數矩陣"></a>隨機範圍整數矩陣</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.random.randint(<span class="number">0</span>,<span class="number">10</span>, <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([<span class="number">9</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="單位矩陣"><a href="#單位矩陣" class="headerlink" title="單位矩陣"></a>單位矩陣</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.eye(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([[<span class="number">1.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>],</span><br><span class="line">       [<span class="number">0.</span>, <span class="number">1.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>],</span><br><span class="line">       [<span class="number">0.</span>, <span class="number">0.</span>, <span class="number">1.</span>, <span class="number">0.</span>, <span class="number">0.</span>],</span><br><span class="line">       [<span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">1.</span>, <span class="number">0.</span>],</span><br><span class="line">       [<span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">1.</span>]])</span><br></pre></td></tr></table></figure>
+<h3 id="未初始化矩陣"><a href="#未初始化矩陣" class="headerlink" title="未初始化矩陣"></a>未初始化矩陣</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.empty(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>])</span><br></pre></td></tr></table></figure>
+<h2 id="陣列屬性"><a href="#陣列屬性" class="headerlink" title="陣列屬性"></a>陣列屬性</h2><p><code>x = np.random.randint(0,10,(2,3))</code></p>
+<ul>
+<li><p>陣列維度 : x.ndim =&gt; <strong>2</strong></p>
+</li>
+<li><p>各維度大小 : x.shape =&gt; <strong>(2, 3)</strong></p>
+</li>
+<li><p>整個陣列總大小 : x.size =&gt; <strong>6</strong></p>
+</li>
+<li><p>陣列的資料型態 : x.dtype =&gt; <strong>dtype(‘int32’)</strong></p>
+</li>
+<li><p>陣列元素的位元組大小 : x.itemsize =&gt; <strong>4 (Bytes)</strong></p>
+</li>
+<li><p>陣列總位元組大小 : x.nbytes =&gt; <strong>24 (Bytes)</strong></p>
+</li>
+</ul>
+<h2 id="陣列操作"><a href="#陣列操作" class="headerlink" title="陣列操作"></a>陣列操作</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x2 = np.array([[<span class="number">12</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">1</span>],</span><br><span class="line">              [ <span class="number">7</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">8</span>],</span><br><span class="line">              [ <span class="number">1</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">7</span>]])</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>取得2列3欄 : <code>x2[:2, :3]</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([[<span class="number">12</span>,  <span class="number">5</span>,  <span class="number">6</span>],</span><br><span class="line">       [ <span class="number">7</span>,  <span class="number">6</span>,  <span class="number">8</span>]])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取得所有偶數欄 : <code>x2[:3, ::2]</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([[<span class="number">12</span>,  <span class="number">6</span>],</span><br><span class="line">       [ <span class="number">7</span>,  <span class="number">8</span>],</span><br><span class="line">       [ <span class="number">1</span>,  <span class="number">7</span>]])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取得陣列的第1列元素 : <code>x2[:, 0]</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([<span class="number">12</span>,  <span class="number">7</span>,  <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取得陣列的第1欄元素 : <code>x2[0, :]</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">array([<span class="number">12</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>所有陣列操作都是藉由<code>參考</code>來執行，會改變原變數的值<br>若不想改變原變數的值，則藉由np.array.copy()來執行</p>
+</blockquote>
+<ul>
+<li><strong>陣列變形</strong><br><code>x3 = np.arange(1,10)</code><ul>
+<li>將x3更改為3x3矩陣 : <code>x3.reshape(3,3)</code></li>
+<li>透過x3建立列向量(reshape) : <code>x3.reshap(3, 1)</code></li>
+<li>透過x3建立列向量(newaxis) : <code>x3[np.newaxis, :]</code></li>
+<li>透過x3建立欄向量(reshape) : <code>x3.reshap(1, 3)</code></li>
+<li>透過x3建立欄向量(newaxis) : <code>x3[:, np.newaxis]</code></li>
+</ul>
+</li>
+<li><p><strong>陣列的合併</strong><br>  <strong>np.concatenate</strong>, <strong>np.vstack(垂直堆疊)</strong>, <strong>np.hstack(水平堆疊)</strong>, <strong>np.dstack(3D)</strong></p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = np.array([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">y = np.array([<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])</span><br><span class="line">z = np.array([[<span class="number">99</span>],</span><br><span class="line">              [<span class="number">99</span>]])</span><br><span class="line">grid = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</span><br><span class="line">                 [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]])</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>合併陣列np.concatenate([x, y])</strong></p>
+<p>  <code>[1,2,3,4,5,6]</code></p>
+</li>
+<li><p><strong>合併陣列np.concatenate(grid, grid)</strong></p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[[1,2,3],</span><br><span class="line"> [4,5,6],</span><br><span class="line"> [1,2,3],</span><br><span class="line"> [4,5,6]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>合併陣列np.concatenate(grid, grid, axis=1)</strong></p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[[1,2,3,1,2,3],</span><br><span class="line"> [4,5,6,4,5,6]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>垂直堆疊合併np.vstack(x, grid)</strong></p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line"> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line"> [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>水平堆疊合併np.hstack([z, grid])</strong></p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[[<span class="number">99</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line"> [<span class="number">99</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>]]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>陣列的分割</strong><br>  <strong>np.split</strong>, <strong>np.vsplit(垂直分割)</strong>, <strong>np.hsplit(水平分割)</strong></p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">99</span>,<span class="number">99</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>]</span><br><span class="line">grid = [[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">        [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">        [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>],</span><br><span class="line">        [<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>]]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>分割陣列np.split(x, [3,5])</strong></p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">99</span>,<span class="number">99</span>], [<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>垂直分割陣列np.vsplit(grid, [2])</strong></p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">upper, lower = np.vsplit(grid, [<span class="number">2</span>])</span><br><span class="line">upper = [[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">         [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]]</span><br><span class="line">lower = [[ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>],</span><br><span class="line">         [<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>水平分割陣列np.hvsplit(grid, [2])</strong></p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">left, right = np.hsplit(grid, [<span class="number">2</span>])</span><br><span class="line">left = [[ <span class="number">0</span>  <span class="number">1</span>]</span><br><span class="line">        [ <span class="number">4</span>  <span class="number">5</span>]</span><br><span class="line">        [ <span class="number">8</span>  <span class="number">9</span>]</span><br><span class="line">        [<span class="number">12</span> <span class="number">13</span>]][[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">         [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]]</span><br><span class="line">right = [[ <span class="number">2</span>  <span class="number">3</span>]</span><br><span class="line">         [ <span class="number">6</span>  <span class="number">7</span>]</span><br><span class="line">         [<span class="number">10</span> <span class="number">11</span>]</span><br><span class="line">         [<span class="number">14</span> <span class="number">15</span>]][[ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>],</span><br><span class="line">         [<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>]]</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#學習筆記, Python">
+    <span class="tag-code">學習筆記, Python</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/06/07/vscode-installation/">
+        <span class="nav-arrow">← </span>
+        
+          如何正確安裝VSCode
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    
+        <!-- Disqus START -->
+        <div id="disqus_thread"></div>
+        <!-- Disqus END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#建立陣列的各種方式"><span class="toc-nav-text">建立陣列的各種方式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#內容全為0的陣列"><span class="toc-nav-text">內容全為0的陣列</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#內容全為1的陣列"><span class="toc-nav-text">內容全為1的陣列</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#填滿同一元素"><span class="toc-nav-text">填滿同一元素</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#依序填滿的矩陣"><span class="toc-nav-text">依序填滿的矩陣</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#產生特定間隔數的陣列"><span class="toc-nav-text">產生特定間隔數的陣列</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#隨機陣列"><span class="toc-nav-text">隨機陣列</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#隨機常態分佈陣列"><span class="toc-nav-text">隨機常態分佈陣列</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#隨機範圍整數矩陣"><span class="toc-nav-text">隨機範圍整數矩陣</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#單位矩陣"><span class="toc-nav-text">單位矩陣</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#未初始化矩陣"><span class="toc-nav-text">未初始化矩陣</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#陣列屬性"><span class="toc-nav-text">陣列屬性</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#陣列操作"><span class="toc-nav-text">陣列操作</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://kaibaooo.github.io/2019/07/08/學習筆記/datascience-note-numpy-array-operations/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Python資料科學學習筆記-Numpy陣列基礎操作",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = 'kaibaogithubpage';
+  
+  var disqus_url = 'https://kaibaooo.github.io/2019/07/08/學習筆記/datascience-note-numpy-array-operations/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'false';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
