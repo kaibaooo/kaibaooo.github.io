@@ -1,369 +1,581 @@
 <!DOCTYPE html>
 <html>
-  <head><meta name="generator" content="Hexo 3.8.0">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113939847-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'UA-113939847-1');
-    </script>    
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-  <meta name="description" content="Kaibao&#39;s blog">
-  <meta name="keyword" content="hexo-theme, vuejs, kaibao">
-  
-    <link rel="shortcut icon" href="/css/images/logo.png">
-  
-  <title>
-    
-      Apache啟用UserDir的方法 | Kaibao
-    
-  </title>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/plugins/gitment.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
-  <script src="/js/qrious.js"></script>
-<script src="/js/gitment.js"></script>
-  
-  
-    <!-- MathJax support START -->
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
 
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/AM_HTMLorMML.js"></script>
-    <!-- MathJax support END -->
-  
+    
+
+    
+    <title>Apache啟用UserDir的方法 | Kaibao</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Linux">
+    
+    <meta name="description" content="UserDIR是什麼?UserDIR是Apache裡的一個模組之一，它可以讓使用者的資料夾都變成一個獨立的網頁環境，方便使用者架設自己的個人網站，使用者的網站會位在http://localhost/~user/ 首先啟用userdir功能 sudo a2enmod userdir  接下來要調整userdir的設定檔userdir.conf sudo vim /etc/apache2/mods-e">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache啟用UserDir的方法">
+<meta property="og:url" content="https://kaibaooo.github.io/2018/11/09/apache-userdir/index.html">
+<meta property="og:site_name" content="Kaibao">
+<meta property="og:description" content="UserDIR是什麼?UserDIR是Apache裡的一個模組之一，它可以讓使用者的資料夾都變成一個獨立的網頁環境，方便使用者架設自己的個人網站，使用者的網站會位在http://localhost/~user/ 首先啟用userdir功能 sudo a2enmod userdir  接下來要調整userdir的設定檔userdir.conf sudo vim /etc/apache2/mods-e">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2018-11-11T02:06:48.197Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apache啟用UserDir的方法">
+<meta name="twitter:description" content="UserDIR是什麼?UserDIR是Apache裡的一個模組之一，它可以讓使用者的資料夾都變成一個獨立的網頁環境，方便使用者架設自己的個人網站，使用者的網站會位在http://localhost/~user/ 首先啟用userdir功能 sudo a2enmod userdir  接下來要調整userdir的設定檔userdir.conf sudo vim /etc/apache2/mods-e">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-113939847-1', 'auto');
+ga('send', 'pageview');
+
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+    
 
 
 </head>
-<div class="wechat-share">
-  <img src="/css/images/logo.png">
-</div>
+</html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Make moments in my life into a story</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">首頁</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">關於</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
 
-  <body>
-    <header class="header fixed-header">
-  <div class="header-container">
-    <a class="home-link" href="/">
-      <div class="logo"></div>
-      <span>Kaibao</span>
-    </a>
-    <ul class="right-list">
-      
-        <li class="list-item">
-          
-            <a href="/" class="item-link">Home</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/tags/" class="item-link">Tags</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/archives/" class="item-link">Archives</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/project/" class="item-link">Projects</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/about/" class="item-link">About</a>
-          
-        </li>
-      
-    </ul>
-    <div class="menu">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="輸入關鍵字..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
     </div>
-    <div class="menu-mask">
-      <ul class="menu-list">
-        
-          <li class="menu-item">
-            
-              <a href="/" class="menu-link">Home</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/tags/" class="menu-link">Tags</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/archives/" class="menu-link">Archives</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/project/" class="menu-link">Projects</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/about/" class="menu-link">About</a>
-            
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</header>
-
-    <div id="article-banner">
-  <h2>Apache啟用UserDir的方法</h2>
-  <p class="post-date">2018-11-09</p>
-  <div class="arrow-down">
-    <a href="javascript:;"></a>
-  </div>
 </div>
-<main class="app-body flex-box">
-  <!-- Article START -->
-  <article class="post-article">
-    <section class="markdown-content"><p>UserDIR是什麼?<br>UserDIR是Apache裡的一個模組之一，它可以讓使用者的資料夾都變成一個獨立的網頁環境，方便使用者架設自己的個人網站，使用者的網站會位在<code>http://localhost/~user/</code></p>
-<p>首先<br>啟用userdir功能<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo a2enmod userdir</span><br></pre></td></tr></table></figure></p>
-<p>接下來要調整userdir的設定檔<code>userdir.conf</code><br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/apache2/mods-enabled/userdir.conf</span><br></pre></td></tr></table></figure></p>
-<p>將內容更改為如下設定<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;IfModule mod_userdir.c&gt;</span><br><span class="line">        UserDir public_html</span><br><span class="line">        UserDir disabled root</span><br><span class="line">        &lt;Directory /home/*/public_html&gt;</span><br><span class="line">		AllowOverride All</span><br><span class="line">		Options MultiViews Indexes SymLinksIfOwnerMatch</span><br><span class="line">		&lt;Limit GET POST OPTIONS&gt;</span><br><span class="line">		    Require all granted</span><br><span class="line">		&lt;/Limit&gt;</span><br><span class="line">		&lt;LimitExcept GET POST OPTIONS&gt;</span><br><span class="line">			Require all denied</span><br><span class="line">		&lt;/LimitExcept&gt;</span><br><span class="line">        &lt;/Directory&gt;</span><br><span class="line">&lt;/IfModule&gt;</span><br></pre></td></tr></table></figure></p>
-<p>最後重新啟動apache伺服器<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo service apache2 restart</span><br></pre></td></tr></table></figure></p>
-<p>之後只要使用者有建立<code>public_html</code>資料夾，就能在<code>http://localhost/~user/</code>上顯示出來了</p>
-</section>
-    <!-- Tags START -->
-    
-      <div class="tags">
-        <span>Tags:</span>
-        
-  <a href="/tags#Linux">
-    <span class="tag-code">Linux</span>
-  </a>
-
-      </div>
-    
-    <!-- Tags END -->
-    <!-- NAV START -->
-    
-  <div class="nav-container">
-    <!-- reverse left and right to put prev and next in a more logic postition -->
-    
-      <a class="nav-left" href="/2018/11/09/uva10189/">
-        <span class="nav-arrow">← </span>
-        
-          UVA10189-Minesweeper解法
-        
-      </a>
-    
-    
-      <a class="nav-right" href="/2018/11/09/js-spread-operator/">
-        
-          Javascript展開運算元
-        
-        <span class="nav-arrow"> →</span>
-      </a>
-    
-  </div>
-
-    <!-- NAV END -->
-    
-        <!-- Disqus START -->
-        <div id="disqus_thread"></div>
-        <!-- Disqus END -->
-    
-  </article>
-  <!-- Article END -->
-  <!-- Catalog START -->
-  
-    <aside class="catalog-container">
-  <div class="toc-main">
-    <strong class="toc-title">Catalog</strong>
-    
-      <ol class="nav">none</ol>
-    
-  </div>
-</aside>
-  
-  <!-- Catalog END -->
-</main>
-
 <script>
-  (function () {
-    var url = 'https://kaibaooo.github.io/2018/11/09/apache-userdir/';
-    var banner = ''
-    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
-      $('#article-banner').css({
-        'background-image': 'url(' + banner + ')'
-      })
-    } else {
-      $('#article-banner').geopattern(url)
-    }
-    $('.header').removeClass('fixed-header')
-
-     // error image
-    $(".markdown-content img").on('error', function() {
-      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
-      $(this).css({
-        'cursor': 'default'
-      })
-    })
-
-    // zoom image
-    $(".markdown-content img").on('click', function() {
-      var src = $(this).attr('src')
-      if (src !== 'http://file.muyutech.com/error-img.png') {
-        var imageW = $(this).width()
-        var imageH = $(this).height()
-        
-        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
-        zoom = zoom < 1 ? 1 : zoom
-        zoom = zoom > 2 ? 2 : zoom
-        var transY = (($(window).height() - imageH) / 2).toFixed(2)
-
-        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
-        $('.image-view-wrap').addClass('wrap-active')
-        $('.image-view-wrap img').css({
-          'width': `${imageW}`,
-          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
-        })
-        $('html').css('overflow', 'hidden')
-
-        $('.image-view-wrap').on('click', function() {
-          $(this).remove()
-          $('html').attr('style', '')
-        })
-      }
-    })
-
-    // qrcode
-    var qr = new QRious({
-      element: document.getElementById('share-qrcode'),
-      value: document.location.href
-    });
-
-    // gitment
-    var gitmentConfig = "";
-    if (gitmentConfig !== 'undefined') {
-      var gitment = new Gitment({
-        id: "Apache啟用UserDir的方法",
-        owner: "",
-        repo: "",
-        oauth: {
-          client_id: "",
-          client_secret: ""
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '頁面',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(未命名)',
         },
-        theme: {
-          render(state, instance) {
-            const container = document.createElement('div')
-            container.lang = "en-US"
-            container.className = 'gitment-container gitment-root-container'
-            container.appendChild(instance.renderHeader(state, instance))
-            container.appendChild(instance.renderEditor(state, instance))
-            container.appendChild(instance.renderComments(state, instance))
-            container.appendChild(instance.renderFooter(state, instance))
-            return container;
-          }
-        }
-      })
-      gitment.render(document.getElementById('comments'))
-    }
-  })();
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/F2E/">F2E</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-apache-userdir" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Apache啟用UserDir的方法
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/11/09/apache-userdir/" class="article-date">
+            <time datetime="2018-11-09T05:34:52.961Z" itemprop="datePublished">2018-11-09</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>UserDIR是什麼?<br>UserDIR是Apache裡的一個模組之一，它可以讓使用者的資料夾都變成一個獨立的網頁環境，方便使用者架設自己的個人網站，使用者的網站會位在<code>http://localhost/~user/</code></p>
+<p>首先<br>啟用userdir功能</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo a2enmod userdir</span><br></pre></td></tr></table></figure>
+
+<p>接下來要調整userdir的設定檔<code>userdir.conf</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/apache2/mods-enabled/userdir.conf</span><br></pre></td></tr></table></figure>
+
+<p>將內容更改為如下設定</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;IfModule mod_userdir.c&gt;</span><br><span class="line">        UserDir public_html</span><br><span class="line">        UserDir disabled root</span><br><span class="line">        &lt;Directory /home/*/public_html&gt;</span><br><span class="line">		AllowOverride All</span><br><span class="line">		Options MultiViews Indexes SymLinksIfOwnerMatch</span><br><span class="line">		&lt;Limit GET POST OPTIONS&gt;</span><br><span class="line">		    Require all granted</span><br><span class="line">		&lt;/Limit&gt;</span><br><span class="line">		&lt;LimitExcept GET POST OPTIONS&gt;</span><br><span class="line">			Require all denied</span><br><span class="line">		&lt;/LimitExcept&gt;</span><br><span class="line">        &lt;/Directory&gt;</span><br><span class="line">&lt;/IfModule&gt;</span><br></pre></td></tr></table></figure>
+
+<p>最後重新啟動apache伺服器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo service apache2 restart</span><br></pre></td></tr></table></figure>
+
+<p>之後只要使用者有建立<code>public_html</code>資料夾，就能在<code>http://localhost/~user/</code>上顯示出來了</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kaibaooo.github.io/2018/11/09/apache-userdir/" data-id="cjy18x1vt0008okthlm2kbvmx" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
 </script>
 
-<script>
-  var disqus_shortname = 'kaibaogithubpage';
-  
-  var disqus_url = 'https://kaibaooo.github.io/2018/11/09/apache-userdir/';
-  
-  (function(){
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Kaibao"
+        },
+        "headline": "Apache啟用UserDir的方法",
+        "image": "https://kaibaooo.github.io",
+        "keywords": "Linux",
+        "genre": "F2E",
+        "datePublished": "2018-11-09",
+        "dateCreated": "2018-11-09",
+        "dateModified": "2018-11-11",
+        "url": "https://kaibaooo.github.io/2018/11/09/apache-userdir/",
+        "description": "UserDIR是什麼?UserDIR是Apache裡的一個模組之一，它可以讓使用者的資料夾都變成一個獨立的網頁環境，方便使用者架設自己的個人網站，使用者的網站會位在http://localhost/~user/
+首先啟用userdir功能
+sudo a2enmod userdir
+
+接下來要調整userdir的設定檔userdir.conf
+sudo vim /etc/apache2/mods-e"
+        "wordCount": 92
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>追蹤 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://kaibaooo.github.io/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/11/09/js-spread-operator/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Javascript展開運算元
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/11/09/uva10189/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">UVA10189-Minesweeper解法</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://i.imgur.com/O48iwfA.png)" alt="Python資料科學學習筆記-UniversalFunctions" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="title">Python資料科學學習筆記-UniversalFunctions</a></p>
+                            <p class="item-date"><time datetime="2019-07-10T16:00:00.000Z" itemprop="datePublished">2019-07-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/08/學習筆記/datascience-note-numpy-array-operations/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/08/學習筆記/datascience-note-numpy-array-operations/" class="title">Python資料科學學習筆記-Numpy陣列基礎操作</a></p>
+                            <p class="item-date"><time datetime="2019-07-07T16:00:00.000Z" itemprop="datePublished">2019-07-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/06/07/vscode-installation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/vscode-installation%2FCNMjcIl.png?alt=media&token=ed31db7e-69e9-4642-85f5-9348917212a9)" alt="如何正確安裝VSCode" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/06/07/vscode-installation/" class="title">如何正確安裝VSCode</a></p>
+                            <p class="item-date"><time datetime="2019-06-07T05:14:48.982Z" itemprop="datePublished">2019-06-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/03/20/cors-solution/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://i.imgur.com/ukCiIJX.png)" alt="喔不！是CORS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/03/20/cors-solution/" class="title">喔不！是CORS</a></p>
+                            <p class="item-date"><time datetime="2019-03-20T14:11:10.882Z" itemprop="datePublished">2019-03-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/03/17/collapsing-margin-solution/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh3.googleusercontent.com/KEYlHthZdLnfi0SnBfKmYNHF4BCneu3GQY4s1OzalCnXrmgzxWQbLvjEagxM6KhRY8jDQVvVEiw4OxuoA41CtUcpt9yMg6pVg3OjQKlto6BfBcMYG2WskPZjSnx3IM_x8CUQ83YDmsMDKYjfpsYfmHXFEmLvnaYFI5FDMRxo7ED7qMn8pa8qM2WOc2fzW7J2wUfMzsZ07OU0qUtc9uqkLDStV-7c891gzX36aTtqdkCC2yUnNVt1lJe4oNsckIGlNDzCBDOPk0z1x6d_kk67n5MLH7GBlo2e4evfVfLM4FyczcXZ0ziNQm3QaQxnu6WJ0YzHuYDjYE8F5IwQqlcCekiVnisZaPv1koNnW5Uv4hq3aqfTVU5uTIYIBsH53aNK5_0-R6zaFaWO7rEkIPz0wPbPQ7bCyCExdqJOFZZHaL_BXp2cxjTADTJMqdnK_PTyp_f0k6_F4uXi5a4dSbbtvBFXM1Z74XGWMj1iOmT2OHAm8jfZWeEB0lZe4zuHaWJVDnyHtBz91o3sZVth_oZs7qzXNR--I-mGKS2MTCU0n1mAqu-WPrsq-x76srecQxgqTTPynRc5eLApsXQbXL9n6_GIhCFMyoosEO2q9NM0tpB45qtN6uYlv0lO5do8WY4gA6CbSQ544gaBPArw7Fs80Wadjfsn5p-vh21X5CoJlk3y01j9G0hvymEwAOISG6OdgcFbelmrMRHIkTN_gYR-md73=w1245-h511-no)" alt="使用margin-top該注意的坑" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/03/17/collapsing-margin-solution/" class="title">使用margin-top該注意的坑</a></p>
+                            <p class="item-date"><time datetime="2019-03-17T14:43:36.654Z" itemprop="datePublished">2019-03-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">所有文章</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cplusplus/">Cplusplus</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frontend/">frontend</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/學習筆記/">學習筆記</a><span class="tag-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Kaibao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'kaibaogithubpage';
+    
+    
+    var disqus_url = 'https://kaibaooo.github.io/2018/11/09/apache-userdir/';
+    
+    (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//go.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
 
-    <div class="scroll-top">
-  <span class="arrow-icon"></span>
-</div>
-    <footer class="app-footer">
-  <p class="copyright">
-    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
-    <br>
-    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
-  </p>
-</footer>
-
-<script>
-  function async(u, c) {
-    var d = document, t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-<script>
-  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-    FastClick.attach(document.body);
-  })
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
 </script>
 
-<script>
-  var hasLine = 'false';
-  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
-    $('figure pre').each(function(i, block) {
-      var figure = $(this).parents('figure');
-      if (hasLine === 'false') {
-        figure.find('.gutter').hide();
-      }
-      var lang = figure.attr('class').split(' ')[1] || 'code';
-      var codeHtml = $(this).html();
-      var codeTag = document.createElement('code');
-      codeTag.className = lang;
-      codeTag.innerHTML = codeHtml;
-      $(this).attr('class', '').empty().html(codeTag);
-      figure.attr('data-lang', lang.toUpperCase());
-      hljs.highlightBlock(block);
-    });
-  })
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
 </script>
-<!-- Baidu Tongji -->
-
-<script src="/js/script.js"></script>
-  </body>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
 </html>

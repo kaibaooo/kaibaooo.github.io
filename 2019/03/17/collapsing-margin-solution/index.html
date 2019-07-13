@@ -1,163 +1,192 @@
 <!DOCTYPE html>
 <html>
-  <head><meta name="generator" content="Hexo 3.8.0">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113939847-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'UA-113939847-1');
-    </script>    
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-  <meta name="description" content="Kaibao&#39;s blog">
-  <meta name="keyword" content="hexo-theme, vuejs, kaibao">
-  
-    <link rel="shortcut icon" href="/css/images/logo.png">
-  
-  <title>
-    
-      使用margin-top該注意的坑 | Kaibao
-    
-  </title>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/plugins/gitment.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
-  <script src="/js/qrious.js"></script>
-<script src="/js/gitment.js"></script>
-  
-  
-    <!-- MathJax support START -->
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
 
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/AM_HTMLorMML.js"></script>
-    <!-- MathJax support END -->
-  
+    
+
+    
+    <title>使用margin-top該注意的坑 | Kaibao</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="frontend">
+    
+    <meta name="description" content="問題最近在切網頁版面的時候，突然很常遇到div無法正確對本身parent元素對齊的狀況，到StackOverFlow上面查了一下，發現這個問題叫做Collapsing margins  問題發生原因引用MDN上的說明  Adjacent siblingsThe margins of adjacent siblings are collapsed (except when the latter si">
+<meta name="keywords" content="frontend">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用margin-top該注意的坑">
+<meta property="og:url" content="https://kaibaooo.github.io/2019/03/17/collapsing-margin-solution/index.html">
+<meta property="og:site_name" content="Kaibao">
+<meta property="og:description" content="問題最近在切網頁版面的時候，突然很常遇到div無法正確對本身parent元素對齊的狀況，到StackOverFlow上面查了一下，發現這個問題叫做Collapsing margins  問題發生原因引用MDN上的說明  Adjacent siblingsThe margins of adjacent siblings are collapsed (except when the latter si">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://lh3.googleusercontent.com/KEYlHthZdLnfi0SnBfKmYNHF4BCneu3GQY4s1OzalCnXrmgzxWQbLvjEagxM6KhRY8jDQVvVEiw4OxuoA41CtUcpt9yMg6pVg3OjQKlto6BfBcMYG2WskPZjSnx3IM_x8CUQ83YDmsMDKYjfpsYfmHXFEmLvnaYFI5FDMRxo7ED7qMn8pa8qM2WOc2fzW7J2wUfMzsZ07OU0qUtc9uqkLDStV-7c891gzX36aTtqdkCC2yUnNVt1lJe4oNsckIGlNDzCBDOPk0z1x6d_kk67n5MLH7GBlo2e4evfVfLM4FyczcXZ0ziNQm3QaQxnu6WJ0YzHuYDjYE8F5IwQqlcCekiVnisZaPv1koNnW5Uv4hq3aqfTVU5uTIYIBsH53aNK5_0-R6zaFaWO7rEkIPz0wPbPQ7bCyCExdqJOFZZHaL_BXp2cxjTADTJMqdnK_PTyp_f0k6_F4uXi5a4dSbbtvBFXM1Z74XGWMj1iOmT2OHAm8jfZWeEB0lZe4zuHaWJVDnyHtBz91o3sZVth_oZs7qzXNR--I-mGKS2MTCU0n1mAqu-WPrsq-x76srecQxgqTTPynRc5eLApsXQbXL9n6_GIhCFMyoosEO2q9NM0tpB45qtN6uYlv0lO5do8WY4gA6CbSQ544gaBPArw7Fs80Wadjfsn5p-vh21X5CoJlk3y01j9G0hvymEwAOISG6OdgcFbelmrMRHIkTN_gYR-md73=w1245-h511-no">
+<meta property="og:updated_time" content="2019-03-17T14:46:29.450Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用margin-top該注意的坑">
+<meta name="twitter:description" content="問題最近在切網頁版面的時候，突然很常遇到div無法正確對本身parent元素對齊的狀況，到StackOverFlow上面查了一下，發現這個問題叫做Collapsing margins  問題發生原因引用MDN上的說明  Adjacent siblingsThe margins of adjacent siblings are collapsed (except when the latter si">
+<meta name="twitter:image" content="https://lh3.googleusercontent.com/KEYlHthZdLnfi0SnBfKmYNHF4BCneu3GQY4s1OzalCnXrmgzxWQbLvjEagxM6KhRY8jDQVvVEiw4OxuoA41CtUcpt9yMg6pVg3OjQKlto6BfBcMYG2WskPZjSnx3IM_x8CUQ83YDmsMDKYjfpsYfmHXFEmLvnaYFI5FDMRxo7ED7qMn8pa8qM2WOc2fzW7J2wUfMzsZ07OU0qUtc9uqkLDStV-7c891gzX36aTtqdkCC2yUnNVt1lJe4oNsckIGlNDzCBDOPk0z1x6d_kk67n5MLH7GBlo2e4evfVfLM4FyczcXZ0ziNQm3QaQxnu6WJ0YzHuYDjYE8F5IwQqlcCekiVnisZaPv1koNnW5Uv4hq3aqfTVU5uTIYIBsH53aNK5_0-R6zaFaWO7rEkIPz0wPbPQ7bCyCExdqJOFZZHaL_BXp2cxjTADTJMqdnK_PTyp_f0k6_F4uXi5a4dSbbtvBFXM1Z74XGWMj1iOmT2OHAm8jfZWeEB0lZe4zuHaWJVDnyHtBz91o3sZVth_oZs7qzXNR--I-mGKS2MTCU0n1mAqu-WPrsq-x76srecQxgqTTPynRc5eLApsXQbXL9n6_GIhCFMyoosEO2q9NM0tpB45qtN6uYlv0lO5do8WY4gA6CbSQ544gaBPArw7Fs80Wadjfsn5p-vh21X5CoJlk3y01j9G0hvymEwAOISG6OdgcFbelmrMRHIkTN_gYR-md73=w1245-h511-no">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-113939847-1', 'auto');
+ga('send', 'pageview');
+
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+    
 
 
 </head>
-<div class="wechat-share">
-  <img src="/css/images/logo.png">
-</div>
+</html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Make moments in my life into a story</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">首頁</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">關於</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
 
-  <body>
-    <header class="header fixed-header">
-  <div class="header-container">
-    <a class="home-link" href="/">
-      <div class="logo"></div>
-      <span>Kaibao</span>
-    </a>
-    <ul class="right-list">
-      
-        <li class="list-item">
-          
-            <a href="/" class="item-link">Home</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/tags/" class="item-link">Tags</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/archives/" class="item-link">Archives</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/project/" class="item-link">Projects</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/about/" class="item-link">About</a>
-          
-        </li>
-      
-    </ul>
-    <div class="menu">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="輸入關鍵字..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
     </div>
-    <div class="menu-mask">
-      <ul class="menu-list">
-        
-          <li class="menu-item">
-            
-              <a href="/" class="menu-link">Home</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/tags/" class="menu-link">Tags</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/archives/" class="menu-link">Archives</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/project/" class="menu-link">Projects</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/about/" class="menu-link">About</a>
-            
-          </li>
-        
-      </ul>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '頁面',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </header>
-
-    <div id="article-banner">
-  <h2>使用margin-top該注意的坑</h2>
-  <p class="post-date">2019-03-17</p>
-  <div class="arrow-down">
-    <a href="javascript:;"></a>
-  </div>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分類
+    </h1>
 </div>
-<main class="app-body flex-box">
-  <!-- Article START -->
-  <article class="post-article">
-    <section class="markdown-content"><h2 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h2><p>最近在切網頁版面的時候，突然很常遇到div無法正確對本身parent元素對齊的狀況，到StackOverFlow上面查了一下，發現這個問題叫做<strong>Collapsing margins</strong></p>
-<p><img src="https://lh3.googleusercontent.com/KEYlHthZdLnfi0SnBfKmYNHF4BCneu3GQY4s1OzalCnXrmgzxWQbLvjEagxM6KhRY8jDQVvVEiw4OxuoA41CtUcpt9yMg6pVg3OjQKlto6BfBcMYG2WskPZjSnx3IM_x8CUQ83YDmsMDKYjfpsYfmHXFEmLvnaYFI5FDMRxo7ED7qMn8pa8qM2WOc2fzW7J2wUfMzsZ07OU0qUtc9uqkLDStV-7c891gzX36aTtqdkCC2yUnNVt1lJe4oNsckIGlNDzCBDOPk0z1x6d_kk67n5MLH7GBlo2e4evfVfLM4FyczcXZ0ziNQm3QaQxnu6WJ0YzHuYDjYE8F5IwQqlcCekiVnisZaPv1koNnW5Uv4hq3aqfTVU5uTIYIBsH53aNK5_0-R6zaFaWO7rEkIPz0wPbPQ7bCyCExdqJOFZZHaL_BXp2cxjTADTJMqdnK_PTyp_f0k6_F4uXi5a4dSbbtvBFXM1Z74XGWMj1iOmT2OHAm8jfZWeEB0lZe4zuHaWJVDnyHtBz91o3sZVth_oZs7qzXNR--I-mGKS2MTCU0n1mAqu-WPrsq-x76srecQxgqTTPynRc5eLApsXQbXL9n6_GIhCFMyoosEO2q9NM0tpB45qtN6uYlv0lO5do8WY4gA6CbSQ544gaBPArw7Fs80Wadjfsn5p-vh21X5CoJlk3y01j9G0hvymEwAOISG6OdgcFbelmrMRHIkTN_gYR-md73=w1245-h511-no" alt=""></p>
+
+                        <div class="main-body-content">
+                            <article id="post-collapsing-margin-solution" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        使用margin-top該注意的坑
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/03/17/collapsing-margin-solution/" class="article-date">
+            <time datetime="2019-03-17T14:43:36.654Z" itemprop="datePublished">2019-03-17</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/frontend/">frontend</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h2><p>最近在切網頁版面的時候，突然很常遇到div無法正確對本身parent元素對齊的狀況，到StackOverFlow上面查了一下，發現這個問題叫做<strong>Collapsing margins</strong></p>
+<p><img src="https://lh3.googleusercontent.com/KEYlHthZdLnfi0SnBfKmYNHF4BCneu3GQY4s1OzalCnXrmgzxWQbLvjEagxM6KhRY8jDQVvVEiw4OxuoA41CtUcpt9yMg6pVg3OjQKlto6BfBcMYG2WskPZjSnx3IM_x8CUQ83YDmsMDKYjfpsYfmHXFEmLvnaYFI5FDMRxo7ED7qMn8pa8qM2WOc2fzW7J2wUfMzsZ07OU0qUtc9uqkLDStV-7c891gzX36aTtqdkCC2yUnNVt1lJe4oNsckIGlNDzCBDOPk0z1x6d_kk67n5MLH7GBlo2e4evfVfLM4FyczcXZ0ziNQm3QaQxnu6WJ0YzHuYDjYE8F5IwQqlcCekiVnisZaPv1koNnW5Uv4hq3aqfTVU5uTIYIBsH53aNK5_0-R6zaFaWO7rEkIPz0wPbPQ7bCyCExdqJOFZZHaL_BXp2cxjTADTJMqdnK_PTyp_f0k6_F4uXi5a4dSbbtvBFXM1Z74XGWMj1iOmT2OHAm8jfZWeEB0lZe4zuHaWJVDnyHtBz91o3sZVth_oZs7qzXNR--I-mGKS2MTCU0n1mAqu-WPrsq-x76srecQxgqTTPynRc5eLApsXQbXL9n6_GIhCFMyoosEO2q9NM0tpB45qtN6uYlv0lO5do8WY4gA6CbSQ544gaBPArw7Fs80Wadjfsn5p-vh21X5CoJlk3y01j9G0hvymEwAOISG6OdgcFbelmrMRHIkTN_gYR-md73=w1245-h511-no" alt></p>
 <h2 id="問題發生原因"><a href="#問題發生原因" class="headerlink" title="問題發生原因"></a>問題發生原因</h2><p>引用MDN上的說明</p>
 <blockquote>
 <p><strong>Adjacent siblings</strong><br>The margins of adjacent siblings are collapsed (except when the latter sibling needs to be cleared past floats).<br><strong>Parent and first/last child</strong><br>If there is no border, padding, inline part, block formatting context created, or clearance to separate the margin-top of a block from the margin-top of its first child block; or no border, padding, inline content, height, min-height, or max-height to separate the margin-bottom of a block from the margin-bottom of its last child, then those margins collapse. The collapsed margin ends up outside the parent.<br><strong>Empty blocks</strong><br>If there is no border, padding, inline content, height, or min-height to separate a block’s margin-top from its margin-bottom, then its top and bottom margins collapse.</p>
@@ -167,222 +196,414 @@
 <li>父元素與子元素都是block，且子元素沒有float屬性</li>
 <li>父元素沒有border、padding、overflow屬性將內外隔開，以至於margin-top和margin-bottom重疊</li>
 </ol>
-<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><h3 id="1-子元素加上float屬性"><a href="#1-子元素加上float屬性" class="headerlink" title="1. 子元素加上float屬性"></a>1. 子元素加上float屬性</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="ZPoZaN" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution4"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/ZPoZaN/" target="_blank" rel="noopener"><br>  margin collapse solution4</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
+<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><h3 id="1-子元素加上float屬性"><a href="#1-子元素加上float屬性" class="headerlink" title="1. 子元素加上float屬性"></a>1. 子元素加上float屬性</h3><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="ZPoZaN" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution4">
+  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/ZPoZaN/" target="_blank" rel="noopener">
+  margin collapse solution4</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)
+  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span>
+</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-<h3 id="2-子元素更改為inline-block"><a href="#2-子元素更改為inline-block" class="headerlink" title="2. 子元素更改為inline-block"></a>2. 子元素更改為inline-block</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="PLegOE" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution3"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/PLegOE/" target="_blank" rel="noopener"><br>  margin collapse solution3</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
+<h3 id="2-子元素更改為inline-block"><a href="#2-子元素更改為inline-block" class="headerlink" title="2. 子元素更改為inline-block"></a>2. 子元素更改為inline-block</h3><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="PLegOE" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution3">
+  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/PLegOE/" target="_blank" rel="noopener">
+  margin collapse solution3</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)
+  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span>
+</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-<h3 id="3-父元素加上border"><a href="#3-父元素加上border" class="headerlink" title="3. 父元素加上border"></a>3. 父元素加上border</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="vPjMWm" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution2"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/vPjMWm/" target="_blank" rel="noopener"><br>  margin collapse solution2</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
+<h3 id="3-父元素加上border"><a href="#3-父元素加上border" class="headerlink" title="3. 父元素加上border"></a>3. 父元素加上border</h3><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="vPjMWm" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution2">
+  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/vPjMWm/" target="_blank" rel="noopener">
+  margin collapse solution2</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)
+  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span>
+</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-<h3 id="4-父元素加上padding"><a href="#4-父元素加上padding" class="headerlink" title="4. 父元素加上padding"></a>4. 父元素加上padding</h3><p></p><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="YgLMVN" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution1"><br>  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/YgLMVN/" target="_blank" rel="noopener"><br>  margin collapse solution1</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)<br>  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span><br></p><p></p>
+<h3 id="4-父元素加上padding"><a href="#4-父元素加上padding" class="headerlink" title="4. 父元素加上padding"></a>4. 父元素加上padding</h3><p class="codepen" data-height="265" data-theme-id="0" data-default-tab="css,result" data-user="kaibaooo" data-slug-hash="YgLMVN" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="margin collapse solution1">
+  <span>See the Pen <a href="https://codepen.io/kaibaooo/pen/YgLMVN/" target="_blank" rel="noopener">
+  margin collapse solution1</a> by Kai-Lun Huang (<a href="https://codepen.io/kaibaooo" target="_blank" rel="noopener">@kaibaooo</a>)
+  on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</span>
+</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing" target="_blank" rel="noopener">MDN - Mastering margin collapsing</a></p>
-</section>
-    <!-- Tags START -->
-    
-      <div class="tags">
-        <span>Tags:</span>
-        
-  <a href="/tags#frontend">
-    <span class="tag-code">frontend</span>
-  </a>
 
-      </div>
-    
-    <!-- Tags END -->
-    <!-- NAV START -->
-    
-  <div class="nav-container">
-    <!-- reverse left and right to put prev and next in a more logic postition -->
-    
-      <a class="nav-left" href="/2018/11/09/uva11292/">
-        <span class="nav-arrow">← </span>
-        
-          UVA11292-Dragon of Loowater解法
-        
-      </a>
-    
-    
-      <a class="nav-right" href="/2019/03/20/cors-solution/">
-        
-          喔不！是CORS
-        
-        <span class="nav-arrow"> →</span>
-      </a>
-    
-  </div>
+        </div>
+        <footer class="article-footer">
+            
 
-    <!-- NAV END -->
-    
-        <!-- Disqus START -->
-        <div id="disqus_thread"></div>
-        <!-- Disqus END -->
-    
-  </article>
-  <!-- Article END -->
-  <!-- Catalog START -->
-  
-    <aside class="catalog-container">
-  <div class="toc-main">
-    <strong class="toc-title">Catalog</strong>
-    
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#問題"><span class="toc-nav-text">問題</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#問題發生原因"><span class="toc-nav-text">問題發生原因</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#解決方法"><span class="toc-nav-text">解決方法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-子元素加上float屬性"><span class="toc-nav-text">1. 子元素加上float屬性</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-子元素更改為inline-block"><span class="toc-nav-text">2. 子元素更改為inline-block</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-父元素加上border"><span class="toc-nav-text">3. 父元素加上border</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-父元素加上padding"><span class="toc-nav-text">4. 父元素加上padding</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#參考資料"><span class="toc-nav-text">參考資料</span></a></li></ol>
-    
-  </div>
-</aside>
-  
-  <!-- Catalog END -->
-</main>
 
+
+    <a data-url="https://kaibaooo.github.io/2019/03/17/collapsing-margin-solution/" data-id="cjy18x1vj0004okthkmyoxv0s" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
-  (function () {
-    var url = 'https://kaibaooo.github.io/2019/03/17/collapsing-margin-solution/';
-    var banner = ''
-    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
-      $('#article-banner').css({
-        'background-image': 'url(' + banner + ')'
-      })
-    } else {
-      $('#article-banner').geopattern(url)
-    }
-    $('.header').removeClass('fixed-header')
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
 
-     // error image
-    $(".markdown-content img").on('error', function() {
-      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
-      $(this).css({
-        'cursor': 'default'
-      })
-    })
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
 
-    // zoom image
-    $(".markdown-content img").on('click', function() {
-      var src = $(this).attr('src')
-      if (src !== 'http://file.muyutech.com/error-img.png') {
-        var imageW = $(this).width()
-        var imageH = $(this).height()
-        
-        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
-        zoom = zoom < 1 ? 1 : zoom
-        zoom = zoom > 2 ? 2 : zoom
-        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+            if ($('#' + id).length) {
+                box = $('#' + id);
 
-        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
-        $('.image-view-wrap').addClass('wrap-active')
-        $('.image-view-wrap img').css({
-          'width': `${imageW}`,
-          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
-        })
-        $('html').css('overflow', 'hidden')
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
 
-        $('.image-view-wrap').on('click', function() {
-          $(this).remove()
-          $('html').attr('style', '')
-        })
-      }
-    })
+              box = $(html);
 
-    // qrcode
-    var qr = new QRious({
-      element: document.getElementById('share-qrcode'),
-      value: document.location.href
-    });
+              $('body').append(box);
+            }
 
-    // gitment
-    var gitmentConfig = "";
-    if (gitmentConfig !== 'undefined') {
-      var gitment = new Gitment({
-        id: "使用margin-top該注意的坑",
-        owner: "",
-        repo: "",
-        oauth: {
-          client_id: "",
-          client_secret: ""
-        },
-        theme: {
-          render(state, instance) {
-            const container = document.createElement('div')
-            container.lang = "en-US"
-            container.className = 'gitment-container gitment-root-container'
-            container.appendChild(instance.renderHeader(state, instance))
-            container.appendChild(instance.renderEditor(state, instance))
-            container.appendChild(instance.renderComments(state, instance))
-            container.appendChild(instance.renderFooter(state, instance))
-            return container;
-          }
-        }
-      })
-      gitment.render(document.getElementById('comments'))
-    }
-  })();
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
 </script>
 
-<script>
-  var disqus_shortname = 'kaibaogithubpage';
-  
-  var disqus_url = 'https://kaibaooo.github.io/2019/03/17/collapsing-margin-solution/';
-  
-  (function(){
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Kaibao"
+        },
+        "headline": "使用margin-top該注意的坑",
+        "image": "https://kaibaooo.github.iohttps://lh3.googleusercontent.com/KEYlHthZdLnfi0SnBfKmYNHF4BCneu3GQY4s1OzalCnXrmgzxWQbLvjEagxM6KhRY8jDQVvVEiw4OxuoA41CtUcpt9yMg6pVg3OjQKlto6BfBcMYG2WskPZjSnx3IM_x8CUQ83YDmsMDKYjfpsYfmHXFEmLvnaYFI5FDMRxo7ED7qMn8pa8qM2WOc2fzW7J2wUfMzsZ07OU0qUtc9uqkLDStV-7c891gzX36aTtqdkCC2yUnNVt1lJe4oNsckIGlNDzCBDOPk0z1x6d_kk67n5MLH7GBlo2e4evfVfLM4FyczcXZ0ziNQm3QaQxnu6WJ0YzHuYDjYE8F5IwQqlcCekiVnisZaPv1koNnW5Uv4hq3aqfTVU5uTIYIBsH53aNK5_0-R6zaFaWO7rEkIPz0wPbPQ7bCyCExdqJOFZZHaL_BXp2cxjTADTJMqdnK_PTyp_f0k6_F4uXi5a4dSbbtvBFXM1Z74XGWMj1iOmT2OHAm8jfZWeEB0lZe4zuHaWJVDnyHtBz91o3sZVth_oZs7qzXNR--I-mGKS2MTCU0n1mAqu-WPrsq-x76srecQxgqTTPynRc5eLApsXQbXL9n6_GIhCFMyoosEO2q9NM0tpB45qtN6uYlv0lO5do8WY4gA6CbSQ544gaBPArw7Fs80Wadjfsn5p-vh21X5CoJlk3y01j9G0hvymEwAOISG6OdgcFbelmrMRHIkTN_gYR-md73=w1245-h511-no",
+        "keywords": "frontend",
+        "genre": "",
+        "datePublished": "2019-03-17",
+        "dateCreated": "2019-03-17",
+        "dateModified": "2019-03-17",
+        "url": "https://kaibaooo.github.io/2019/03/17/collapsing-margin-solution/",
+        "description": "問題最近在切網頁版面的時候，突然很常遇到div無法正確對本身parent元素對齊的狀況，到StackOverFlow上面查了一下，發現這個問題叫做Collapsing margins
+
+問題發生原因引用MDN上的說明
+
+Adjacent siblingsThe margins of adjacent siblings are collapsed (except when the latter si"
+        "wordCount": 382
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>追蹤 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://kaibaooo.github.io/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/03/20/cors-solution/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            喔不！是CORS
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/11/09/uva11292/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">UVA11292-Dragon of Loowater解法</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://i.imgur.com/O48iwfA.png)" alt="Python資料科學學習筆記-UniversalFunctions" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="title">Python資料科學學習筆記-UniversalFunctions</a></p>
+                            <p class="item-date"><time datetime="2019-07-10T16:00:00.000Z" itemprop="datePublished">2019-07-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/08/學習筆記/datascience-note-numpy-array-operations/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/08/學習筆記/datascience-note-numpy-array-operations/" class="title">Python資料科學學習筆記-Numpy陣列基礎操作</a></p>
+                            <p class="item-date"><time datetime="2019-07-07T16:00:00.000Z" itemprop="datePublished">2019-07-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/06/07/vscode-installation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/vscode-installation%2FCNMjcIl.png?alt=media&token=ed31db7e-69e9-4642-85f5-9348917212a9)" alt="如何正確安裝VSCode" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/06/07/vscode-installation/" class="title">如何正確安裝VSCode</a></p>
+                            <p class="item-date"><time datetime="2019-06-07T05:14:48.982Z" itemprop="datePublished">2019-06-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/03/20/cors-solution/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://i.imgur.com/ukCiIJX.png)" alt="喔不！是CORS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/03/20/cors-solution/" class="title">喔不！是CORS</a></p>
+                            <p class="item-date"><time datetime="2019-03-20T14:11:10.882Z" itemprop="datePublished">2019-03-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/03/17/collapsing-margin-solution/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh3.googleusercontent.com/KEYlHthZdLnfi0SnBfKmYNHF4BCneu3GQY4s1OzalCnXrmgzxWQbLvjEagxM6KhRY8jDQVvVEiw4OxuoA41CtUcpt9yMg6pVg3OjQKlto6BfBcMYG2WskPZjSnx3IM_x8CUQ83YDmsMDKYjfpsYfmHXFEmLvnaYFI5FDMRxo7ED7qMn8pa8qM2WOc2fzW7J2wUfMzsZ07OU0qUtc9uqkLDStV-7c891gzX36aTtqdkCC2yUnNVt1lJe4oNsckIGlNDzCBDOPk0z1x6d_kk67n5MLH7GBlo2e4evfVfLM4FyczcXZ0ziNQm3QaQxnu6WJ0YzHuYDjYE8F5IwQqlcCekiVnisZaPv1koNnW5Uv4hq3aqfTVU5uTIYIBsH53aNK5_0-R6zaFaWO7rEkIPz0wPbPQ7bCyCExdqJOFZZHaL_BXp2cxjTADTJMqdnK_PTyp_f0k6_F4uXi5a4dSbbtvBFXM1Z74XGWMj1iOmT2OHAm8jfZWeEB0lZe4zuHaWJVDnyHtBz91o3sZVth_oZs7qzXNR--I-mGKS2MTCU0n1mAqu-WPrsq-x76srecQxgqTTPynRc5eLApsXQbXL9n6_GIhCFMyoosEO2q9NM0tpB45qtN6uYlv0lO5do8WY4gA6CbSQ544gaBPArw7Fs80Wadjfsn5p-vh21X5CoJlk3y01j9G0hvymEwAOISG6OdgcFbelmrMRHIkTN_gYR-md73=w1245-h511-no)" alt="使用margin-top該注意的坑" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/03/17/collapsing-margin-solution/" class="title">使用margin-top該注意的坑</a></p>
+                            <p class="item-date"><time datetime="2019-03-17T14:43:36.654Z" itemprop="datePublished">2019-03-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">所有文章</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cplusplus/">Cplusplus</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frontend/">frontend</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/學習筆記/">學習筆記</a><span class="tag-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Kaibao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'kaibaogithubpage';
+    
+    
+    var disqus_url = 'https://kaibaooo.github.io/2019/03/17/collapsing-margin-solution/';
+    
+    (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//go.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
 
-    <div class="scroll-top">
-  <span class="arrow-icon"></span>
-</div>
-    <footer class="app-footer">
-  <p class="copyright">
-    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
-    <br>
-    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
-  </p>
-</footer>
-
-<script>
-  function async(u, c) {
-    var d = document, t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-<script>
-  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-    FastClick.attach(document.body);
-  })
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
 </script>
 
-<script>
-  var hasLine = 'false';
-  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
-    $('figure pre').each(function(i, block) {
-      var figure = $(this).parents('figure');
-      if (hasLine === 'false') {
-        figure.find('.gutter').hide();
-      }
-      var lang = figure.attr('class').split(' ')[1] || 'code';
-      var codeHtml = $(this).html();
-      var codeTag = document.createElement('code');
-      codeTag.className = lang;
-      codeTag.innerHTML = codeHtml;
-      $(this).attr('class', '').empty().html(codeTag);
-      figure.attr('data-lang', lang.toUpperCase());
-      hljs.highlightBlock(block);
-    });
-  })
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
 </script>
-<!-- Baidu Tongji -->
-
-<script src="/js/script.js"></script>
-  </body>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
 </html>
