@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+
+    
+
+    
+    <title>CHIP8模擬器開發-來寫程式吧 | Kaibao的學習札記</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="cplusplus,學習筆記,emulator">
+    
+    <meta name="description" content="虛擬硬體環境建立根據第一篇文章的CHIP8硬體環境來實作，實作過程需要了解各個資料型態的大小，所以整理了下表供參考    型態 大小 範圍    char 1 byte -128 ~ 127   short 2 bytes -32768 ~ 32767   unsigned char 1 byte 0 ~ 255   unsigned short 2 bytes 0 ~ 65535    建立一">
+<meta name="keywords" content="cplusplus,學習筆記,emulator">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CHIP8模擬器開發-來寫程式吧">
+<meta property="og:url" content="https://kaibaooo.github.io/2019/07/22/chip8emu-code/index.html">
+<meta property="og:site_name" content="Kaibao的學習札記">
+<meta property="og:description" content="虛擬硬體環境建立根據第一篇文章的CHIP8硬體環境來實作，實作過程需要了解各個資料型態的大小，所以整理了下表供參考    型態 大小 範圍    char 1 byte -128 ~ 127   short 2 bytes -32768 ~ 32767   unsigned char 1 byte 0 ~ 255   unsigned short 2 bytes 0 ~ 65535    建立一">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-code-thumbnail.png?alt=media&token=da98d6da-d31d-4b22-85ab-285ab38885b5">
+<meta property="og:updated_time" content="2019-07-22T08:22:33.972Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CHIP8模擬器開發-來寫程式吧">
+<meta name="twitter:description" content="虛擬硬體環境建立根據第一篇文章的CHIP8硬體環境來實作，實作過程需要了解各個資料型態的大小，所以整理了下表供參考    型態 大小 範圍    char 1 byte -128 ~ 127   short 2 bytes -32768 ~ 32767   unsigned char 1 byte 0 ~ 255   unsigned short 2 bytes 0 ~ 65535    建立一">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-code-thumbnail.png?alt=media&token=da98d6da-d31d-4b22-85ab-285ab38885b5">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-113939847-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3215972389999620",
+        enable_page_level_ads: true
+    });
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+</html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">My notes</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">首頁</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">關於</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="輸入關鍵字..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '頁面',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分類
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-chip8emu-code" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        CHIP8模擬器開發-來寫程式吧
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/07/22/chip8emu-code/" class="article-date">
+            <time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/cplusplus/">cplusplus</a>, <a class="tag-link" href="/tags/emulator/">emulator</a>, <a class="tag-link" href="/tags/學習筆記/">學習筆記</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-code-thumbnail.png?alt=media&token=da98d6da-d31d-4b22-85ab-285ab38885b5" alt></p>
+<h3 id="虛擬硬體環境建立"><a href="#虛擬硬體環境建立" class="headerlink" title="虛擬硬體環境建立"></a>虛擬硬體環境建立</h3><p>根據第一篇文章的CHIP8硬體環境來實作，實作過程需要了解各個資料型態的大小，所以整理了下表供參考</p>
+<table>
+<thead>
+<tr>
+<th>型態</th>
+<th>大小</th>
+<th>範圍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>char</td>
+<td>1 byte</td>
+<td>-128 ~ 127</td>
+</tr>
+<tr>
+<td>short</td>
+<td>2 bytes</td>
+<td>-32768 ~ 32767</td>
+</tr>
+<tr>
+<td>unsigned char</td>
+<td>1 byte</td>
+<td>0 ~ 255</td>
+</tr>
+<tr>
+<td>unsigned short</td>
+<td>2 bytes</td>
+<td>0 ~ 65535</td>
+</tr>
+</tbody></table>
+<ol>
+<li><p><strong>建立一個CHIP8的物件並加入基本硬體規格與參數</strong><br><code>Chip8.h</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Chip8</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> opcode;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> memory[<span class="number">4096</span>];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> reg[<span class="number">16</span>];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> I;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> pc;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> gfx[<span class="number">64</span> * <span class="number">32</span>];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> delay_timer;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> sound_timer;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="built_in">stack</span>[<span class="number">16</span>];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> sp;  </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> key[<span class="number">16</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>加入初始化CHIP8的function</strong><br><code>Chip8.h</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Chip8</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">initialize</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><code>Chip8.cpp</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> Chip8::initialize() &#123;</span><br><span class="line">    opcode = <span class="number">0</span>;</span><br><span class="line">    I = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//Memory從0x200以後才能直接存取，所以初始化為0x200</span></span><br><span class="line">    pc = <span class="number">0x200</span>;</span><br><span class="line">    sp = <span class="number">-1</span>;</span><br><span class="line">    drawFlag = <span class="literal">true</span>;</span><br><span class="line">    delay_timer = <span class="number">0</span>;</span><br><span class="line">    sound_timer = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4096</span>; i++) &#123;</span><br><span class="line">        memory[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">        reg[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2048</span>; i++) &#123;</span><br><span class="line">        gfx[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">        <span class="built_in">stack</span>[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">        key[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//亂數種子產生器</span></span><br><span class="line">    srand(time(<span class="literal">NULL</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="讀取ROM"><a href="#讀取ROM" class="headerlink" title="讀取ROM"></a>讀取ROM</h3><p><code>Chip8.h</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Chip8</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">initialize</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Chip8.cpp</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">bool</span> Chip8::loadGame(<span class="keyword">const</span> <span class="keyword">char</span> *filename) &#123;</span><br><span class="line">    <span class="comment">// 初始化CHIP8</span></span><br><span class="line">    initialize();</span><br><span class="line">    print(<span class="string">"Load Game : %s\n"</span>, filename);</span><br><span class="line">	<span class="comment">// Load ROM from file</span></span><br><span class="line">    FILE *filePtr = fopen(filename, <span class="string">"rb"</span>);</span><br><span class="line">    <span class="keyword">if</span>(filePtr == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"File is not found!\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 取得檔案大小，最大不能超過4096-512</span></span><br><span class="line">    <span class="comment">// 將檔案指針移動到檔案最後方</span></span><br><span class="line">    fseek(filePtr, <span class="number">0L</span>, SEEK_END);</span><br><span class="line">    <span class="comment">// 透過ftell函式取得目前指針到檔案開頭共有多少byte</span></span><br><span class="line">    <span class="keyword">long</span> fileSize = ftell(filePtr);</span><br><span class="line">    <span class="comment">// 將指針移回到檔案開頭</span></span><br><span class="line">    fseek(filePtr, <span class="number">0L</span>, SEEK_SET);</span><br><span class="line">    print(<span class="string">"File Size : %d\n"</span>, fileSize);</span><br><span class="line">    <span class="keyword">if</span> (fileSize &gt; (<span class="number">4096</span> - <span class="number">512</span>)) &#123;</span><br><span class="line">        print(<span class="string">"File is too big\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 宣告一塊memory做為讀檔的buffer</span></span><br><span class="line">    <span class="keyword">char</span> * buffer = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * fileSize);</span><br><span class="line">    <span class="comment">// 使用fread將file指標複製到buffer中</span></span><br><span class="line">    fread(buffer, <span class="number">1</span>, fileSize, filePtr);</span><br><span class="line">    print(<span class="string">"Loading file....\n"</span>);</span><br><span class="line">	<span class="keyword">if</span> (buffer == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Memory error\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">// 一個一個讀進去Chip8的memory當中</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; fileSize; i++) &#123;</span><br><span class="line">        memory[<span class="number">512</span> + i] = buffer[i];</span><br><span class="line">    &#125;</span><br><span class="line">    print(<span class="string">"ROM Loaded!\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="實作Chip8-Cycle"><a href="#實作Chip8-Cycle" class="headerlink" title="實作Chip8 Cycle"></a>實作Chip8 Cycle</h3><p>由於指令集的實作程式碼很長一大串，所以挑幾個比較特別的Opcode視作過程當成範例，剩下的舉一反三即可。</p>
+<p>還記得CPU執行指令的過程嗎，必須先Fetch,Decode才能Execute和Store</p>
+<h4 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch"></a>Fetch</h4><p>由於剛剛讀進來的ROM是從512(0x200)開始往下放，而每個Opcode都是2 bytes，所以先從memory讀1byte之後再將其往左推，與下一個byte做OR運算</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">opcode = memory[pc] &lt;&lt; <span class="number">8</span> | memory[pc + <span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fwhy-operator.png?alt=media&token=81abd994-9436-4acf-8d61-2cea695ef034" alt></p>
+<h4 id="Decode-amp-Execute"><a href="#Decode-amp-Execute" class="headerlink" title="Decode &amp; Execute"></a>Decode &amp; Execute</h4><h5 id="00E0-CLS"><a href="#00E0-CLS" class="headerlink" title="00E0 - CLS"></a><code>00E0</code> - CLS</h5><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">0x00E0</span>:</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2048</span>; i++) &#123;</span><br><span class="line">        gfx[i] = <span class="number">0x0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//drawflag設為true表示執行完這個opcode之後要重新繪圖</span></span><br><span class="line">    drawFlag = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// 執行結束，跳到下一個opcode</span></span><br><span class="line">    pc += <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="00EE-RET"><a href="#00EE-RET" class="headerlink" title="00EE - RET"></a><code>00EE</code> - RET</h5><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">0x000E</span>:</span><br><span class="line">    <span class="comment">// 把stack最上層存放的值丟給PC</span></span><br><span class="line">    pc = <span class="built_in">stack</span>[sp];</span><br><span class="line">    <span class="comment">//Stack減一層</span></span><br><span class="line">    sp--;</span><br><span class="line">    pc += <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="0x1NNN-JP-addr"><a href="#0x1NNN-JP-addr" class="headerlink" title="0x1NNN - JP addr"></a><code>0x1NNN</code> - JP addr</h5><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">0x1</span>NNN:</span><br><span class="line">    pc = opcode &amp; <span class="number">0x0FFF</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3XNN-SE-Vx-byte"><a href="#3XNN-SE-Vx-byte" class="headerlink" title="3XNN - SE Vx, byte"></a><code>3XNN</code> - SE Vx, byte</h5><p>這個opcode需存取到Vx暫存器，<code>reg[(opcode &amp; 0x0F00) &gt;&gt; 8]</code>opcode與0x0F00作AND運算的原因是此運算會將F位置的值保留，其餘歸零，留下我們要的值之後向右位移8bytes即為我們所要的值。<br>舉例:<code>38AA</code>decode的過程如下<br><code>38AA</code> -&gt; <code>0800</code> -&gt; <code>0008</code>，此時值為8，帶入reg[8]即為我們所要的Vx</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">0x3000</span>:</span><br><span class="line">    <span class="keyword">if</span> (reg[(opcode &amp; <span class="number">0x0F00</span>) &gt;&gt; <span class="number">8</span>] == (opcode &amp; <span class="number">0x00FF</span>)) &#123;</span><br><span class="line">        <span class="comment">// 每個opcode為2bytes，加4即為跳過一個opcode</span></span><br><span class="line">        pc += <span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        pc += <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="DXYN-DRW-Vx-Vy-nibble"><a href="#DXYN-DRW-Vx-Vy-nibble" class="headerlink" title="DXYN - DRW Vx, Vy, nibble"></a><code>DXYN</code> - DRW Vx, Vy, nibble</h5><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">0xD000</span>:&#123;</span><br><span class="line">    <span class="comment">//從opcode中取出我們所要的值</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> x = reg[(opcode &amp; <span class="number">0x0F00</span>) &gt;&gt; <span class="number">8</span>];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> y = reg[(opcode &amp; <span class="number">0x00F0</span>) &gt;&gt; <span class="number">4</span>];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> height = (opcode &amp; <span class="number">0x000F</span>);</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> rowPixel;</span><br><span class="line">    <span class="comment">//將flag暫存器歸零</span></span><br><span class="line">    reg[<span class="number">0xF</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; height; i++) &#123;</span><br><span class="line">        <span class="comment">//讀出I位置一列的值</span></span><br><span class="line">        rowPixel = memory[I + i];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">8</span>; j++) &#123;</span><br><span class="line">            <span class="comment">// 在列上一個一個pixel讀取</span></span><br><span class="line">            <span class="keyword">if</span> ((rowPixel &amp; (<span class="number">0x80</span> &gt;&gt; j)) != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// 若要填入的像素上已有存在畫面，則判定碰撞</span></span><br><span class="line">                <span class="comment">// 碰撞將VF設為1</span></span><br><span class="line">                <span class="keyword">if</span> (gfx[x + j + (y + i) * <span class="number">64</span>] == <span class="number">1</span>) &#123;</span><br><span class="line">                    reg[<span class="number">0xF</span>] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// XOR顯示</span></span><br><span class="line">                gfx[x + j + (y + i) * <span class="number">64</span>] ^= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 需更新畫面</span></span><br><span class="line">    drawFlag = <span class="literal">true</span>;</span><br><span class="line">    pc += <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="FX33-LD-B-Vx"><a href="#FX33-LD-B-Vx" class="headerlink" title="FX33 - LD B, Vx"></a><code>FX33</code> - LD B, Vx</h5><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">0x0033</span>:</span><br><span class="line">    <span class="comment">//取得百位數後放至memory[I]</span></span><br><span class="line">    memory[I] = reg[(opcode &amp; <span class="number">0x0F00</span>) &gt;&gt; <span class="number">8</span>] / <span class="number">100</span>;</span><br><span class="line">    <span class="comment">//取得十位數後放至memory[I + 1]</span></span><br><span class="line">    memory[I + <span class="number">1</span>] = (reg[(opcode &amp; <span class="number">0x0F00</span>) &gt;&gt; <span class="number">8</span>] / <span class="number">10</span>) % <span class="number">10</span>;</span><br><span class="line">    <span class="comment">//取得個位數後放至memory[I + 2]</span></span><br><span class="line">    memory[I + <span class="number">2</span>] = reg[(opcode &amp; <span class="number">0x0F00</span>) &gt;&gt; <span class="number">8</span>] % <span class="number">10</span>;</span><br><span class="line">    pc += <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<p>列舉以上Opcode的做法供參考，其餘opcode實作方法請參閱完成品<a href="https://github.com/kaibaooo/Chip8_Emulator" target="_blank" rel="noopener">Source</a></p>
+<h3 id="加入預設字符集"><a href="#加入預設字符集" class="headerlink" title="加入預設字符集"></a>加入預設字符集</h3><p><code>Chip8.h</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Chip8</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> chip8_fontset[<span class="number">80</span>] =</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x90</span>, <span class="number">0x90</span>, <span class="number">0x90</span>, <span class="number">0xF0</span>, <span class="comment">// 0</span></span><br><span class="line">      <span class="number">0x20</span>, <span class="number">0x60</span>, <span class="number">0x20</span>, <span class="number">0x20</span>, <span class="number">0x70</span>, <span class="comment">// 1</span></span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x10</span>, <span class="number">0xF0</span>, <span class="number">0x80</span>, <span class="number">0xF0</span>, <span class="comment">// 2</span></span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x10</span>, <span class="number">0xF0</span>, <span class="number">0x10</span>, <span class="number">0xF0</span>, <span class="comment">// 3</span></span><br><span class="line">      <span class="number">0x90</span>, <span class="number">0x90</span>, <span class="number">0xF0</span>, <span class="number">0x10</span>, <span class="number">0x10</span>, <span class="comment">// 4</span></span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x80</span>, <span class="number">0xF0</span>, <span class="number">0x10</span>, <span class="number">0xF0</span>, <span class="comment">// 5</span></span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x80</span>, <span class="number">0xF0</span>, <span class="number">0x90</span>, <span class="number">0xF0</span>, <span class="comment">// 6</span></span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x10</span>, <span class="number">0x20</span>, <span class="number">0x40</span>, <span class="number">0x40</span>, <span class="comment">// 7</span></span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x90</span>, <span class="number">0xF0</span>, <span class="number">0x90</span>, <span class="number">0xF0</span>, <span class="comment">// 8</span></span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x90</span>, <span class="number">0xF0</span>, <span class="number">0x10</span>, <span class="number">0xF0</span>, <span class="comment">// 9</span></span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x90</span>, <span class="number">0xF0</span>, <span class="number">0x90</span>, <span class="number">0x90</span>, <span class="comment">// A</span></span><br><span class="line">      <span class="number">0xE0</span>, <span class="number">0x90</span>, <span class="number">0xE0</span>, <span class="number">0x90</span>, <span class="number">0xE0</span>, <span class="comment">// B</span></span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x80</span>, <span class="number">0x80</span>, <span class="number">0x80</span>, <span class="number">0xF0</span>, <span class="comment">// C</span></span><br><span class="line">      <span class="number">0xE0</span>, <span class="number">0x90</span>, <span class="number">0x90</span>, <span class="number">0x90</span>, <span class="number">0xE0</span>, <span class="comment">// D</span></span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x80</span>, <span class="number">0xF0</span>, <span class="number">0x80</span>, <span class="number">0xF0</span>, <span class="comment">// E</span></span><br><span class="line">      <span class="number">0xF0</span>, <span class="number">0x80</span>, <span class="number">0xF0</span>, <span class="number">0x80</span>, <span class="number">0x80</span>  <span class="comment">// F</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>字符對應方法</strong><br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Ffonsample.png?alt=media&token=022f59cf-56a9-4582-86a8-eddf7f231551" alt></p>
+</li>
+<li><p><strong>完整字符表如下表</strong><br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Ffontset.png?alt=media&token=f213cb55-0229-4a56-b66c-00b81bdf52b8" alt><br>  <strong>來源<a href>http://devernay.free.fr/hacks/chip8/C8TECH10.HTM</a></strong></p>
+</li>
+</ul>
+<h3 id="繪圖引擎"><a href="#繪圖引擎" class="headerlink" title="繪圖引擎"></a>繪圖引擎</h3><p>本篇範例採用的是freeglut(OpenGL)，因為筆者本身對OpenGL也不是很熟，所以就不多做解釋，用你喜歡的就可以了，當然也可以不用繪圖引擎，直接在命令列上以文字方式繪圖也行得通。</p>
+<h3 id="鍵盤輸入"><a href="#鍵盤輸入" class="headerlink" title="鍵盤輸入"></a>鍵盤輸入</h3><p><code>Source.cpp</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">controller</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> key, <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (key == <span class="string">'1'</span>) chip8.key[<span class="number">0x1</span>] = <span class="number">1</span>; <span class="comment">// Press X mapping to 1</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'2'</span>) chip8.key[<span class="number">0x2</span>] = <span class="number">1</span>; <span class="comment">// Press 2 mapping to 2</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'3'</span>) chip8.key[<span class="number">0x3</span>] = <span class="number">1</span>; <span class="comment">// Press 3 mapping to 3</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'4'</span>) chip8.key[<span class="number">0xC</span>] = <span class="number">1</span>; <span class="comment">// Press 4 mapping to C</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'q'</span>) chip8.key[<span class="number">0x4</span>] = <span class="number">1</span>; <span class="comment">// Press q mapping to 4</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'w'</span>) chip8.key[<span class="number">0x5</span>] = <span class="number">1</span>; <span class="comment">// Press w mapping to 5</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'e'</span>) chip8.key[<span class="number">0x6</span>] = <span class="number">1</span>; <span class="comment">// Press e mapping to 6</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'r'</span>) chip8.key[<span class="number">0xD</span>] = <span class="number">1</span>; <span class="comment">// Press r mapping to D</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'a'</span>) chip8.key[<span class="number">0x7</span>] = <span class="number">1</span>; <span class="comment">// Press a mapping to 7</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'s'</span>) chip8.key[<span class="number">0x8</span>] = <span class="number">1</span>; <span class="comment">// Press s mapping to 8</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'d'</span>) chip8.key[<span class="number">0x9</span>] = <span class="number">1</span>; <span class="comment">// Press d mapping to 9</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'f'</span>) chip8.key[<span class="number">0xE</span>] = <span class="number">1</span>; <span class="comment">// Press f mapping to E</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'z'</span>) chip8.key[<span class="number">0xA</span>] = <span class="number">1</span>; <span class="comment">// Press z mapping to A</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'x'</span>) chip8.key[<span class="number">0x0</span>] = <span class="number">1</span>; <span class="comment">// Press x mapping to 0</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'c'</span>) chip8.key[<span class="number">0xB</span>] = <span class="number">1</span>; <span class="comment">// Press c mapping to B</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'v'</span>) chip8.key[<span class="number">0xF</span>] = <span class="number">1</span>; <span class="comment">// Press v mapping to F</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">controllerUP</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> key, <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (key == <span class="string">'1'</span>) chip8.key[<span class="number">0x1</span>] = <span class="number">0</span>; <span class="comment">// Press X mapping to 1</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'2'</span>) chip8.key[<span class="number">0x2</span>] = <span class="number">0</span>; <span class="comment">// Press 2 mapping to 2</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'3'</span>) chip8.key[<span class="number">0x3</span>] = <span class="number">0</span>; <span class="comment">// Press 3 mapping to 3</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'4'</span>) chip8.key[<span class="number">0xC</span>] = <span class="number">0</span>; <span class="comment">// Press 4 mapping to C</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'q'</span>) chip8.key[<span class="number">0x4</span>] = <span class="number">0</span>; <span class="comment">// Press q mapping to 4</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'w'</span>) chip8.key[<span class="number">0x5</span>] = <span class="number">0</span>; <span class="comment">// Press w mapping to 5</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'e'</span>) chip8.key[<span class="number">0x6</span>] = <span class="number">0</span>; <span class="comment">// Press e mapping to 6</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'r'</span>) chip8.key[<span class="number">0xD</span>] = <span class="number">0</span>; <span class="comment">// Press r mapping to D</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'a'</span>) chip8.key[<span class="number">0x7</span>] = <span class="number">0</span>; <span class="comment">// Press a mapping to 7</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'s'</span>) chip8.key[<span class="number">0x8</span>] = <span class="number">0</span>; <span class="comment">// Press s mapping to 8</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'d'</span>) chip8.key[<span class="number">0x9</span>] = <span class="number">0</span>; <span class="comment">// Press d mapping to 9</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'f'</span>) chip8.key[<span class="number">0xE</span>] = <span class="number">0</span>; <span class="comment">// Press f mapping to E</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'z'</span>) chip8.key[<span class="number">0xA</span>] = <span class="number">0</span>; <span class="comment">// Press z mapping to A</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'x'</span>) chip8.key[<span class="number">0x0</span>] = <span class="number">0</span>; <span class="comment">// Press x mapping to 0</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'c'</span>) chip8.key[<span class="number">0xB</span>] = <span class="number">0</span>; <span class="comment">// Press c mapping to B</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == <span class="string">'v'</span>) chip8.key[<span class="number">0xF</span>] = <span class="number">0</span>; <span class="comment">// Press v mapping to F</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="完成"><a href="#完成" class="headerlink" title="完成?"></a>完成?</h3><p>做到這裡基本上已經完成核心了，尤其是那血尿的指令集實作，接下來要完成的部分就是繪圖的部分與CHIP8核心做連結，這裡就不多提了。<br><strong>Source :</strong> <a href="https://github.com/kaibaooo/Chip8_Emulator" target="_blank" rel="noopener">https://github.com/kaibaooo/Chip8_Emulator</a></p>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ol>
+<li><a href="http://devernay.free.fr/hacks/chip8/C8TECH10.HTM" target="_blank" rel="noopener">Cowgod’s Chip-8 Technical Reference v1.0</a></li>
+<li><a href="https://en.wikipedia.org/wiki/CHIP-8" target="_blank" rel="noopener">CHIP-8 Wikipedia</a></li>
+<li><a href="http://www.multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/" target="_blank" rel="noopener">How to write an emulator (CHIP-8 interpreter)</a></li>
+</ol>
+<h2 id="額外資源"><a href="#額外資源" class="headerlink" title="額外資源"></a>額外資源</h2><ul>
+<li><a href="https://github.com/dmatlack/chip8/tree/master/roms" target="_blank" rel="noopener">CHIP-8 ROMs</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-code/" data-id="cjye4dsdd001umgth6am1wz1z" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Kaibao"
+        },
+        "headline": "CHIP8模擬器開發-來寫程式吧",
+        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-code-thumbnail.png?alt=media&token=da98d6da-d31d-4b22-85ab-285ab38885b5",
+        "keywords": "cplusplus 學習筆記 emulator",
+        "genre": "",
+        "datePublished": "2019-07-22",
+        "dateCreated": "2019-07-22",
+        "dateModified": "2019-07-22",
+        "url": "https://kaibaooo.github.io/2019/07/22/chip8emu-code/",
+        "description": "
+虛擬硬體環境建立根據第一篇文章的CHIP8硬體環境來實作，實作過程需要了解各個資料型態的大小，所以整理了下表供參考
+
+
+
+型態
+大小
+範圍
+
+
+
+char
+1 byte
+-128 ~ 127
+
+
+short
+2 bytes
+-32768 ~ 32767
+
+
+unsigned char
+1 byte
+0 ~ 255
+
+
+unsigned short
+2 bytes
+0 ~ 65535
+
+
+
+建立一"
+        "wordCount": 2831
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>追蹤 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kaibaooo" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/07/22/chip8emu-intro/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">CHIP8模擬器開發-模擬器與CHIP8簡介</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目錄</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#虛擬硬體環境建立"><span class="toc-number">1.</span> <span class="toc-text">虛擬硬體環境建立</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#讀取ROM"><span class="toc-number">2.</span> <span class="toc-text">讀取ROM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#實作Chip8-Cycle"><span class="toc-number">3.</span> <span class="toc-text">實作Chip8 Cycle</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fetch"><span class="toc-number">3.1.</span> <span class="toc-text">Fetch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Decode-amp-Execute"><span class="toc-number">3.2.</span> <span class="toc-text">Decode &amp; Execute</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#00E0-CLS"><span class="toc-number">3.2.1.</span> <span class="toc-text">00E0 - CLS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#00EE-RET"><span class="toc-number">3.2.2.</span> <span class="toc-text">00EE - RET</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#0x1NNN-JP-addr"><span class="toc-number">3.2.3.</span> <span class="toc-text">0x1NNN - JP addr</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3XNN-SE-Vx-byte"><span class="toc-number">3.2.4.</span> <span class="toc-text">3XNN - SE Vx, byte</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DXYN-DRW-Vx-Vy-nibble"><span class="toc-number">3.2.5.</span> <span class="toc-text">DXYN - DRW Vx, Vy, nibble</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#FX33-LD-B-Vx"><span class="toc-number">3.2.6.</span> <span class="toc-text">FX33 - LD B, Vx</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加入預設字符集"><span class="toc-number">4.</span> <span class="toc-text">加入預設字符集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#繪圖引擎"><span class="toc-number">5.</span> <span class="toc-text">繪圖引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#鍵盤輸入"><span class="toc-number">6.</span> <span class="toc-text">鍵盤輸入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#完成"><span class="toc-number">7.</span> <span class="toc-text">完成?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考文章"><span class="toc-number"></span> <span class="toc-text">參考文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#額外資源"><span class="toc-number"></span> <span class="toc-text">額外資源</span></a>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-code/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-code-thumbnail.png?alt=media&token=da98d6da-d31d-4b22-85ab-285ab38885b5)" alt="CHIP8模擬器開發-來寫程式吧" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-code/" class="title">CHIP8模擬器開發-來寫程式吧</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493)" alt="CHIP8模擬器開發-指令集" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-instruction-set/" class="title">CHIP8模擬器開發-指令集</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/18/學習筆記/opencv-vs2019/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fopencvwithvs2019.png?alt=media&token=4e562b86-0259-4880-a480-2da426361d83)" alt="在Visual Studio 2019上使用OpenCV" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/18/學習筆記/opencv-vs2019/" class="title">在Visual Studio 2019上使用OpenCV</a></p>
+                            <p class="item-date"><time datetime="2019-07-17T16:00:00.000Z" itemprop="datePublished">2019-07-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/13/vscode-installation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/vscode-installation%2FCNMjcIl.png?alt=media&token=ed31db7e-69e9-4642-85f5-9348917212a9)" alt="如何正確安裝VSCode" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/13/vscode-installation/" class="title">如何正確安裝VSCode</a></p>
+                            <p class="item-date"><time datetime="2019-07-12T16:00:00.000Z" itemprop="datePublished">2019-07-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">所有文章</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cplusplus/">Cplusplus</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cplusplus/">cplusplus</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emulator/">emulator</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frontend/">frontend</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/學習筆記/">學習筆記</a><span class="tag-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Kaibao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'kaibaogithubpage';
+    
+    
+    var disqus_url = 'https://kaibaooo.github.io/2019/07/22/chip8emu-code/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

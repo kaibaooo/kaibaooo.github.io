@@ -169,7 +169,7 @@ ga('send', 'pageview');
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/11/11/uva11292/" class="thumbnail">
+        <a href="/2018/11/11/uva10591/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -179,7 +179,7 @@ ga('send', 'pageview');
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2018/11/11/uva11292/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2018/11/11/uva10591/">0</span>
     
 </span>
 
@@ -197,15 +197,16 @@ ga('send', 'pageview');
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/11/11/uva11292/">UVA11292-Dragon of Loowater解法</a>
+        <a href="/2018/11/11/uva10591/">UVA10591-Happy Number解法</a>
         </h1>
     
 
         <p class="article-excerpt">
-            敘述有個王國遭受龍群的侵襲，需要聘請騎士把龍全部消滅掉，否則王國會滅亡。
-騎士身高(int)必須大於等於龍的頭數(int)才能殺掉龍，每聘用一位騎士需要花費其身高的金幣數(e.g 身高為3的騎士，需要花費3金幣)，每位騎士只能殺死一條龍。
-輸入說明每行輸入兩個整數n,m，分別代表龍群的數量以及騎士的數量，接下來n行資料分別為龍的頭數，接續下去的m行資料為騎士的身高
-輸出說明輸出最小花費金幣數
+            敘述7 is a Happy number since 7 → 49 → 97 → 130 → 10 → 14 is an Unhappy number since 4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4
+輸入說明一個正整數
+輸出說明輸出是否為Happy Number
+Solution將執行過的數字記錄下來record[]，每次平方後做一次查表，看看有沒有重複做過的數字，如果有重複數字就不是HappyNumber。
+將一路上執行過的數字紀錄下來，每次跑下一個數字之前先從頭檢查一遍是否重複，如果有重複數字的話，則為UnhappyNumeber
         </p>
     </div>
 </article>
@@ -214,6 +215,59 @@ ga('send', 'pageview');
     
     
     
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/11/11/uva10189/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2018/11/11/uva10189/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            
+            </div>
+            <div class="date"><time datetime="2018-11-10T16:00:00.000Z" itemprop="datePublished">2018-11-11</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/11/11/uva10189/">UVA10189-Minesweeper解法</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            敘述計算周遭九宮格的地雷數
+輸入說明輸入兩整數n,m，分別為地雷區的row和column接下來n行輸入地雷的位置，輸入 * 代表有地雷，輸入 . 代表無地雷
+輸出說明輸出如Windows踩地雷那樣的周圍九宮格地雷數
+Solution雖然題目定義最高為100x100的大小，但為了讓邊界處理簡單些，我們宣告102x102大小的二維陣列來處理
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -270,14 +324,10 @@ var arr1 = [1, 2];var arr2 = [3, 4];var arr3 = [arr1, arr2];
     </div>
 </article>
     
-        </div>
-    
 
     
     
     
-    
-        <div class="article-row">
     
         <article class="article article-summary">
     <div class="article-summary-inner">
@@ -372,6 +422,26 @@ sudo vim /etc/apache2/mods-e
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-code/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-code-thumbnail.png?alt=media&token=da98d6da-d31d-4b22-85ab-285ab38885b5)" alt="CHIP8模擬器開發-來寫程式吧" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-code/" class="title">CHIP8模擬器開發-來寫程式吧</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
     
     
@@ -449,26 +519,6 @@ sudo vim /etc/apache2/mods-e
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://i.imgur.com/O48iwfA.png)" alt="Python資料科學學習筆記-UniversalFunctions" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="title">Python資料科學學習筆記-UniversalFunctions</a></p>
-                            <p class="item-date"><time datetime="2019-07-10T16:00:00.000Z" itemprop="datePublished">2019-07-11</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -478,7 +528,7 @@ sudo vim /etc/apache2/mods-e
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">所有文章</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -488,7 +538,7 @@ sudo vim /etc/apache2/mods-e
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">標籤</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cplusplus/">Cplusplus</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cplusplus/">cplusplus</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emulator/">emulator</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frontend/">frontend</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/學習筆記/">學習筆記</a><span class="tag-list-count">7</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cplusplus/">Cplusplus</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cplusplus/">cplusplus</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emulator/">emulator</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frontend/">frontend</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/學習筆記/">學習筆記</a><span class="tag-list-count">8</span></li></ul>
         </div>
     </div>
 
