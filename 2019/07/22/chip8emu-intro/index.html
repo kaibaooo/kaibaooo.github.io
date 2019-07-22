@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+
+    
+
+    
+    <title>CHIP8模擬器開發-模擬器與CHIP8簡介 | Kaibao的學習札記</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="學習筆記,cplusplus,emulator">
+    
+    <meta name="description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指令">
+<meta name="keywords" content="學習筆記,cplusplus,emulator">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CHIP8模擬器開發-模擬器與CHIP8簡介">
+<meta property="og:url" content="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/index.html">
+<meta property="og:site_name" content="Kaibao的學習札記">
+<meta property="og:description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指令">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c">
+<meta property="og:updated_time" content="2019-07-22T04:26:38.035Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CHIP8模擬器開發-模擬器與CHIP8簡介">
+<meta name="twitter:description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指令">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-113939847-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3215972389999620",
+        enable_page_level_ads: true
+    });
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+</html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">My notes</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">首頁</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">關於</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="輸入關鍵字..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '頁面',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分類
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-chip8emu-intro" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        CHIP8模擬器開發-模擬器與CHIP8簡介
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/07/22/chip8emu-intro/" class="article-date">
+            <time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/cplusplus/">cplusplus</a>, <a class="tag-link" href="/tags/emulator/">emulator</a>, <a class="tag-link" href="/tags/學習筆記/">學習筆記</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="模擬器基本概念"><a href="#模擬器基本概念" class="headerlink" title="模擬器基本概念"></a>模擬器基本概念</h2><p>模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c" alt="image alt"></p>
+<h3 id="電腦怎麼執行指令"><a href="#電腦怎麼執行指令" class="headerlink" title="電腦怎麼執行指令?"></a>電腦怎麼執行指令?</h3><p>電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指令集是完全不同的，幾乎無法相容，這也就是為什麼要在電腦上玩手機遊戲需要藉由模擬器來”模擬”ARM架構的指令執行過程。電腦執行一連串的指令需要經過以下流程:</p>
+<ol>
+<li>Fetch : 從記憶體中取出下一個要執行的指令</li>
+<li>Decode : 將指令解析成對應的資料格式</li>
+<li>Execute : 執行該指令</li>
+<li>Store : 儲存執行結果</li>
+</ol>
+<h2 id="Hello-CHIP-8"><a href="#Hello-CHIP-8" class="headerlink" title="Hello CHIP-8"></a>Hello CHIP-8</h2><h3 id="什麼是CHIP-8"><a href="#什麼是CHIP-8" class="headerlink" title="什麼是CHIP-8"></a>什麼是CHIP-8</h3><p>CHIP-8其實是一種程式語言，它需要執行在它專屬的模擬環境中，這套模擬環境是一個小型的系統架構，總共只有35個指令需要實作，非常適合第一次學習模擬器開發的一套系統。這一系列筆記將使用C語言開發CHIP-8模擬器。</p>
+<h3 id="CHIP-8-模擬環境規格"><a href="#CHIP-8-模擬環境規格" class="headerlink" title="CHIP-8 模擬環境規格"></a>CHIP-8 模擬環境規格</h3><h4 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h4><p>總共 4096 Bytes，其中前512Bytes(0x000~0x200)通常用來存放CHIP-8本身語言的interpreter(直譯器)，最末端的96Bytes(0xEA0-0xEFF) + 256Bytes(0xF00-0xFFF)前者是用來存放CallStack，後者是用來處理畫面刷新。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fchip8mem.png?alt=media&token=8881f134-dd63-4e50-ad62-4e0d957a434c" alt></p>
+<h4 id="Registers"><a href="#Registers" class="headerlink" title="Registers"></a>Registers</h4><p>共 16 個 8 bits registers，個別的名稱為V0, V1, V2….VF，其中VF被拿來做為flag使用，當執行加法運算時VF為CarryFlag，減法運算為BorrowFlag，繪圖運算為CollisionFlag(像素碰撞旗標)<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fchip8%20reg.png?alt=media&token=67c47cf4-a760-4da8-8234-153895a51a5d" alt></p>
+<h4 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h4><p>Stack用來存放return addresses，與現行系統的概念一樣，目前設計通常以16層堆疊上限為原則。</p>
+<h4 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h4><p>輸入共有16個按鍵能使用(如下圖)，通常以2,8,4,6為上下左右，CHIP-8有三個關於鍵盤輸入的Opcode要實作，分別為某個鍵是否被按下、某個鍵是否沒被按、等待某個鍵被按下後存放至register中。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fchip8KB.png?alt=media&token=23bb06e2-104b-432a-9a7e-78748f90fc69" alt></p>
+<h4 id="Graphics"><a href="#Graphics" class="headerlink" title="Graphics"></a>Graphics</h4><p>Chip-8的螢幕解析度為 64×32 pixels，螢幕色彩為Monochrome(單色)，繪製畫面到螢幕上顯示時以Sprite為單位，每個Sprite最多占15bytes的資料量，所以最大能繪製的單一大小為8x15 pixels</p>
+<h3 id="Sound-and-Timer"><a href="#Sound-and-Timer" class="headerlink" title="Sound and Timer"></a>Sound and Timer</h3><p>Timer有兩種<br>第一種是Delay timer用來控制整個系統的速率，其值非零時會持續以60Hz的頻率減少1。<br>第二種是Sound timer，主要是用來控制音效，當timer值為零時就會發出聲音，同樣是60Hz的頻率。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/" data-id="cjydvwtoz000958thxmkb16dw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Kaibao"
+        },
+        "headline": "CHIP8模擬器開發-模擬器與CHIP8簡介",
+        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c",
+        "keywords": "學習筆記 cplusplus emulator",
+        "genre": "",
+        "datePublished": "2019-07-22",
+        "dateCreated": "2019-07-22",
+        "dateModified": "2019-07-22",
+        "url": "https://kaibaooo.github.io/2019/07/22/chip8emu-intro/",
+        "description": "模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。
+電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指令"
+        "wordCount": 87
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>追蹤 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kaibaooo" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/07/18/學習筆記/opencv-vs2019/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">在Visual Studio 2019上使用OpenCV</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目錄</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#模擬器基本概念"><span class="toc-number">1.</span> <span class="toc-text">模擬器基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#電腦怎麼執行指令"><span class="toc-number">1.1.</span> <span class="toc-text">電腦怎麼執行指令?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-CHIP-8"><span class="toc-number">2.</span> <span class="toc-text">Hello CHIP-8</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什麼是CHIP-8"><span class="toc-number">2.1.</span> <span class="toc-text">什麼是CHIP-8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CHIP-8-模擬環境規格"><span class="toc-number">2.2.</span> <span class="toc-text">CHIP-8 模擬環境規格</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Memory"><span class="toc-number">2.2.1.</span> <span class="toc-text">Memory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Registers"><span class="toc-number">2.2.2.</span> <span class="toc-text">Registers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stack"><span class="toc-number">2.2.3.</span> <span class="toc-text">Stack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Input"><span class="toc-number">2.2.4.</span> <span class="toc-text">Input</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Graphics"><span class="toc-number">2.2.5.</span> <span class="toc-text">Graphics</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sound-and-Timer"><span class="toc-number">2.3.</span> <span class="toc-text">Sound and Timer</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/18/學習筆記/opencv-vs2019/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fopencvwithvs2019.png?alt=media&token=4e562b86-0259-4880-a480-2da426361d83)" alt="在Visual Studio 2019上使用OpenCV" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/18/學習筆記/opencv-vs2019/" class="title">在Visual Studio 2019上使用OpenCV</a></p>
+                            <p class="item-date"><time datetime="2019-07-17T16:00:00.000Z" itemprop="datePublished">2019-07-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/13/vscode-installation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/vscode-installation%2FCNMjcIl.png?alt=media&token=ed31db7e-69e9-4642-85f5-9348917212a9)" alt="如何正確安裝VSCode" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/13/vscode-installation/" class="title">如何正確安裝VSCode</a></p>
+                            <p class="item-date"><time datetime="2019-07-12T16:00:00.000Z" itemprop="datePublished">2019-07-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://i.imgur.com/O48iwfA.png)" alt="Python資料科學學習筆記-UniversalFunctions" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="title">Python資料科學學習筆記-UniversalFunctions</a></p>
+                            <p class="item-date"><time datetime="2019-07-10T16:00:00.000Z" itemprop="datePublished">2019-07-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/08/學習筆記/datascience-note-numpy-array-operations/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/08/學習筆記/datascience-note-numpy-array-operations/" class="title">Python資料科學學習筆記-Numpy陣列基礎操作</a></p>
+                            <p class="item-date"><time datetime="2019-07-07T16:00:00.000Z" itemprop="datePublished">2019-07-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">所有文章</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cplusplus/">Cplusplus</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cplusplus/">cplusplus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emulator/">emulator</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frontend/">frontend</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/學習筆記/">學習筆記</a><span class="tag-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Kaibao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'kaibaogithubpage';
+    
+    
+    var disqus_url = 'https://kaibaooo.github.io/2019/07/22/chip8emu-intro/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+
+    
+
+    
+    <title>喔不！是CORS | Kaibao的學習札記</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="frontend,學習筆記">
+    
+    <meta name="description" content="喔不！是CORS前言看到JS地下城5F題目的時候，心裡想「噢，這不就AJAX嗎 簡單!」，到了實際上要抓資料的時候，發現並沒有那麼容易，一開始是透過ES6內建的fetch()來抓資料，但跳出了這個訊息   問題所在這個訊息說明了行政院環保署的Server端不提供CORS(Cross-Origin Resource Sharing)存取。   這時內心又會有另一個問題，CORS是甚麼? 這裡引用一段">
+<meta name="keywords" content="frontend,學習筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="喔不！是CORS">
+<meta property="og:url" content="https://kaibaooo.github.io/2019/03/02/cors-solution/index.html">
+<meta property="og:site_name" content="Kaibao的學習札記">
+<meta property="og:description" content="喔不！是CORS前言看到JS地下城5F題目的時候，心裡想「噢，這不就AJAX嗎 簡單!」，到了實際上要抓資料的時候，發現並沒有那麼容易，一開始是透過ES6內建的fetch()來抓資料，但跳出了這個訊息   問題所在這個訊息說明了行政院環保署的Server端不提供CORS(Cross-Origin Resource Sharing)存取。   這時內心又會有另一個問題，CORS是甚麼? 這裡引用一段">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://i.imgur.com/ukCiIJX.png">
+<meta property="og:updated_time" content="2019-07-18T06:29:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="喔不！是CORS">
+<meta name="twitter:description" content="喔不！是CORS前言看到JS地下城5F題目的時候，心裡想「噢，這不就AJAX嗎 簡單!」，到了實際上要抓資料的時候，發現並沒有那麼容易，一開始是透過ES6內建的fetch()來抓資料，但跳出了這個訊息   問題所在這個訊息說明了行政院環保署的Server端不提供CORS(Cross-Origin Resource Sharing)存取。   這時內心又會有另一個問題，CORS是甚麼? 這裡引用一段">
+<meta name="twitter:image" content="https://i.imgur.com/ukCiIJX.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-113939847-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3215972389999620",
+        enable_page_level_ads: true
+    });
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+</html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">My notes</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">首頁</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">關於</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="輸入關鍵字..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '頁面',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分類
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-cors-solution" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        喔不！是CORS
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/03/02/cors-solution/" class="article-date">
+            <time datetime="2019-03-01T16:00:00.000Z" itemprop="datePublished">2019-03-02</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/frontend/">frontend</a>, <a class="tag-link" href="/tags/學習筆記/">學習筆記</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="喔不！是CORS"><a href="#喔不！是CORS" class="headerlink" title="喔不！是CORS"></a>喔不！是CORS</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>看到JS地下城5F題目的時候，心裡想「噢，這不就AJAX嗎 簡單!」<br>，到了實際上要抓資料的時候，發現並沒有那麼容易，一開始是透過ES6內建的fetch()來抓資料，但跳出了這個訊息<br><img src="https://i.imgur.com/ukCiIJX.png" alt>  </p>
+<h2 id="問題所在"><a href="#問題所在" class="headerlink" title="問題所在"></a>問題所在</h2><p>這個訊息說明了行政院環保署的Server端不提供CORS(Cross-Origin Resource Sharing)存取。  </p>
+<p>這時內心又會有另一個問題，CORS是甚麼? 這裡引用一段MDN上的說明  </p>
+<blockquote>
+<p>Cross-Origin Resource Sharing (CORS) is a mechanism that uses additional HTTP headers to tell a browser to let a web application running at one origin (domain) have permission to access selected resources from a server at a different origin. A web application executes a cross-origin HTTP request when it requests a resource that has a different origin (domain, protocol, and port) than its own origin.</p>
+</blockquote>
+<p>簡單來說，<code>XMLHttpRequest</code>和<code>Fetch API</code>兩種AJAX的存取方式都需要遵守same-origin policy，也就是在前端呼叫另一個網域的資源需要在同一個域名下才行，例如fetch()不能在 <a href="http://127.0.0.1/" target="_blank" rel="noopener">http://127.0.0.1/</a> 底下呼叫 <a href="https://www.google.com/" target="_blank" rel="noopener">https://www.google.com/</a> 的資源。<br>雖然這兩個AJAX的呼叫方法都要遵守same-origin policy，但可以透過在伺服器上設定加入回應<code>Access-Control-Allow-Origin</code>的header，讓其他網域能夠存取你伺服器上的資源。(氣象局API不能直接存取的原因就是少了這個header)  </p>
+<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><p>上面有提到前端的AJAX不能直接使用GET存與資料，但後端可以，所以我們的解決方法是透過自己寫的代理server來取得氣象局的AQI資料後，再自己透過HTTP將取得的資料回傳回來。  </p>
+<p>這裡使用了request來GET網頁上的資料，並使用express透過HTTP回傳回來  </p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line">app.get(<span class="regexp">/^\/corskiller\/.*/</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> targetURL = req.originalUrl.slice(<span class="number">12</span>);</span><br><span class="line">    <span class="keyword">await</span> request(targetURL, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">error, response, body</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">await</span> res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>)</span><br><span class="line">        <span class="keyword">await</span> res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>);</span><br><span class="line">        <span class="keyword">await</span> res.send(body);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Waiting for GET'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>架好之後只要透過正常的AJAX抓取<code>https://localhost:3000/corskiller/&lt;API URL&gt;</code>，就能獲得該API上的資料囉~  </p>
+<h4 id="最重要的Access-Control-Allow-Origin"><a href="#最重要的Access-Control-Allow-Origin" class="headerlink" title="最重要的Access-Control-Allow-Origin"></a>最重要的Access-Control-Allow-Origin</h4><p>設定伺服器的可以允許哪些網域來存取，在這裡設為無限制  </p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">await</span> res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其他設定參數如下  </p>
+<ul>
+<li>不限制  Access-Control-Allow-Origin : *  </li>
+<li>特定域名才能存取 Access-Control-Allow-Origin : domain  </li>
+<li>不啟用 Access-Control-Allow-Origin : null  </li>
+</ul>
+<h3 id="之後的事情"><a href="#之後的事情" class="headerlink" title="之後的事情"></a>之後的事情</h3><p>弄了這麼一大坨之後，開開心心部屬到GCP上面，結果發現域名沒有SSL憑證，不能直接存取，覺得心好累，覺得heroku會休眠有點小討厭，所以就弄個Google Script來處理這個問題了<em>(:з」∠)</em> </p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p>CORS -<br><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS</a><br>Access-Control-Allow-Origin -<br><a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Server-Side_Access_Control" target="_blank" rel="noopener">https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Server-Side_Access_Control</a></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kaibaooo.github.io/2019/03/02/cors-solution/" data-id="cjydvwtoy000858th5p30bjm6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Kaibao"
+        },
+        "headline": "喔不！是CORS",
+        "image": "https://kaibaooo.github.iohttps://i.imgur.com/ukCiIJX.png",
+        "keywords": "frontend 學習筆記",
+        "genre": "",
+        "datePublished": "2019-03-02",
+        "dateCreated": "2019-03-02",
+        "dateModified": "2019-07-18",
+        "url": "https://kaibaooo.github.io/2019/03/02/cors-solution/",
+        "description": "喔不！是CORS前言看到JS地下城5F題目的時候，心裡想「噢，這不就AJAX嗎 簡單!」，到了實際上要抓資料的時候，發現並沒有那麼容易，一開始是透過ES6內建的fetch()來抓資料，但跳出了這個訊息  
+問題所在這個訊息說明了行政院環保署的Server端不提供CORS(Cross-Origin Resource Sharing)存取。  
+這時內心又會有另一個問題，CORS是甚麼? 這裡引用一段"
+        "wordCount": 288
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>追蹤 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kaibaooo" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/04/22/collapsing-margin-solution/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            使用margin-top該注意的坑
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/11/11/uva10591/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">UVA10591-Happy Number解法</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目錄</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#喔不！是CORS"><span class="toc-number">1.</span> <span class="toc-text">喔不！是CORS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#問題所在"><span class="toc-number">1.2.</span> <span class="toc-text">問題所在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解決方法"><span class="toc-number">1.3.</span> <span class="toc-text">解決方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#最重要的Access-Control-Allow-Origin"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">最重要的Access-Control-Allow-Origin</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#之後的事情"><span class="toc-number">1.3.1.</span> <span class="toc-text">之後的事情</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#參考資料"><span class="toc-number">1.3.2.</span> <span class="toc-text">參考資料</span></a></li></ol></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/18/學習筆記/opencv-vs2019/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fopencvwithvs2019.png?alt=media&token=4e562b86-0259-4880-a480-2da426361d83)" alt="在Visual Studio 2019上使用OpenCV" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/18/學習筆記/opencv-vs2019/" class="title">在Visual Studio 2019上使用OpenCV</a></p>
+                            <p class="item-date"><time datetime="2019-07-17T16:00:00.000Z" itemprop="datePublished">2019-07-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/13/vscode-installation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/vscode-installation%2FCNMjcIl.png?alt=media&token=ed31db7e-69e9-4642-85f5-9348917212a9)" alt="如何正確安裝VSCode" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/13/vscode-installation/" class="title">如何正確安裝VSCode</a></p>
+                            <p class="item-date"><time datetime="2019-07-12T16:00:00.000Z" itemprop="datePublished">2019-07-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://i.imgur.com/O48iwfA.png)" alt="Python資料科學學習筆記-UniversalFunctions" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="title">Python資料科學學習筆記-UniversalFunctions</a></p>
+                            <p class="item-date"><time datetime="2019-07-10T16:00:00.000Z" itemprop="datePublished">2019-07-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/08/學習筆記/datascience-note-numpy-array-operations/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/08/學習筆記/datascience-note-numpy-array-operations/" class="title">Python資料科學學習筆記-Numpy陣列基礎操作</a></p>
+                            <p class="item-date"><time datetime="2019-07-07T16:00:00.000Z" itemprop="datePublished">2019-07-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">所有文章</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cplusplus/">Cplusplus</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cplusplus/">cplusplus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emulator/">emulator</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frontend/">frontend</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/學習筆記/">學習筆記</a><span class="tag-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Kaibao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'kaibaogithubpage';
+    
+    
+    var disqus_url = 'https://kaibaooo.github.io/2019/03/02/cors-solution/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
