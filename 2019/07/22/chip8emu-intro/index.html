@@ -10,10 +10,10 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="cplusplus,學習筆記,emulator">
+        <meta name="keywords" content="學習筆記,cplusplus,emulator">
     
     <meta name="description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指">
-<meta name="keywords" content="cplusplus,學習筆記,emulator">
+<meta name="keywords" content="學習筆記,cplusplus,emulator">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CHIP8模擬器開發-模擬器與CHIP8簡介">
 <meta property="og:url" content="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/index.html">
@@ -21,7 +21,7 @@
 <meta property="og:description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指">
 <meta property="og:locale" content="zh-TW">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559">
-<meta property="og:updated_time" content="2019-07-22T04:58:52.844Z">
+<meta property="og:updated_time" content="2019-07-22T12:23:05.258Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CHIP8模擬器開發-模擬器與CHIP8簡介">
 <meta name="twitter:description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指">
@@ -208,6 +208,11 @@ ga('send', 'pageview');
 <h4 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h4><p>輸入共有16個按鍵能使用(如下圖)，通常以2,8,4,6為上下左右，CHIP-8有三個關於鍵盤輸入的Opcode要實作，分別為某個鍵是否被按下、某個鍵是否沒被按、等待某個鍵被按下後存放至register中。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fchip8KB.png?alt=media&token=23bb06e2-104b-432a-9a7e-78748f90fc69" alt></p>
 <h4 id="Graphics"><a href="#Graphics" class="headerlink" title="Graphics"></a>Graphics</h4><p>Chip-8的螢幕解析度為 64×32 pixels，螢幕色彩為Monochrome(單色)，繪製畫面到螢幕上顯示時以Sprite為單位，每個Sprite最多占15bytes的資料量，所以最大能繪製的單一大小為8x15 pixels</p>
 <h3 id="Sound-and-Timer"><a href="#Sound-and-Timer" class="headerlink" title="Sound and Timer"></a>Sound and Timer</h3><p>Timer有兩種<br>第一種是Delay timer用來控制整個系統的速率，其值非零時會持續以60Hz的頻率減少1。<br>第二種是Sound timer，主要是用來控制音效，當timer值為零時就會發出聲音，同樣是60Hz的頻率。</p>
+<h2 id="CHIP8模擬器開發系列文章"><a href="#CHIP8模擬器開發系列文章" class="headerlink" title="CHIP8模擬器開發系列文章"></a>CHIP8模擬器開發系列文章</h2><ol>
+<li><strong>CHIP8模擬器開發-模擬器與CHIP8簡介</strong></li>
+<li><strong><a href="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/">CHIP8模擬器開發-指令集</a></strong></li>
+<li><strong><a href="https://kaibaooo.github.io/2019/07/22/chip8emu-code/">CHIP8模擬器開發-來寫程式吧</a></strong></li>
+</ol>
 
         </div>
         <footer class="article-footer">
@@ -215,7 +220,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/" data-id="cjye4dsc60008mgth9x4ejxr0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/" data-id="cjyed1s7x0016dsthy6rzlt5h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -287,7 +292,7 @@ ga('send', 'pageview');
         },
         "headline": "CHIP8模擬器開發-模擬器與CHIP8簡介",
         "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559",
-        "keywords": "cplusplus 學習筆記 emulator",
+        "keywords": "學習筆記 cplusplus emulator",
         "genre": "",
         "datePublished": "2019-07-22",
         "dateCreated": "2019-07-22",
@@ -296,7 +301,7 @@ ga('send', 'pageview');
         "description": "
 模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。
 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指"
-        "wordCount": 88
+        "wordCount": 94
     }
 </script>
 
@@ -336,20 +341,20 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2019/07/22/chip8emu-code/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2019/07/22/chip8emu-instruction-set/" id="article-nav-newer" class="article-nav-link-wrap">
         <strong class="article-nav-caption">下一篇</strong>
         <p class="article-nav-title">
         
-            CHIP8模擬器開發-來寫程式吧
+            CHIP8模擬器開發-指令集
         
         </p>
         <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
     </a>
     
     
-        <a href="/2019/07/22/chip8emu-instruction-set/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/07/18/學習筆記/opencv-vs2019/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">CHIP8模擬器開發-指令集</p>
+        <p class="article-nav-title">在Visual Studio 2019上使用OpenCV</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -364,7 +369,7 @@ ga('send', 'pageview');
     <h3 class="widget-title">目錄</h3>
     <div class="widget">
         <div id="toc" class="toc-article">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#模擬器基本概念"><span class="toc-number">1.</span> <span class="toc-text">模擬器基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#電腦怎麼執行指令"><span class="toc-number">1.1.</span> <span class="toc-text">電腦怎麼執行指令?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-CHIP-8"><span class="toc-number">2.</span> <span class="toc-text">Hello CHIP-8</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什麼是CHIP-8"><span class="toc-number">2.1.</span> <span class="toc-text">什麼是CHIP-8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CHIP-8-模擬環境規格"><span class="toc-number">2.2.</span> <span class="toc-text">CHIP-8 模擬環境規格</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Memory"><span class="toc-number">2.2.1.</span> <span class="toc-text">Memory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Registers"><span class="toc-number">2.2.2.</span> <span class="toc-text">Registers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stack"><span class="toc-number">2.2.3.</span> <span class="toc-text">Stack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Input"><span class="toc-number">2.2.4.</span> <span class="toc-text">Input</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Graphics"><span class="toc-number">2.2.5.</span> <span class="toc-text">Graphics</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sound-and-Timer"><span class="toc-number">2.3.</span> <span class="toc-text">Sound and Timer</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#模擬器基本概念"><span class="toc-number">1.</span> <span class="toc-text">模擬器基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#電腦怎麼執行指令"><span class="toc-number">1.1.</span> <span class="toc-text">電腦怎麼執行指令?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-CHIP-8"><span class="toc-number">2.</span> <span class="toc-text">Hello CHIP-8</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什麼是CHIP-8"><span class="toc-number">2.1.</span> <span class="toc-text">什麼是CHIP-8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CHIP-8-模擬環境規格"><span class="toc-number">2.2.</span> <span class="toc-text">CHIP-8 模擬環境規格</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Memory"><span class="toc-number">2.2.1.</span> <span class="toc-text">Memory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Registers"><span class="toc-number">2.2.2.</span> <span class="toc-text">Registers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stack"><span class="toc-number">2.2.3.</span> <span class="toc-text">Stack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Input"><span class="toc-number">2.2.4.</span> <span class="toc-text">Input</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Graphics"><span class="toc-number">2.2.5.</span> <span class="toc-text">Graphics</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sound-and-Timer"><span class="toc-number">2.3.</span> <span class="toc-text">Sound and Timer</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CHIP8模擬器開發系列文章"><span class="toc-number">3.</span> <span class="toc-text">CHIP8模擬器開發系列文章</span></a></li></ol>
         </div>
     </div>
 </div>
@@ -400,26 +405,6 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
-                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
                             <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
     
     
@@ -433,6 +418,26 @@ ga('send', 'pageview');
                         <div class="item-inner">
                             <p class="item-category"></p>
                             <p class="item-title"><a href="/2019/07/22/chip8emu-instruction-set/" class="title">CHIP8模擬器開發-指令集</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
                             <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
                         </div>
                     </li>
