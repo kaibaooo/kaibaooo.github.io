@@ -10,22 +10,22 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="cplusplus,學習筆記,emulator">
+        <meta name="keywords" content="學習筆記,cplusplus,emulator">
     
-    <meta name="description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指令">
-<meta name="keywords" content="cplusplus,學習筆記,emulator">
+    <meta name="description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指">
+<meta name="keywords" content="學習筆記,cplusplus,emulator">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CHIP8模擬器開發-模擬器與CHIP8簡介">
 <meta property="og:url" content="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/index.html">
 <meta property="og:site_name" content="Kaibao的學習札記">
-<meta property="og:description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指令">
+<meta property="og:description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c">
-<meta property="og:updated_time" content="2019-07-22T04:40:46.894Z">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559">
+<meta property="og:updated_time" content="2019-07-22T04:58:52.844Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CHIP8模擬器開發-模擬器與CHIP8簡介">
-<meta name="twitter:description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指令">
-<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c">
+<meta name="twitter:description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559">
     
 
     
@@ -192,7 +192,8 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="模擬器基本概念"><a href="#模擬器基本概念" class="headerlink" title="模擬器基本概念"></a>模擬器基本概念</h2><p>模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c" alt></p>
+            <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559" alt></p>
+<h2 id="模擬器基本概念"><a href="#模擬器基本概念" class="headerlink" title="模擬器基本概念"></a>模擬器基本概念</h2><p>模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c" alt></p>
 <h3 id="電腦怎麼執行指令"><a href="#電腦怎麼執行指令" class="headerlink" title="電腦怎麼執行指令?"></a>電腦怎麼執行指令?</h3><p>電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指令集是完全不同的，幾乎無法相容，這也就是為什麼要在電腦上玩手機遊戲需要藉由模擬器來”模擬”ARM架構的指令執行過程。電腦執行一連串的指令需要經過以下流程:</p>
 <ol>
 <li>Fetch : 從記憶體中取出下一個要執行的指令</li>
@@ -214,7 +215,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/" data-id="cjydwiejt000864thovjut06m" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/" data-id="cjydx77c1001khgtho6ajah23" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -285,16 +286,17 @@ ga('send', 'pageview');
             "name": "Kaibao"
         },
         "headline": "CHIP8模擬器開發-模擬器與CHIP8簡介",
-        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c",
-        "keywords": "cplusplus 學習筆記 emulator",
+        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559",
+        "keywords": "學習筆記 cplusplus emulator",
         "genre": "",
         "datePublished": "2019-07-22",
         "dateCreated": "2019-07-22",
         "dateModified": "2019-07-22",
         "url": "https://kaibaooo.github.io/2019/07/22/chip8emu-intro/",
-        "description": "模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。
-電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指令"
-        "wordCount": 86
+        "description": "
+模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。
+電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指"
+        "wordCount": 88
     }
 </script>
 
@@ -334,20 +336,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2019/07/22/chip8emu-instruction-set/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            CHIP8模擬器開發-指令集
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/07/18/學習筆記/opencv-vs2019/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/07/22/chip8emu-instruction-set/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">在Visual Studio 2019上使用OpenCV</p>
+        <p class="article-nav-title">CHIP8模擬器開發-指令集</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -378,6 +370,26 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
     
     
@@ -391,26 +403,6 @@ ga('send', 'pageview');
                         <div class="item-inner">
                             <p class="item-category"></p>
                             <p class="item-title"><a href="/2019/07/22/chip8emu-instruction-set/" class="title">CHIP8模擬器開發-指令集</a></p>
-                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
                             <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
                         </div>
                     </li>

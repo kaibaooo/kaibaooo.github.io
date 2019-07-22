@@ -10,10 +10,10 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="cplusplus,學習筆記,emulator">
+        <meta name="keywords" content="學習筆記,cplusplus,emulator">
     
     <meta name="description" content="CHIP-8每個指令占2 Bytes並以big-endian的方式存放在記憶體當中，另外有10個額外的指令可加入，但本次筆記並沒有實作。 底下指令集的部分我也不知道為什麼心血來潮想把它翻成中文，建議還是去看原文版可能比較好懂啦(? NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~ F)I: Index register 指令集1. 0N">
-<meta name="keywords" content="cplusplus,學習筆記,emulator">
+<meta name="keywords" content="學習筆記,cplusplus,emulator">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CHIP8模擬器開發-指令集">
 <meta property="og:url" content="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/index.html">
@@ -21,7 +21,7 @@
 <meta property="og:description" content="CHIP-8每個指令占2 Bytes並以big-endian的方式存放在記憶體當中，另外有10個額外的指令可加入，但本次筆記並沒有實作。 底下指令集的部分我也不知道為什麼心血來潮想把它翻成中文，建議還是去看原文版可能比較好懂啦(? NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~ F)I: Index register 指令集1. 0N">
 <meta property="og:locale" content="zh-TW">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493">
-<meta property="og:updated_time" content="2019-07-22T04:50:45.485Z">
+<meta property="og:updated_time" content="2019-07-22T04:59:31.426Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CHIP8模擬器開發-指令集">
 <meta name="twitter:description" content="CHIP-8每個指令占2 Bytes並以big-endian的方式存放在記憶體當中，另外有10個額外的指令可加入，但本次筆記並沒有實作。 底下指令集的部分我也不知道為什麼心血來潮想把它翻成中文，建議還是去看原文版可能比較好懂啦(? NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~ F)I: Index register 指令集1. 0N">
@@ -230,7 +230,7 @@ ga('send', 'pageview');
 <h4 id="32-FX29-LD-F-Vx"><a href="#32-FX29-LD-F-Vx" class="headerlink" title="32. FX29 - LD F, Vx"></a>32. <code>FX29</code> - LD F, Vx</h4><p>將Vx的值對應到正確字型記憶體位置後存放到I<br><strong>實作方法:</strong> 第一次看到這個有點不解，舉個範例來解釋比較清楚，由於我們存放預設字型的位置是0x0000~0x0050，每個字各占5 bytes大小，假設Vx暫存器的值是3，那麼它所對應的字型3記憶體位置應為0x000F開始，所以將0x000F放至I當中。簡單來說因為每個字占5bytes而且又是從0開始，所以將Vx當中的值乘上5後即可存放至I。</p>
 <h4 id="33-FX33-LD-B-Vx"><a href="#33-FX33-LD-B-Vx" class="headerlink" title="33. FX33 - LD B, Vx"></a>33. <code>FX33</code> - LD B, Vx</h4><p>將Vx中的值轉換成BCD表示法，並將結果分別存放至記憶體位址I(百位數字),I+1(十位數字),I+2(個位數)<br><strong>實作方法:</strong> BCD轉換不多談，來說明一下I存放的方法，由於I存放的是記憶體位址，所以必須藉由memory[I]這樣的存取方式存放值到記憶體當中。</p>
 <h4 id="34-FX55-LD-I-Vx"><a href="#34-FX55-LD-I-Vx" class="headerlink" title="34. FX55 - LD [I], Vx"></a>34. <code>FX55</code> - LD [I], Vx</h4><p>俗稱的register dump，把特定範圍register所存放的值複製一份到從I開始的連續記憶體當中<br><strong>實作方法:</strong> V0~Vx依序將值複製到I, I+1, I+2….V+x當中</p>
-<h4 id="35-FX65-LD-Vx-I"><a href="#35-FX65-LD-Vx-I" class="headerlink" title="35. FX65 - LD Vx, [I]"></a>35. <code>FX65</code> - LD Vx, [I]</h4><p>從I開始的memory當中依序取出值存放到register當中<br><strong>實作方法:</strong> I, I+1, I+2….V+x依序將值複製到V0~Vx當中</p>
+<h4 id="35-FX65-LD-Vx-I"><a href="#35-FX65-LD-Vx-I" class="headerlink" title="35. FX65 - LD Vx, [I]"></a>35. <code>FX65</code> - LD Vx, [I]</h4><p>從I開始的memory當中依序取出值存放到register當中<br><strong>實作方法:</strong> I, I+1, I+2….V+x依序將值複製到V0~Vx當中<br>.</p>
 
         </div>
         <footer class="article-footer">
@@ -238,7 +238,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/" data-id="cjydwiek6000o64thpfkb1r8b" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/" data-id="cjydx77av0009hgthuisquybk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -310,7 +310,7 @@ ga('send', 'pageview');
         },
         "headline": "CHIP8模擬器開發-指令集",
         "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493",
-        "keywords": "cplusplus 學習筆記 emulator",
+        "keywords": "學習筆記 cplusplus emulator",
         "genre": "",
         "datePublished": "2019-07-22",
         "dateCreated": "2019-07-22",
@@ -361,10 +361,20 @@ NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~
         
 <nav id="article-nav">
     
+        <a href="/2019/07/22/chip8emu-intro/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            CHIP8模擬器開發-模擬器與CHIP8簡介
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
     
-        <a href="/2019/07/22/chip8emu-intro/" id="article-nav-older" class="article-nav-link-wrap">
+    
+        <a href="/2019/07/18/學習筆記/opencv-vs2019/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">CHIP8模擬器開發-模擬器與CHIP8簡介</p>
+        <p class="article-nav-title">在Visual Studio 2019上使用OpenCV</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -395,6 +405,26 @@ NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
     
     
@@ -408,26 +438,6 @@ NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~
                         <div class="item-inner">
                             <p class="item-category"></p>
                             <p class="item-title"><a href="/2019/07/22/chip8emu-instruction-set/" class="title">CHIP8模擬器開發-指令集</a></p>
-                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
                             <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
                         </div>
                     </li>
