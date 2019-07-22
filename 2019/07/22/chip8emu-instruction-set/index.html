@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+
+    
+
+    
+    <title>CHIP8模擬器開發-指令集 | Kaibao的學習札記</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="cplusplus,學習筆記,emulator">
+    
+    <meta name="description" content="CHIP-8每個指令占2 Bytes並以big-endian的方式存放在記憶體當中，另外有10個額外的指令可加入，但本次筆記並沒有實作。 底下指令集的部分我也不知道為什麼心血來潮想把它翻成中文，建議還是去看原文版可能比較好懂啦(? NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~ F)I: Index register 指令集1. 0N">
+<meta name="keywords" content="cplusplus,學習筆記,emulator">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CHIP8模擬器開發-指令集">
+<meta property="og:url" content="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/index.html">
+<meta property="og:site_name" content="Kaibao的學習札記">
+<meta property="og:description" content="CHIP-8每個指令占2 Bytes並以big-endian的方式存放在記憶體當中，另外有10個額外的指令可加入，但本次筆記並沒有實作。 底下指令集的部分我也不知道為什麼心血來潮想把它翻成中文，建議還是去看原文版可能比較好懂啦(? NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~ F)I: Index register 指令集1. 0N">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493">
+<meta property="og:updated_time" content="2019-07-22T04:50:45.485Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CHIP8模擬器開發-指令集">
+<meta name="twitter:description" content="CHIP-8每個指令占2 Bytes並以big-endian的方式存放在記憶體當中，另外有10個額外的指令可加入，但本次筆記並沒有實作。 底下指令集的部分我也不知道為什麼心血來潮想把它翻成中文，建議還是去看原文版可能比較好懂啦(? NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~ F)I: Index register 指令集1. 0N">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-113939847-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3215972389999620",
+        enable_page_level_ads: true
+    });
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+</html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">My notes</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">首頁</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">關於</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="輸入關鍵字..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '頁面',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分類
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-chip8emu-instruction-set" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        CHIP8模擬器開發-指令集
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/07/22/chip8emu-instruction-set/" class="article-date">
+            <time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/cplusplus/">cplusplus</a>, <a class="tag-link" href="/tags/emulator/">emulator</a>, <a class="tag-link" href="/tags/學習筆記/">學習筆記</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493" alt></p>
+<p>CHIP-8每個指令占2 Bytes並以big-endian的方式存放在記憶體當中，另外有10個額外的指令可加入，但本次筆記並沒有實作。</p>
+<p>底下指令集的部分我也不知道為什麼心血來潮想把它翻成中文，建議還是去看原文版可能比較好懂啦(?</p>
+<p><strong>NNN:</strong> 記憶體位址<br><strong>NN、N:</strong> 8bits或4bits的常數<br><strong>X and Y:</strong> register的名稱(0 ~ F)<br><strong>I:</strong> Index register</p>
+<h3 id="指令集"><a href="#指令集" class="headerlink" title="指令集"></a>指令集</h3><h4 id="1-0NNN-SYS-addr"><a href="#1-0NNN-SYS-addr" class="headerlink" title="1. 0NNN - SYS addr"></a>1. <code>0NNN</code> - SYS addr</h4><p>已不使用，Jump到某個Machine code程序中</p>
+<h4 id="2-00E0-CLS"><a href="#2-00E0-CLS" class="headerlink" title="2. 00E0 - CLS"></a>2. <code>00E0</code> - CLS</h4><p>清除畫面<br><strong>實作方法:</strong> 請依據繪圖引擎不同自行設計</p>
+<h4 id="3-00EE-RET"><a href="#3-00EE-RET" class="headerlink" title="3. 00EE - RET"></a>3. <code>00EE</code> - RET</h4><p>Return from a subroutine<br><strong>實作方法:</strong> 將Stack最上層的address放到ProgramCounter裡，並將StackPointer減少一層</p>
+<h4 id="4-1NNN-JP-addr"><a href="#4-1NNN-JP-addr" class="headerlink" title="4. 1NNN - JP addr"></a>4. <code>1NNN</code> - JP addr</h4><p>跳到NNN這個address執行<br><strong>實作方法:</strong> ProgramCounter &lt;= NNN</p>
+<h4 id="5-2NNN-CALL-addr"><a href="#5-2NNN-CALL-addr" class="headerlink" title="5. 2NNN - CALL addr"></a>5. <code>2NNN</code> - CALL addr</h4><p>呼叫NNN位址中的子程序<br><strong>實作方法:</strong> 將StackPointer增加1，並把目前的ProgramCounter放到Stack中，最後把ProgramCounter更改為NNN</p>
+<h4 id="6-3XNN-SE-Vx-byte"><a href="#6-3XNN-SE-Vx-byte" class="headerlink" title="6. 3XNN - SE Vx, byte"></a>6. <code>3XNN</code> - SE Vx, byte</h4><p>if Vx = kk, 跳過下一個指令<br><strong>實作方法:</strong> 比較Vx占存器所儲存的值是否與常數NN相同，如果結果為真，就跳過一次Opcode</p>
+<h4 id="7-4XNN-SNE-Vx-byte"><a href="#7-4XNN-SNE-Vx-byte" class="headerlink" title="7. 4XNN - SNE Vx, byte"></a>7. <code>4XNN</code> - SNE Vx, byte</h4><p>if Vx != kk, 跳過下一個指令<br><strong>實作方法:</strong> 比較Vx占存器所儲存的值是否與常數NN相異，如果結果為真，就跳過一次Opcode</p>
+<h4 id="8-5XY0-SE-Vx-Vy"><a href="#8-5XY0-SE-Vx-Vy" class="headerlink" title="8. 5XY0 - SE Vx, Vy"></a>8. <code>5XY0</code> - SE Vx, Vy</h4><p>if Vx = Vy, 跳過下一個指令<br><strong>實作方法:</strong> 比較Vx占存器所儲存的值是否與Vy占存器所儲存的值相同，如果結果為真，就跳過一次Opcode</p>
+<h4 id="9-6XNN-LD-Vx-byte"><a href="#9-6XNN-LD-Vx-byte" class="headerlink" title="9. 6XNN - LD Vx, byte"></a>9. <code>6XNN</code> - LD Vx, byte</h4><p>將Vx的值設為NN<br><strong>實作方法:</strong> Vx &lt;= NN</p>
+<h4 id="10-7XNN-ADD-Vx-byte"><a href="#10-7XNN-ADD-Vx-byte" class="headerlink" title="10. 7XNN - ADD Vx, byte"></a>10. <code>7XNN</code> - ADD Vx, byte</h4><p>Vx的值加上NN之後，再放到Vx中<br><strong>實作方法:</strong> Vx = Vx + NN</p>
+<h4 id="11-8XY0-LD-Vx-Vy"><a href="#11-8XY0-LD-Vx-Vy" class="headerlink" title="11. 8XY0 - LD Vx, Vy"></a>11. <code>8XY0</code> - LD Vx, Vy</h4><p>Vy的值放到Vx<br><strong>實作方法:</strong> Vx = Vy</p>
+<h4 id="12-8XY1-OR-Vx-Vy"><a href="#12-8XY1-OR-Vx-Vy" class="headerlink" title="12. 8XY1 - OR Vx, Vy"></a>12. <code>8XY1</code> - OR Vx, Vy</h4><p>Vx與Vy的每個bit做OR位元運算<br><strong>實作方法:</strong> Vx = Vx | Vy</p>
+<h4 id="13-8XY2-AND-Vx-Vy"><a href="#13-8XY2-AND-Vx-Vy" class="headerlink" title="13. 8XY2 - AND Vx, Vy"></a>13. <code>8XY2</code> - AND Vx, Vy</h4><p>Vx與Vy的每個bit做AND位元運算<br><strong>實作方法:</strong> Vx = Vx &amp; Vy</p>
+<h4 id="14-8XY3-XOR-Vx-Vy"><a href="#14-8XY3-XOR-Vx-Vy" class="headerlink" title="14. 8XY3 - XOR Vx, Vy"></a>14. <code>8XY3</code> - XOR Vx, Vy</h4><p>Vx與Vy的每個bit做XOR位元運算<br><strong>實作方法:</strong> Vx = Vx ^ Vy</p>
+<h4 id="15-8XY4-ADD-Vx-Vy"><a href="#15-8XY4-ADD-Vx-Vy" class="headerlink" title="15. 8XY4 - ADD Vx, Vy"></a>15. <code>8XY4</code> - ADD Vx, Vy</h4><p>將Vx的值設為Vx+Vy，若相加數值超過255則將VF(CarryFlag)設為1<br><strong>實作方法:</strong> Vx = Vx + Vy, 若相加結果無法完整放於8bits中，則將VF設為1，並把低位元的8bits放到Vx中</p>
+<h4 id="16-8XY5-SUB-Vx-Vy"><a href="#16-8XY5-SUB-Vx-Vy" class="headerlink" title="16. 8XY5 - SUB Vx, Vy"></a>16. <code>8XY5</code> - SUB Vx, Vy</h4><p>將Vx的值設為Vx-Vy，若Vx&gt;Vy則將VF設為1，否則為0<br><strong>實作方法:</strong> Vx = Vx - Vy, 若Vx&gt;Vy則將VF的值設為1，否則為0，並將相減結果存放至Vx中</p>
+<h4 id="17-8XY6-SHR-Vx-Vy"><a href="#17-8XY6-SHR-Vx-Vy" class="headerlink" title="17. 8XY6 - SHR Vx {, Vy}"></a>17. <code>8XY6 - SHR Vx {, Vy}</code></h4><p>將Vx最大位元的數值放到VF中，並將Vx除以2<br><strong>實作方法:</strong> 將Vx最大位元放置VF中後，把Vx向右位移1bit</p>
+<h4 id="18-8XY7-SUBN-Vx-Vy"><a href="#18-8XY7-SUBN-Vx-Vy" class="headerlink" title="18. 8XY7 - SUBN Vx, Vy"></a>18. <code>8XY7</code> - SUBN Vx, Vy</h4><p>將Vx的值設為Vy-Vx，若Vy&gt;Vx則將VF設為1，否則為0<br><strong>實作方法:</strong> Vx = Vy - Vx, 若Vy&gt;Vx則將VF的值設為1，否則為0，並將相減結果存放至Vx中</p>
+<h4 id="19-8XYE-SHL-Vx-Vy"><a href="#19-8XYE-SHL-Vx-Vy" class="headerlink" title="19. 8XYE - SHL Vx {, Vy}"></a>19. <code>8XYE</code> - SHL Vx {, Vy}</h4><p>將Vx最大位元的數值放到VF中，並將Vx乘以2<br><strong>實作方法:</strong> 將Vx最大位元放置VF中後，把Vx向右位移1bit</p>
+<h4 id="20-9xy0-SNE-Vx-Vy"><a href="#20-9xy0-SNE-Vx-Vy" class="headerlink" title="20. 9xy0 - SNE Vx, Vy"></a>20. <code>9xy0</code> - SNE Vx, Vy</h4><p>if Vx != Vy 跳過下一個指令<br><strong>實作方法:</strong> 若Vx != Vy，則跳過一次Opcode</p>
+<h4 id="21-ANNN-LD-I-addr"><a href="#21-ANNN-LD-I-addr" class="headerlink" title="21. ANNN - LD I, addr"></a>21. <code>ANNN</code> - LD I, addr</h4><p>將I的值設為NNN<br><strong>實作方法:</strong> 恩…如上所述</p>
+<h4 id="22-BNNN-JP-V0-addr"><a href="#22-BNNN-JP-V0-addr" class="headerlink" title="22. BNNN - JP V0, addr"></a>22. <code>BNNN</code> - JP V0, addr</h4><p>程式跳至NNN+V0的位置執行<br><strong>實作方法:</strong> 將ProgramCounter的值設為NNN再加上暫存器V0的值</p>
+<h4 id="23-CXNN-RND-Vx-byte"><a href="#23-CXNN-RND-Vx-byte" class="headerlink" title="23. CXNN - RND Vx, byte"></a>23. <code>CXNN</code> - RND Vx, byte</h4><p>隨機產生一個8bits的數字與常數NN做AND運算，並值放置Vx中<br><strong>實作方法:</strong> 呼叫C語言中的亂數產生器產生0~255的數字，並透過8XY2的概念來執行AND運算，運算結果放到Vx的值中</p>
+<h4 id="24-DXYN-DRW-Vx-Vy-nibble"><a href="#24-DXYN-DRW-Vx-Vy-nibble" class="headerlink" title="24. DXYN - DRW Vx, Vy, nibble"></a>24. <code>DXYN</code> - DRW Vx, Vy, nibble</h4><p>在(Vx, Vy)的座標上繪製一個從I所儲存的位址開始n bytes的sprite，若畫面有任何已存在的pixel被修改，則將VF設為1(CollisionFlag)<br><strong>實作方法:</strong> 從I所儲存的位址開始以byte為單位繪製畫面，每個pixel繪製之前都須與現有畫面上的pixel做XOR運算(參閱8XY3 opcode)，若結果為真，則將VF值改為1否則為0。詳細繪製方法請參閱繪圖引擎的相關文件。</p>
+<h4 id="25-Ex9E-SKP-Vx"><a href="#25-Ex9E-SKP-Vx" class="headerlink" title="25. Ex9E - SKP Vx"></a>25. <code>Ex9E</code> - SKP Vx</h4><p>若存放在Vx的KeyCode等於目前所按下的按鍵，則跳過下個Opcode<br><strong>實作方法:</strong> 檢查目前按下的KeyCode是否等於Vx的值，若兩值相等則將ProgramCounter加2</p>
+<h4 id="26-EXA1-SKNP-Vx"><a href="#26-EXA1-SKNP-Vx" class="headerlink" title="26. EXA1 - SKNP Vx"></a>26. <code>EXA1</code> - SKNP Vx</h4><p>若存放在Vx的KeyCode目前沒有被按下，則跳過下個Opcode<br><strong>實作方法:</strong> 檢查Vx目前的KeyCode是否處於非按下的情況，若為非按下的情況則將ProgramCounter加2</p>
+<h4 id="27-FX07-LD-Vx-DT"><a href="#27-FX07-LD-Vx-DT" class="headerlink" title="27. FX07 - LD Vx, DT"></a>27. <code>FX07</code> - LD Vx, DT</h4><p>Vx的值設為目前的Delay Time</p>
+<h4 id="28-Fx0A-LD-Vx-K"><a href="#28-Fx0A-LD-Vx-K" class="headerlink" title="28. Fx0A - LD Vx, K"></a>28. <code>Fx0A</code> - LD Vx, K</h4><p>等待按鍵輸入，當任一按鍵觸發時將其KeyCode存放至Vx中<br><strong>實作方法:</strong> 這是一個blocking的Opcode，會等待任一按鍵觸發之後將其值存放至Vx當中</p>
+<h4 id="29-FX15-LD-DT-Vx"><a href="#29-FX15-LD-DT-Vx" class="headerlink" title="29. FX15 - LD DT, Vx"></a>29. <code>FX15</code> - LD DT, Vx</h4><p>將目前Delay Timer的值設為Vx所存放的值</p>
+<h4 id="30-FX18-LD-ST-Vx"><a href="#30-FX18-LD-ST-Vx" class="headerlink" title="30. FX18 - LD ST, Vx"></a>30. <code>FX18</code> - LD ST, Vx</h4><p>將目前Sound Timer的值設為Vx所存放的值</p>
+<h4 id="31-FX1E-ADD-I-Vx"><a href="#31-FX1E-ADD-I-Vx" class="headerlink" title="31. FX1E - ADD I, Vx"></a>31. <code>FX1E</code> - ADD I, Vx</h4><p>將I與Vx的值相加之後存放至I當中</p>
+<h4 id="32-FX29-LD-F-Vx"><a href="#32-FX29-LD-F-Vx" class="headerlink" title="32. FX29 - LD F, Vx"></a>32. <code>FX29</code> - LD F, Vx</h4><p>將Vx的值對應到正確字型記憶體位置後存放到I<br><strong>實作方法:</strong> 第一次看到這個有點不解，舉個範例來解釋比較清楚，由於我們存放預設字型的位置是0x0000~0x0050，每個字各占5 bytes大小，假設Vx暫存器的值是3，那麼它所對應的字型3記憶體位置應為0x000F開始，所以將0x000F放至I當中。簡單來說因為每個字占5bytes而且又是從0開始，所以將Vx當中的值乘上5後即可存放至I。</p>
+<h4 id="33-FX33-LD-B-Vx"><a href="#33-FX33-LD-B-Vx" class="headerlink" title="33. FX33 - LD B, Vx"></a>33. <code>FX33</code> - LD B, Vx</h4><p>將Vx中的值轉換成BCD表示法，並將結果分別存放至記憶體位址I(百位數字),I+1(十位數字),I+2(個位數)<br><strong>實作方法:</strong> BCD轉換不多談，來說明一下I存放的方法，由於I存放的是記憶體位址，所以必須藉由memory[I]這樣的存取方式存放值到記憶體當中。</p>
+<h4 id="34-FX55-LD-I-Vx"><a href="#34-FX55-LD-I-Vx" class="headerlink" title="34. FX55 - LD [I], Vx"></a>34. <code>FX55</code> - LD [I], Vx</h4><p>俗稱的register dump，把特定範圍register所存放的值複製一份到從I開始的連續記憶體當中<br><strong>實作方法:</strong> V0~Vx依序將值複製到I, I+1, I+2….V+x當中</p>
+<h4 id="35-FX65-LD-Vx-I"><a href="#35-FX65-LD-Vx-I" class="headerlink" title="35. FX65 - LD Vx, [I]"></a>35. <code>FX65</code> - LD Vx, [I]</h4><p>從I開始的memory當中依序取出值存放到register當中<br><strong>實作方法:</strong> I, I+1, I+2….V+x依序將值複製到V0~Vx當中</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/" data-id="cjydwiek6000o64thpfkb1r8b" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Kaibao"
+        },
+        "headline": "CHIP8模擬器開發-指令集",
+        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493",
+        "keywords": "cplusplus 學習筆記 emulator",
+        "genre": "",
+        "datePublished": "2019-07-22",
+        "dateCreated": "2019-07-22",
+        "dateModified": "2019-07-22",
+        "url": "https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/",
+        "description": "
+CHIP-8每個指令占2 Bytes並以big-endian的方式存放在記憶體當中，另外有10個額外的指令可加入，但本次筆記並沒有實作。
+底下指令集的部分我也不知道為什麼心血來潮想把它翻成中文，建議還是去看原文版可能比較好懂啦(?
+NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~ F)I: Index register
+指令集1. 0N"
+        "wordCount": 596
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>追蹤 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kaibaooo" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/07/22/chip8emu-intro/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">CHIP8模擬器開發-模擬器與CHIP8簡介</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目錄</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#指令集"><span class="toc-number">1.</span> <span class="toc-text">指令集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-0NNN-SYS-addr"><span class="toc-number">1.1.</span> <span class="toc-text">1. 0NNN - SYS addr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-00E0-CLS"><span class="toc-number">1.2.</span> <span class="toc-text">2. 00E0 - CLS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-00EE-RET"><span class="toc-number">1.3.</span> <span class="toc-text">3. 00EE - RET</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1NNN-JP-addr"><span class="toc-number">1.4.</span> <span class="toc-text">4. 1NNN - JP addr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2NNN-CALL-addr"><span class="toc-number">1.5.</span> <span class="toc-text">5. 2NNN - CALL addr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3XNN-SE-Vx-byte"><span class="toc-number">1.6.</span> <span class="toc-text">6. 3XNN - SE Vx, byte</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-4XNN-SNE-Vx-byte"><span class="toc-number">1.7.</span> <span class="toc-text">7. 4XNN - SNE Vx, byte</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-5XY0-SE-Vx-Vy"><span class="toc-number">1.8.</span> <span class="toc-text">8. 5XY0 - SE Vx, Vy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-6XNN-LD-Vx-byte"><span class="toc-number">1.9.</span> <span class="toc-text">9. 6XNN - LD Vx, byte</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-7XNN-ADD-Vx-byte"><span class="toc-number">1.10.</span> <span class="toc-text">10. 7XNN - ADD Vx, byte</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-8XY0-LD-Vx-Vy"><span class="toc-number">1.11.</span> <span class="toc-text">11. 8XY0 - LD Vx, Vy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12-8XY1-OR-Vx-Vy"><span class="toc-number">1.12.</span> <span class="toc-text">12. 8XY1 - OR Vx, Vy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#13-8XY2-AND-Vx-Vy"><span class="toc-number">1.13.</span> <span class="toc-text">13. 8XY2 - AND Vx, Vy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-8XY3-XOR-Vx-Vy"><span class="toc-number">1.14.</span> <span class="toc-text">14. 8XY3 - XOR Vx, Vy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#15-8XY4-ADD-Vx-Vy"><span class="toc-number">1.15.</span> <span class="toc-text">15. 8XY4 - ADD Vx, Vy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#16-8XY5-SUB-Vx-Vy"><span class="toc-number">1.16.</span> <span class="toc-text">16. 8XY5 - SUB Vx, Vy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#17-8XY6-SHR-Vx-Vy"><span class="toc-number">1.17.</span> <span class="toc-text">17. 8XY6 - SHR Vx {, Vy}</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#18-8XY7-SUBN-Vx-Vy"><span class="toc-number">1.18.</span> <span class="toc-text">18. 8XY7 - SUBN Vx, Vy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#19-8XYE-SHL-Vx-Vy"><span class="toc-number">1.19.</span> <span class="toc-text">19. 8XYE - SHL Vx {, Vy}</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#20-9xy0-SNE-Vx-Vy"><span class="toc-number">1.20.</span> <span class="toc-text">20. 9xy0 - SNE Vx, Vy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#21-ANNN-LD-I-addr"><span class="toc-number">1.21.</span> <span class="toc-text">21. ANNN - LD I, addr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#22-BNNN-JP-V0-addr"><span class="toc-number">1.22.</span> <span class="toc-text">22. BNNN - JP V0, addr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#23-CXNN-RND-Vx-byte"><span class="toc-number">1.23.</span> <span class="toc-text">23. CXNN - RND Vx, byte</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#24-DXYN-DRW-Vx-Vy-nibble"><span class="toc-number">1.24.</span> <span class="toc-text">24. DXYN - DRW Vx, Vy, nibble</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#25-Ex9E-SKP-Vx"><span class="toc-number">1.25.</span> <span class="toc-text">25. Ex9E - SKP Vx</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#26-EXA1-SKNP-Vx"><span class="toc-number">1.26.</span> <span class="toc-text">26. EXA1 - SKNP Vx</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#27-FX07-LD-Vx-DT"><span class="toc-number">1.27.</span> <span class="toc-text">27. FX07 - LD Vx, DT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#28-Fx0A-LD-Vx-K"><span class="toc-number">1.28.</span> <span class="toc-text">28. Fx0A - LD Vx, K</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#29-FX15-LD-DT-Vx"><span class="toc-number">1.29.</span> <span class="toc-text">29. FX15 - LD DT, Vx</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#30-FX18-LD-ST-Vx"><span class="toc-number">1.30.</span> <span class="toc-text">30. FX18 - LD ST, Vx</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#31-FX1E-ADD-I-Vx"><span class="toc-number">1.31.</span> <span class="toc-text">31. FX1E - ADD I, Vx</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#32-FX29-LD-F-Vx"><span class="toc-number">1.32.</span> <span class="toc-text">32. FX29 - LD F, Vx</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#33-FX33-LD-B-Vx"><span class="toc-number">1.33.</span> <span class="toc-text">33. FX33 - LD B, Vx</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#34-FX55-LD-I-Vx"><span class="toc-number">1.34.</span> <span class="toc-text">34. FX55 - LD [I], Vx</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#35-FX65-LD-Vx-I"><span class="toc-number">1.35.</span> <span class="toc-text">35. FX65 - LD Vx, [I]</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493)" alt="CHIP8模擬器開發-指令集" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-instruction-set/" class="title">CHIP8模擬器開發-指令集</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/18/學習筆記/opencv-vs2019/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fopencvwithvs2019.png?alt=media&token=4e562b86-0259-4880-a480-2da426361d83)" alt="在Visual Studio 2019上使用OpenCV" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/18/學習筆記/opencv-vs2019/" class="title">在Visual Studio 2019上使用OpenCV</a></p>
+                            <p class="item-date"><time datetime="2019-07-17T16:00:00.000Z" itemprop="datePublished">2019-07-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/13/vscode-installation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/vscode-installation%2FCNMjcIl.png?alt=media&token=ed31db7e-69e9-4642-85f5-9348917212a9)" alt="如何正確安裝VSCode" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/13/vscode-installation/" class="title">如何正確安裝VSCode</a></p>
+                            <p class="item-date"><time datetime="2019-07-12T16:00:00.000Z" itemprop="datePublished">2019-07-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://i.imgur.com/O48iwfA.png)" alt="Python資料科學學習筆記-UniversalFunctions" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/11/學習筆記/datascience-note-numpy-universalfunctions/" class="title">Python資料科學學習筆記-UniversalFunctions</a></p>
+                            <p class="item-date"><time datetime="2019-07-10T16:00:00.000Z" itemprop="datePublished">2019-07-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">所有文章</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cplusplus/">Cplusplus</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cplusplus/">cplusplus</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emulator/">emulator</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frontend/">frontend</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/學習筆記/">學習筆記</a><span class="tag-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Kaibao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'kaibaogithubpage';
+    
+    
+    var disqus_url = 'https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
