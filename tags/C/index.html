@@ -60,6 +60,13 @@ ga('send', 'pageview');
         google_ad_client: "ca-pub-3215972389999620",
         enable_page_level_ads: true
     });
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-3215972389999620",
+              enable_page_level_ads: true
+         });
     </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 </html>
@@ -169,7 +176,7 @@ ga('send', 'pageview');
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/11/11/uva11292/" class="thumbnail">
+        <a href="/2018/11/11/uva10189/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -179,7 +186,7 @@ ga('send', 'pageview');
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2018/11/11/uva11292/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2018/11/11/uva10189/">0</span>
     
 </span>
 
@@ -197,15 +204,15 @@ ga('send', 'pageview');
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/11/11/uva11292/">UVA11292-Dragon of Loowater解法</a>
+        <a href="/2018/11/11/uva10189/">UVA10189-Minesweeper解法</a>
         </h1>
     
 
         <p class="article-excerpt">
-            敘述有個王國遭受龍群的侵襲，需要聘請騎士把龍全部消滅掉，否則王國會滅亡。
-騎士身高(int)必須大於等於龍的頭數(int)才能殺掉龍，每聘用一位騎士需要花費其身高的金幣數(e.g 身高為3的騎士，需要花費3金幣)，每位騎士只能殺死一條龍。
-輸入說明每行輸入兩個整數n,m，分別代表龍群的數量以及騎士的數量，接下來n行資料分別為龍的頭數，接續下去的m行資料為騎士的身高
-輸出說明輸出最小花費金幣數
+            敘述計算周遭九宮格的地雷數
+輸入說明輸入兩整數n,m，分別為地雷區的row和column接下來n行輸入地雷的位置，輸入 * 代表有地雷，輸入 . 代表無地雷
+輸出說明輸出如Windows踩地雷那樣的周圍九宮格地雷數
+Solution雖然題目定義最高為100x100的大小，但為了讓邊界處理簡單些，我們宣告102x102大小的二維陣列來處理
         </p>
     </div>
 </article>
@@ -272,7 +279,7 @@ Solution將執行過的數字記錄下來record[]，每次平方後做一次查�
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/11/11/uva10189/" class="thumbnail">
+        <a href="/2018/11/11/uva11292/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -282,7 +289,7 @@ Solution將執行過的數字記錄下來record[]，每次平方後做一次查�
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2018/11/11/uva10189/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2018/11/11/uva11292/">0</span>
     
 </span>
 
@@ -300,15 +307,15 @@ Solution將執行過的數字記錄下來record[]，每次平方後做一次查�
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/11/11/uva10189/">UVA10189-Minesweeper解法</a>
+        <a href="/2018/11/11/uva11292/">UVA11292-Dragon of Loowater解法</a>
         </h1>
     
 
         <p class="article-excerpt">
-            敘述計算周遭九宮格的地雷數
-輸入說明輸入兩整數n,m，分別為地雷區的row和column接下來n行輸入地雷的位置，輸入 * 代表有地雷，輸入 . 代表無地雷
-輸出說明輸出如Windows踩地雷那樣的周圍九宮格地雷數
-Solution雖然題目定義最高為100x100的大小，但為了讓邊界處理簡單些，我們宣告102x102大小的二維陣列來處理
+            敘述有個王國遭受龍群的侵襲，需要聘請騎士把龍全部消滅掉，否則王國會滅亡。
+騎士身高(int)必須大於等於龍的頭數(int)才能殺掉龍，每聘用一位騎士需要花費其身高的金幣數(e.g 身高為3的騎士，需要花費3金幣)，每位騎士只能殺死一條龍。
+輸入說明每行輸入兩個整數n,m，分別代表龍群的數量以及騎士的數量，接下來n行資料分別為龍的頭數，接續下去的m行資料為騎士的身高
+輸出說明輸出最小花費金幣數
         </p>
     </div>
 </article>
