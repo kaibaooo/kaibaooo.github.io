@@ -236,7 +236,7 @@ ga('send', 'pageview');
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/11/11/uva10591/" class="thumbnail">
+        <a href="/2018/11/11/uva11292/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -246,7 +246,7 @@ ga('send', 'pageview');
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2018/11/11/uva10591/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2018/11/11/uva11292/">0</span>
     
 </span>
 
@@ -264,16 +264,15 @@ ga('send', 'pageview');
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/11/11/uva10591/">UVA10591-Happy Number解法</a>
+        <a href="/2018/11/11/uva11292/">UVA11292-Dragon of Loowater解法</a>
         </h1>
     
 
         <p class="article-excerpt">
-            敘述7 is a Happy number since 7 → 49 → 97 → 130 → 10 → 14 is an Unhappy number since 4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4
-輸入說明一個正整數
-輸出說明輸出是否為Happy Number
-Solution將執行過的數字記錄下來record[]，每次平方後做一次查表，看看有沒有重複做過的數字，如果有重複數字就不是HappyNumber。
-將一路上執行過的數字紀錄下來，每次跑下一個數字之前先從頭檢查一遍是否重複，如果有重複數字的話，則為UnhappyNumeber
+            敘述有個王國遭受龍群的侵襲，需要聘請騎士把龍全部消滅掉，否則王國會滅亡。
+騎士身高(int)必須大於等於龍的頭數(int)才能殺掉龍，每聘用一位騎士需要花費其身高的金幣數(e.g 身高為3的騎士，需要花費3金幣)，每位騎士只能殺死一條龍。
+輸入說明每行輸入兩個整數n,m，分別代表龍群的數量以及騎士的數量，接下來n行資料分別為龍的頭數，接續下去的m行資料為騎士的身高
+輸出說明輸出最小花費金幣數
         </p>
     </div>
 </article>
@@ -339,7 +338,7 @@ Solution雖然題目定義最高為100x100的大小，但為了讓邊界處理�
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/11/11/uva11292/" class="thumbnail">
+        <a href="/2018/11/11/uva10591/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -349,7 +348,7 @@ Solution雖然題目定義最高為100x100的大小，但為了讓邊界處理�
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2018/11/11/uva11292/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2018/11/11/uva10591/">0</span>
     
 </span>
 
@@ -367,15 +366,16 @@ Solution雖然題目定義最高為100x100的大小，但為了讓邊界處理�
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/11/11/uva11292/">UVA11292-Dragon of Loowater解法</a>
+        <a href="/2018/11/11/uva10591/">UVA10591-Happy Number解法</a>
         </h1>
     
 
         <p class="article-excerpt">
-            敘述有個王國遭受龍群的侵襲，需要聘請騎士把龍全部消滅掉，否則王國會滅亡。
-騎士身高(int)必須大於等於龍的頭數(int)才能殺掉龍，每聘用一位騎士需要花費其身高的金幣數(e.g 身高為3的騎士，需要花費3金幣)，每位騎士只能殺死一條龍。
-輸入說明每行輸入兩個整數n,m，分別代表龍群的數量以及騎士的數量，接下來n行資料分別為龍的頭數，接續下去的m行資料為騎士的身高
-輸出說明輸出最小花費金幣數
+            敘述7 is a Happy number since 7 → 49 → 97 → 130 → 10 → 14 is an Unhappy number since 4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4
+輸入說明一個正整數
+輸出說明輸出是否為Happy Number
+Solution將執行過的數字記錄下來record[]，每次平方後做一次查表，看看有沒有重複做過的數字，如果有重複數字就不是HappyNumber。
+將一路上執行過的數字紀錄下來，每次跑下一個數字之前先從頭檢查一遍是否重複，如果有重複數字的話，則為UnhappyNumeber
         </p>
     </div>
 </article>
@@ -600,26 +600,6 @@ sudo vim /etc/apache2/mods-e
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493)" alt="CHIP8模擬器開發-指令集" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/07/22/chip8emu-instruction-set/" class="title">CHIP8模擬器開發-指令集</a></p>
-                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
                             <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
     
     
@@ -633,6 +613,26 @@ sudo vim /etc/apache2/mods-e
                         <div class="item-inner">
                             <p class="item-category"></p>
                             <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493)" alt="CHIP8模擬器開發-指令集" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-instruction-set/" class="title">CHIP8模擬器開發-指令集</a></p>
                             <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
                         </div>
                     </li>
