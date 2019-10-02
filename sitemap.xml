@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kaibaooo.github.io/project/index.html</loc>
+    
+    <lastmod>2019-10-02T12:52:14.690Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kaibaooo.github.io/2019/10/01/raspberrypi3-static-ip/</loc>
     
     <lastmod>2019-10-01T13:12:49.353Z</lastmod>
@@ -129,13 +136,6 @@
   
   <url>
     <loc>https://kaibaooo.github.io/tags/index.html</loc>
-    
-    <lastmod>2018-11-09T05:33:34.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://kaibaooo.github.io/project/index.html</loc>
     
     <lastmod>2018-11-09T05:33:34.000Z</lastmod>
     
