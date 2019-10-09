@@ -387,7 +387,7 @@ ga('send', 'pageview');
 <h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">char</span> tmp;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span> &amp;&amp; m == <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(count&gt;<span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">        <span class="keyword">int</span> <span class="built_in">map</span>[<span class="number">102</span>][<span class="number">102</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">        <span class="keyword">int</span> danZone[<span class="number">102</span>][<span class="number">102</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            getchar();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j++) &#123;</span><br><span class="line">                </span><br><span class="line">                <span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;tmp);</span><br><span class="line">                <span class="keyword">if</span> (tmp == <span class="string">'*'</span>) &#123;</span><br><span class="line">                    <span class="built_in">map</span>[i][j] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    <span class="built_in">map</span>[i][j] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">map</span>[i][j] == <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> a = <span class="number">-1</span>; a &lt;= <span class="number">1</span>; a++)</span><br><span class="line">                        <span class="keyword">for</span> (<span class="keyword">int</span> b = <span class="number">-1</span>; b &lt;= <span class="number">1</span>; b++) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (<span class="built_in">map</span>[i + a][j + b] != <span class="number">1</span>)</span><br><span class="line">                                danZone[i + a][j + b]++;</span><br><span class="line">                        &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Field #%d:\n"</span>, count);</span><br><span class="line">        count++;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">map</span>[i][j] == <span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">"*"</span>);</span><br><span class="line">                <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"%d"</span>, danZone[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
         <footer class="article-footer">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                 <ins class="adsbygoogle"
                     style="display:block; text-align:center;"
                     data-ad-layout="in-article"
@@ -396,12 +396,12 @@ ga('send', 'pageview');
                     data-ad-slot="3927264463"></ins>
                 <script>
                     (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+                </script> -->
             
 
 
 
-    <a data-url="https://kaibaooo.github.io/2018/11/11/uva10189/" data-id="ck1jeepsy000r6gth85ogwmmj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2018/11/11/uva10189/" data-id="ck1jeivfi000uv0thv0oei6pv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -525,11 +525,11 @@ Solution雖然題目定義最高為100x100的大小，但為了讓邊界處理�
         
 <nav id="article-nav">
     
-        <a href="/2019/03/02/cors-solution/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/11/11/uva10591/" id="article-nav-newer" class="article-nav-link-wrap">
         <strong class="article-nav-caption">下一篇</strong>
         <p class="article-nav-title">
         
-            喔不！是CORS
+            UVA10591-Happy Number解法
         
         </p>
         <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
@@ -620,6 +620,26 @@ Solution雖然題目定義最高為100x100的大小，但為了讓邊界處理�
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-code/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-code-thumbnail.png?alt=media&token=da98d6da-d31d-4b22-85ab-285ab38885b5)" alt="CHIP8模擬器開發-來寫程式吧" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-code/" class="title">CHIP8模擬器開發-來寫程式吧</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
     
     
@@ -633,26 +653,6 @@ Solution雖然題目定義最高為100x100的大小，但為了讓邊界處理�
                         <div class="item-inner">
                             <p class="item-category"></p>
                             <p class="item-title"><a href="/2019/07/22/chip8emu-instruction-set/" class="title">CHIP8模擬器開發-指令集</a></p>
-                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
                             <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
                         </div>
                     </li>

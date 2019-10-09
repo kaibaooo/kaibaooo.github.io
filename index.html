@@ -328,108 +328,6 @@ interface eth0# Static IPstatic ip_address=x.x.x.x/24# Routers/Gatewaystati
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493)" alt="CHIP8模擬器開發-指令集" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            
-            </div>
-            <div class="date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/07/22/chip8emu-instruction-set/">CHIP8模擬器開發-指令集</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-CHIP-8每個指令占2 Bytes並以big-endian的方式存放在記憶體當中，另外有10個額外的指令可加入，但本次筆記並沒有實作。
-底下指令集的部分我也不知道為什麼心血來潮想把它翻成中文，建議還是去看原文版可能比較好懂啦(?
-NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~ F)I: Index register
-指令集1. 0N
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            
-            </div>
-            <div class="date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/07/22/chip8emu-intro/">CHIP8模擬器開發-模擬器與CHIP8簡介</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。
-電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
         <a href="/2019/07/22/chip8emu-code/" class="thumbnail">
     
     
@@ -496,6 +394,108 @@ unsigned short
 
 
 建立一
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493)" alt="CHIP8模擬器開發-指令集" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            
+            </div>
+            <div class="date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2019/07/22/chip8emu-instruction-set/">CHIP8模擬器開發-指令集</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            
+CHIP-8每個指令占2 Bytes並以big-endian的方式存放在記憶體當中，另外有10個額外的指令可加入，但本次筆記並沒有實作。
+底下指令集的部分我也不知道為什麼心血來潮想把它翻成中文，建議還是去看原文版可能比較好懂啦(?
+NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~ F)I: Index register
+指令集1. 0N
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            
+            </div>
+            <div class="date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2019/07/22/chip8emu-intro/">CHIP8模擬器開發-模擬器與CHIP8簡介</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            
+模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。
+電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指
         </p>
     </div>
 </article>
@@ -841,6 +841,26 @@ array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-code/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-code-thumbnail.png?alt=media&token=da98d6da-d31d-4b22-85ab-285ab38885b5)" alt="CHIP8模擬器開發-來寫程式吧" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-code/" class="title">CHIP8模擬器開發-來寫程式吧</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
     
     
@@ -854,26 +874,6 @@ array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
                         <div class="item-inner">
                             <p class="item-category"></p>
                             <p class="item-title"><a href="/2019/07/22/chip8emu-instruction-set/" class="title">CHIP8模擬器開發-指令集</a></p>
-                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/07/22/chip8emu-intro/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559)" alt="CHIP8模擬器開發-模擬器與CHIP8簡介" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/07/22/chip8emu-intro/" class="title">CHIP8模擬器開發-模擬器與CHIP8簡介</a></p>
                             <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
                         </div>
                     </li>
