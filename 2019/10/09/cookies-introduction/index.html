@@ -12,19 +12,19 @@
     
         <meta name="keywords" content="Javascript">
     
-    <meta name="description" content="在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有Cookie以及前端技術上使用Cookie的方法。 Cookie?紀錄你在網頁上的狀態在講解Cookie一來之前，先來聊聊HTTP這個東西，HTTP是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在HTTP的世界中是沒有狀態可言的，也就是所謂的st">
+    <meta name="description" content="在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有 Cookie 以及前端技術上使用 Cookie 的方法。 Cookie?紀錄你在網頁上的狀態在講解 Cookie 一來之前，先來聊聊 HTTP 這個東西，HTTP 是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在 HTTP 的世界中是沒有狀態可">
 <meta name="keywords" content="Javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="透過購物車來了解Cookie的運作方式">
 <meta property="og:url" content="https://kaibaooo.github.io/2019/10/09/cookies-introduction/index.html">
 <meta property="og:site_name" content="Kaibao的學習札記">
-<meta property="og:description" content="在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有Cookie以及前端技術上使用Cookie的方法。 Cookie?紀錄你在網頁上的狀態在講解Cookie一來之前，先來聊聊HTTP這個東西，HTTP是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在HTTP的世界中是沒有狀態可言的，也就是所謂的st">
+<meta property="og:description" content="在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有 Cookie 以及前端技術上使用 Cookie 的方法。 Cookie?紀錄你在網頁上的狀態在講解 Cookie 一來之前，先來聊聊 HTTP 這個東西，HTTP 是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在 HTTP 的世界中是沒有狀態可">
 <meta property="og:locale" content="zh-TW">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fwhere-cookie.png?alt=media&token=ee97e6da-443d-4a18-a1c4-aec0b7d372a5">
-<meta property="og:updated_time" content="2019-10-09T13:57:28.261Z">
+<meta property="og:updated_time" content="2019-10-09T15:40:32.891Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="透過購物車來了解Cookie的運作方式">
-<meta name="twitter:description" content="在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有Cookie以及前端技術上使用Cookie的方法。 Cookie?紀錄你在網頁上的狀態在講解Cookie一來之前，先來聊聊HTTP這個東西，HTTP是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在HTTP的世界中是沒有狀態可言的，也就是所謂的st">
+<meta name="twitter:description" content="在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有 Cookie 以及前端技術上使用 Cookie 的方法。 Cookie?紀錄你在網頁上的狀態在講解 Cookie 一來之前，先來聊聊 HTTP 這個東西，HTTP 是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在 HTTP 的世界中是沒有狀態可">
 <meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fwhere-cookie.png?alt=media&token=ee97e6da-443d-4a18-a1c4-aec0b7d372a5">
     
 
@@ -197,41 +197,41 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有Cookie以及前端技術上使用Cookie的方法。</p>
-<h2 id="Cookie-紀錄你在網頁上的狀態"><a href="#Cookie-紀錄你在網頁上的狀態" class="headerlink" title="Cookie?紀錄你在網頁上的狀態"></a>Cookie?紀錄你在網頁上的狀態</h2><p>在講解Cookie一來之前，先來聊聊HTTP這個東西，HTTP是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，<strong>在HTTP的世界中是沒有狀態可言的，也就是所謂的stateless</strong>，每次連線請求都是獨立發生，不會因為前一秒才傳照片給你就把你當朋友，每次連線都是新的開始。</p>
-<p>也因此發展出的一些網頁儲存狀態的方法，最常見的就是<strong>Cookie</strong>和<strong>session</strong>兩種方法，本文要講的Cookie是前後端都可以做修改的，並且是會附屬在HTTP的連線請求上，後者是僅能在伺服器端上做的狀態紀錄。</p>
-<p>在Chrome上有兩種方法可以看到自己在網站上的Cookie</p>
+            <p>在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有 Cookie 以及前端技術上使用 Cookie 的方法。</p>
+<h2 id="Cookie-紀錄你在網頁上的狀態"><a href="#Cookie-紀錄你在網頁上的狀態" class="headerlink" title="Cookie?紀錄你在網頁上的狀態"></a>Cookie?紀錄你在網頁上的狀態</h2><p>在講解 Cookie 一來之前，先來聊聊 HTTP 這個東西，HTTP 是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，<strong>在 HTTP 的世界中是沒有狀態可言的，也就是所謂的stateless</strong>，每次連線請求都是獨立發生，不會因為前一秒才傳照片給你就把你當朋友，每次連線都是新的開始。</p>
+<p>也因此發展出的一些網頁儲存狀態的方法，最常見的就是<strong>Cookie</strong>和<strong>session</strong>兩種方法，本文要講的 Cookie 是前後端都可以做修改的，並且是會附屬在 HTTP 的連線請求上，後者是僅能在伺服器端上做的狀態紀錄。</p>
+<p>在 Chrome 上有兩種方法可以看到自己在網站上的Cookie</p>
 <ol>
-<li><strong>從網址列的左邊小i圖示</strong></li>
+<li><strong>從網址列的左邊小 i 圖示</strong></li>
 </ol>
 <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fwhere-cookie.png?alt=media&token=ee97e6da-443d-4a18-a1c4-aec0b7d372a5" alt></p>
 <ol start="2">
 <li><strong>F12開發人員工具&gt;Network</strong></li>
 </ol>
 <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fwhere-cookie2.png?alt=media&token=04f5d1c2-d2eb-47bb-863e-1e7cf3c9b396" alt></p>
-<h2 id="如何使用Cookie儲存資料"><a href="#如何使用Cookie儲存資料" class="headerlink" title="如何使用Cookie儲存資料"></a>如何使用Cookie儲存資料</h2><p>那個，Cookie的欄位長成甚麼樣子呢?</p>
+<h2 id="如何使用-Cookie-儲存資料"><a href="#如何使用-Cookie-儲存資料" class="headerlink" title="如何使用 Cookie 儲存資料"></a>如何使用 Cookie 儲存資料</h2><p>那個，Cookie 的欄位長成甚麼樣子呢?</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Cookie:key1=value1;key2=value2;</span><br></pre></td></tr></table></figure>
 
-<p>以分號分開的格式，但這樣的資料每次都要處理很麻煩，所以就藉由一個套件叫做<a href="https://github.com/js-cookie/js-cookie" target="_blank" rel="noopener">js-cookie</a>，這個套件主要是幫我們處理了一下Cookie的資料，讓我們能夠很簡單的編輯Cookie的內容。</p>
-<p>首先，在HTML中以CDN方式引入<a href="https://github.com/js-cookie/js-cookie" target="_blank" rel="noopener">js-cookie</a></p>
+<p>以分號分開的格式，但這樣的資料每次都要處理很麻煩，所以就藉由一個套件叫做<a href="https://github.com/js-cookie/js-cookie" target="_blank" rel="noopener">js-cookie</a>，這個套件主要是幫我們處理了一下 Cookie 的資料，讓我們能夠很簡單的編輯 Cookie 的內容。</p>
+<p>首先，在 HTML 中以 CDN 方式引入<a href="https://github.com/js-cookie/js-cookie" target="_blank" rel="noopener">js-cookie</a></p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>當然也可以到Github的repo上找到其他使用的方法，看你喜歡哪種</p>
-<p>完成之後就可以來使用Cookie存放資料了</p>
-<h3 id="設定新的Cookie"><a href="#設定新的Cookie" class="headerlink" title="設定新的Cookie"></a>設定新的Cookie</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.set(<span class="string">'foo'</span>, <span class="string">'bar'</span>)</span><br></pre></td></tr></table></figure>
+<p>當然也可以到 Github 的 repo 上找到其他使用的方法，看你喜歡哪種</p>
+<p>完成之後就可以來使用 Cookie 存放資料了</p>
+<h3 id="設定新的-Cookie"><a href="#設定新的-Cookie" class="headerlink" title="設定新的 Cookie"></a>設定新的 Cookie</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.set(<span class="string">'foo'</span>, <span class="string">'bar'</span>)</span><br></pre></td></tr></table></figure>
 
-<p>由於<strong>Cookie是存放在你的瀏覽器上面</strong>，沒設定時效性的話，在瀏覽器關閉時Cookie就會同時失效，所以通常我們都會替他設一個時效性，過了時效瀏覽器就會自己幫他清除。</p>
+<p>由於<strong>Cookie 是存放在你的瀏覽器上面</strong>，沒設定時效性的話，在瀏覽器關閉時 Cookie 就會同時失效，所以通常我們都會替他設一個時效性，過了時效瀏覽器就會自己幫他清除。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.set(<span class="string">'name'</span>, <span class="string">'value'</span>, &#123; <span class="attr">expires</span>: <span class="number">7</span> &#125;)</span><br><span class="line"><span class="comment">// 7天後這個Cookie就過期</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fresult.png?alt=media&token=daae8411-b8b0-4fc8-be5c-3678bea2188c" alt></p>
-<h3 id="取得Cookie的值"><a href="#取得Cookie的值" class="headerlink" title="取得Cookie的值"></a>取得Cookie的值</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.get(<span class="string">'foo'</span>)</span><br><span class="line"><span class="comment">// 'bar'</span></span><br></pre></td></tr></table></figure>
+<h3 id="取得-Cookie-的值"><a href="#取得-Cookie-的值" class="headerlink" title="取得 Cookie 的值"></a>取得 Cookie 的值</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.get(<span class="string">'foo'</span>)</span><br><span class="line"><span class="comment">// 'bar'</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="刪除某個Cookie"><a href="#刪除某個Cookie" class="headerlink" title="刪除某個Cookie"></a>刪除某個Cookie</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.remove(<span class="string">'foo'</span>)</span><br><span class="line"><span class="comment">// 'bar'</span></span><br></pre></td></tr></table></figure>
+<h3 id="刪除某個-Cookie"><a href="#刪除某個-Cookie" class="headerlink" title="刪除某個 Cookie"></a>刪除某個 Cookie</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.remove(<span class="string">'foo'</span>)</span><br><span class="line"><span class="comment">// 'bar'</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="進階一點的用法"><a href="#進階一點的用法" class="headerlink" title="進階一點的用法"></a>進階一點的用法</h3><ul>
 <li><strong>路徑(path)</strong></li>
 </ul>
-<p>所謂路徑就是在你域名或IP之後的那一串字</p>
+<p>所謂路徑就是在你域名或 IP 之後的那一串字</p>
 <p>例如:</p>
 <ul>
 <li><a href="https://yourdomain.com/" target="_blank" rel="noopener">https://yourdomain.com/</a></li>
@@ -241,51 +241,51 @@ ga('send', 'pageview');
 <li><a href="https://yourdomain.com/car" target="_blank" rel="noopener">https://yourdomain.com/car</a></li>
 </ul>
 <p>這個的路徑就是<code>/car</code></p>
-<p>知道路徑的概念之後就可以做更進階的用法了，如果你只想要在購物車的頁面上才能讀取到物品的Cookie，那麼可以加入一個path的屬性(假設路徑是”/car”)，當然這是非必要，只是有些內容比較敏感，可能就需要限制能夠存取的路徑。</p>
+<p>知道路徑的概念之後就可以做更進階的用法了，如果你只想要在購物車的頁面上才能讀取到物品的 Cookie ，那麼可以加入一個 path 的屬性(假設路徑是”/car”)，當然這是非必要，只是有些內容比較敏感，可能就需要限制能夠存取的路徑。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.set(<span class="string">'name3'</span>, <span class="string">'value'</span>, &#123; <span class="attr">path</span>: <span class="string">'/car'</span> &#125;)</span><br></pre></td></tr></table></figure>
 
-<p>如此一來只有在<code>https://yourdomain.com/car</code>這個網址下才能取得這個Cookie了</p>
+<p>如此一來只有在 <code>https://yourdomain.com/car</code> 這個網址下才能取得這個 Cookie 了</p>
 <ul>
 <li><strong>域名(domain)</strong></li>
 </ul>
-<p>域名簡單來說就是網址上通訊協定之後，第一個slash之前的區塊叫做域名，當然有些時候也有可能是IP，以下舉例</p>
+<p>域名簡單來說就是網址上通訊協定之後，第一個 slash 之前的區塊叫做域名，當然有些時候也有可能是 IP ，以下舉例</p>
 <ul>
-<li><a href="https://yourdomain.com/" target="_blank" rel="noopener">https://yourdomain.com/</a> - 域名是<code>yourdomain.com</code></li>
-<li><a href="https://yourdomain.tw/" target="_blank" rel="noopener">https://yourdomain.tw/</a> - 域名是<code>yourdomain.tw</code></li>
+<li><a href="https://yourdomain.com/" target="_blank" rel="noopener">https://yourdomain.com/</a> - 域名是 <code>yourdomain.com</code></li>
+<li><a href="https://yourdomain.tw/" target="_blank" rel="noopener">https://yourdomain.tw/</a> - 域名是 <code>yourdomain.tw</code></li>
 </ul>
 <p>另外還要提到的一個東西叫做<strong>子網域</strong>，子網域是附屬在網域底下的名稱，假設我擁有一個域名叫做 yourdomain.com，那麼我就有權限能夠在這個域名底下掛上子網域，如下</p>
 <ul>
 <li>sub1.yourdomain.com</li>
 <li>sub2.yourdomain.com</li>
 </ul>
-<p>這兩個例子也是隸屬在yourdomain.com底下的網域</p>
-<p>網域的內容其實可以開獨立一篇文章來解釋，但這裡是Cookie的場，就不做太多講幾了。</p>
-<p>Cookie不只可以針對路徑去設定Cookie，也可以針對特定域名上去做設定，使用方式如下</p>
+<p>這兩個例子也是隸屬在 yourdomain.com 底下的網域</p>
+<p>網域的內容其實可以開獨立一篇文章來解釋，但這裡是 Cookie 的場，就不做太多講解了。</p>
+<p>Cookie 不只可以針對路徑去設定 Cookie ，也可以針對特定域名上去做設定，使用方式如下</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.set(<span class="string">'key'</span>, <span class="string">'value'</span>, &#123; <span class="attr">domain</span>: <span class="string">'sub.yourdomain.com'</span> &#125;)</span><br></pre></td></tr></table></figure>
 
-<p>這個Cookie設定之後就只能在<code>sub.yourdomain.com</code>底下存取，在<code>yourdomain.com</code>是無法成功取得的。</p>
+<p>這個 Cookie 設定之後就只能在 <code>sub.yourdomain.com</code> 底下存取，在 <code>yourdomain.com</code> 是無法成功取得的。</p>
 <p>但如果執行的是</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.set(<span class="string">'key'</span>, <span class="string">'value'</span>, &#123; <span class="attr">domain</span>: <span class="string">'yourdomain.com'</span> &#125;)</span><br></pre></td></tr></table></figure>
 
-<p>則在主網域(<code>yourdomain.com</code>)與子網域(<code>sub.yourdomain.com</code>)都是能夠存取到這個Cookiek的。</p>
-<h2 id="應用場景示範-餅乾電商"><a href="#應用場景示範-餅乾電商" class="headerlink" title="應用場景示範:餅乾電商"></a>應用場景示範:餅乾電商</h2><p>首先，我們先做個簡單的購物頁面如下圖，並透過localhost的方式將網頁打開</p>
+<p>則在主網域(<code>yourdomain.com</code>)與子網域(<code>sub.yourdomain.com</code>)都是能夠存取到這個 Cookie 的。</p>
+<h2 id="應用場景示範-餅乾電商"><a href="#應用場景示範-餅乾電商" class="headerlink" title="應用場景示範 : 餅乾電商"></a>應用場景示範 : 餅乾電商</h2><p>首先，我們先做個簡單的購物頁面如下圖，並透過 localhost 的方式將網頁打開</p>
 <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fsample-page.png?alt=media&token=2a68a930-714d-44d3-944a-55876c00574d" alt></p>
-<p>接下來寫個JS function，等一下要讓加入購物車按鈕按下時能夠將品項放到Cookie中</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addToCar</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">        <span class="comment">//item為品項名稱，型態為字串</span></span><br><span class="line">    <span class="keyword">if</span>(Cookies.get(<span class="string">"carItem"</span>) == <span class="literal">undefined</span>)&#123;</span><br><span class="line">                <span class="comment">//若目前沒有carItem這個key的Cookie，直接新增一個，並只對購物車頁面設定Cookie</span></span><br><span class="line">        Cookies.set(<span class="string">"carItem"</span>, item, &#123; <span class="attr">path</span>: <span class="string">'/car.html'</span> &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//有的話就用逗號將品項做分隔再加入至carItem中</span></span><br><span class="line">        currentItem = Cookies.get(<span class="string">"carItem"</span>);</span><br><span class="line">        currentItem = currentItem+<span class="string">","</span>+item; </span><br><span class="line">        Cookies.set(<span class="string">"carItem"</span>, currentItem, &#123; <span class="attr">path</span>: <span class="string">'/car.html'</span> &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    alert(<span class="string">"已加入"</span>+item+<span class="string">"至購物車"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下來寫個 JS function ，等一下要讓加入購物車按鈕按下時能夠將品項放到 Cookie 中</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addToCar</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">        <span class="comment">//item為品項名稱，型態為字串</span></span><br><span class="line">    <span class="keyword">if</span>(Cookies.get(<span class="string">"carItem"</span>) == <span class="literal">undefined</span>)&#123;</span><br><span class="line">                <span class="comment">//若目前沒有 carItem 這個 key 的 Cookie ，直接新增一個，並只對購物車頁面設定 Cookie</span></span><br><span class="line">        Cookies.set(<span class="string">"carItem"</span>, item, &#123; <span class="attr">path</span>: <span class="string">'/car.html'</span> &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//有的話就用逗號將品項做分隔再加入至 carItem 中</span></span><br><span class="line">        currentItem = Cookies.get(<span class="string">"carItem"</span>);</span><br><span class="line">        currentItem = currentItem+<span class="string">","</span>+item; </span><br><span class="line">        Cookies.set(<span class="string">"carItem"</span>, currentItem, &#123; <span class="attr">path</span>: <span class="string">'/car.html'</span> &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    alert(<span class="string">"已加入"</span>+item+<span class="string">"至購物車"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>寫好寫入Cookie的函式之後，就將該功能帶入至按紐當中</p>
+<p>寫好寫入 Cookie 的函式之後，就將該功能帶入至按紐當中</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary"</span> <span class="attr">onclick</span>=<span class="string">"addToCar('餅乾一號')"</span>&gt;</span>加入購物車<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>這樣就完成簡易購物車的功能了，夠簡單吧! 我們來按個按鈕試試看</p>
 <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Falert.png?alt=media&token=6775638e-8d1a-431d-be8c-8eb0e009546f" alt></p>
-<p>看起來活得好好的，接下來我們創立一個<code>car.html</code>的頁面</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>我的購物車<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="comment">//若Cookies中沒有carItem這個key，提醒使用者快去買東西!!</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(Cookies.get(<span class="string">"carItem"</span>) == <span class="literal">undefined</span>)&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> element = <span class="built_in">document</span>.createElement(<span class="string">"p"</span>);</span></span><br><span class="line"><span class="javascript">            element.innerText = <span class="string">"購物車內沒有物品喔!趕快去選購"</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">document</span>.querySelector(<span class="string">"ul"</span>).appendChild(element);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">//藉由split方法將逗號切開來，即可把品項一個一個列出來</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> items = Cookies.get(<span class="string">"carItem"</span>);</span></span><br><span class="line"><span class="javascript">            items = items.split(<span class="string">","</span>);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> items)&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> element = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);</span></span><br><span class="line"><span class="undefined">                element.innerText = item;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">document</span>.querySelector(<span class="string">"ul"</span>).appendChild(element);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>看起來活得好好的，接下來我們創立一個 <code>car.html</code> 的頁面</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>我的購物車<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="comment">//若 Cookies 中沒有 carItem 這個 key ，提醒使用者快去買東西!!</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(Cookies.get(<span class="string">"carItem"</span>) == <span class="literal">undefined</span>)&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> element = <span class="built_in">document</span>.createElement(<span class="string">"p"</span>);</span></span><br><span class="line"><span class="javascript">            element.innerText = <span class="string">"購物車內沒有物品喔!趕快去選購"</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">document</span>.querySelector(<span class="string">"ul"</span>).appendChild(element);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">//藉由split方法將逗號切開來，即可把品項一個一個列出來</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> items = Cookies.get(<span class="string">"carItem"</span>);</span></span><br><span class="line"><span class="javascript">            items = items.split(<span class="string">","</span>);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> items)&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> element = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);</span></span><br><span class="line"><span class="undefined">                element.innerText = item;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">document</span>.querySelector(<span class="string">"ul"</span>).appendChild(element);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>進入car.html的頁面看看，應該就可以看到剛剛加入的品項了喔!</p>
+<p>進入 <code>car.html</code> 的頁面看看，應該就可以看到剛剛加入的品項了喔!</p>
 <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fcar.png?alt=media&token=db42529d-06ae-46a7-b501-58bceab9f508" alt></p>
-<p>最後，可以順便看看Cookie中的內容，會發現他是被URL Encoded起來的</p>
+<p>最後，可以順便看看 Cookie 中的內容，會發現他是被 URL Encoded 起來的</p>
 <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fyo.png?alt=media&token=cc01e250-529f-4f3e-bcd8-53d21b963f17" alt></p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>透過這篇稍微介紹了一下Cookie的概念與使用方法，這其中其實牽涉到許多電腦網路的概念，沒學過這一塊的人可能會不太了解其中的一些原理，希望能藉由這篇簡單的教學讓大家有稍微了解一下Cookie與其他相關的知識。另外，關於Cookie的資安議題其實也不少，所以使用Cookie時也需要多多注意，尤其是GDPR法案或是遭到篡改的可能性都有，底下會附上相關參考資訊。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>透過這篇稍微介紹了一下 Cookie 的概念與使用方法，這其中其實牽涉到許多電腦網路的概念，沒學過這一塊的人可能會不太了解其中的一些原理，希望能藉由這篇簡單的教學讓大家有稍微了解一下 Cookie 與其他相關的知識。另外，關於 Cookie 的資安議題其實也不少，所以使用 Cookie 時也需要多多注意，尤其是 GDPR 法案或是遭到篡改的可能性都有，底下會附上相關參考資訊。</p>
 <h2 id="延伸閱讀"><a href="#延伸閱讀" class="headerlink" title="延伸閱讀"></a>延伸閱讀</h2><ul>
 <li>GDPR : <a href="https://eugdpr.org/" target="_blank" rel="noopener">https://eugdpr.org/</a></li>
 <li>GDPR Wiki : <a href="https://zh.wikipedia.org/wiki/%E6%AD%90%E7%9B%9F%E4%B8%80%E8%88%AC%E8%B3%87%E6%96%99%E4%BF%9D%E8%AD%B7%E8%A6%8F%E7%AF%84" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/歐盟一般資料保護規範</a></li>
@@ -309,7 +309,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="https://kaibaooo.github.io/2019/10/09/cookies-introduction/" data-id="ck1jf2vq9000rwgth2ueip1u9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2019/10/09/cookies-introduction/" data-id="ck1jfwm9b000bcsthg76hipaw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -388,9 +388,9 @@ ga('send', 'pageview');
         "dateCreated": "2019-10-09",
         "dateModified": "2019-10-09",
         "url": "https://kaibaooo.github.io/2019/10/09/cookies-introduction/",
-        "description": "在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有Cookie以及前端技術上使用Cookie的方法。
-Cookie?紀錄你在網頁上的狀態在講解Cookie一來之前，先來聊聊HTTP這個東西，HTTP是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在HTTP的世界中是沒有狀態可言的，也就是所謂的st",
-        "wordCount": 699
+        "description": "在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有 Cookie 以及前端技術上使用 Cookie 的方法。
+Cookie?紀錄你在網頁上的狀態在講解 Cookie 一來之前，先來聊聊 HTTP 這個東西，HTTP 是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在 HTTP 的世界中是沒有狀態可",
+        "wordCount": 824
     }
 </script>
 
@@ -461,7 +461,7 @@ Cookie?紀錄你在網頁上的狀態在講解Cookie一來之前，先來聊聊H
     <h3 class="widget-title">目錄</h3>
     <div class="widget">
         <div id="toc" class="toc-article">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie-紀錄你在網頁上的狀態"><span class="toc-number">1.</span> <span class="toc-text">Cookie?紀錄你在網頁上的狀態</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何使用Cookie儲存資料"><span class="toc-number">2.</span> <span class="toc-text">如何使用Cookie儲存資料</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#設定新的Cookie"><span class="toc-number">2.1.</span> <span class="toc-text">設定新的Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取得Cookie的值"><span class="toc-number">2.2.</span> <span class="toc-text">取得Cookie的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#刪除某個Cookie"><span class="toc-number">2.3.</span> <span class="toc-text">刪除某個Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#進階一點的用法"><span class="toc-number">2.4.</span> <span class="toc-text">進階一點的用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#應用場景示範-餅乾電商"><span class="toc-number">3.</span> <span class="toc-text">應用場景示範:餅乾電商</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#結語"><span class="toc-number">4.</span> <span class="toc-text">結語</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延伸閱讀"><span class="toc-number">5.</span> <span class="toc-text">延伸閱讀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#內容圖示版權聲明"><span class="toc-number">6.</span> <span class="toc-text">內容圖示版權聲明</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie-紀錄你在網頁上的狀態"><span class="toc-number">1.</span> <span class="toc-text">Cookie?紀錄你在網頁上的狀態</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何使用-Cookie-儲存資料"><span class="toc-number">2.</span> <span class="toc-text">如何使用 Cookie 儲存資料</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#設定新的-Cookie"><span class="toc-number">2.1.</span> <span class="toc-text">設定新的 Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取得-Cookie-的值"><span class="toc-number">2.2.</span> <span class="toc-text">取得 Cookie 的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#刪除某個-Cookie"><span class="toc-number">2.3.</span> <span class="toc-text">刪除某個 Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#進階一點的用法"><span class="toc-number">2.4.</span> <span class="toc-text">進階一點的用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#應用場景示範-餅乾電商"><span class="toc-number">3.</span> <span class="toc-text">應用場景示範 : 餅乾電商</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#結語"><span class="toc-number">4.</span> <span class="toc-text">結語</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延伸閱讀"><span class="toc-number">5.</span> <span class="toc-text">延伸閱讀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#內容圖示版權聲明"><span class="toc-number">6.</span> <span class="toc-text">內容圖示版權聲明</span></a></li></ol>
         </div>
     </div>
 </div>
