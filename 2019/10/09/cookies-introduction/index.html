@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+
+    
+
+    
+    <title>透過購物車來了解Cookie的運作方式 | Kaibao的學習札記</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Javascript">
+    
+    <meta name="description" content="在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有Cookie以及前端技術上使用Cookie的方法。 Cookie?紀錄你在網頁上的狀態在講解Cookie一來之前，先來聊聊HTTP這個東西，HTTP是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在HTTP的世界中是沒有狀態可言的，也就是所謂的st">
+<meta name="keywords" content="Javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="透過購物車來了解Cookie的運作方式">
+<meta property="og:url" content="https://kaibaooo.github.io/2019/10/09/cookies-introduction/index.html">
+<meta property="og:site_name" content="Kaibao的學習札記">
+<meta property="og:description" content="在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有Cookie以及前端技術上使用Cookie的方法。 Cookie?紀錄你在網頁上的狀態在講解Cookie一來之前，先來聊聊HTTP這個東西，HTTP是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在HTTP的世界中是沒有狀態可言的，也就是所謂的st">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fwhere-cookie.png?alt=media&token=ee97e6da-443d-4a18-a1c4-aec0b7d372a5">
+<meta property="og:updated_time" content="2019-10-09T13:57:28.261Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="透過購物車來了解Cookie的運作方式">
+<meta name="twitter:description" content="在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有Cookie以及前端技術上使用Cookie的方法。 Cookie?紀錄你在網頁上的狀態在講解Cookie一來之前，先來聊聊HTTP這個東西，HTTP是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在HTTP的世界中是沒有狀態可言的，也就是所謂的st">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fwhere-cookie.png?alt=media&token=ee97e6da-443d-4a18-a1c4-aec0b7d372a5">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-113939847-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3215972389999620",
+        enable_page_level_ads: true
+    });
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-3215972389999620",
+              enable_page_level_ads: true
+         });
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+</html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">My notes</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">首頁</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/project/index.html">Project</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">關於</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="輸入關鍵字..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '頁面',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分類
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-cookies-introduction" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        透過購物車來了解Cookie的運作方式
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/10/09/cookies-introduction/" class="article-date">
+            <time datetime="2019-10-08T16:00:00.000Z" itemprop="datePublished">2019-10-09</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Javascript/">Javascript</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有Cookie以及前端技術上使用Cookie的方法。</p>
+<h2 id="Cookie-紀錄你在網頁上的狀態"><a href="#Cookie-紀錄你在網頁上的狀態" class="headerlink" title="Cookie?紀錄你在網頁上的狀態"></a>Cookie?紀錄你在網頁上的狀態</h2><p>在講解Cookie一來之前，先來聊聊HTTP這個東西，HTTP是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，<strong>在HTTP的世界中是沒有狀態可言的，也就是所謂的stateless</strong>，每次連線請求都是獨立發生，不會因為前一秒才傳照片給你就把你當朋友，每次連線都是新的開始。</p>
+<p>也因此發展出的一些網頁儲存狀態的方法，最常見的就是<strong>Cookie</strong>和<strong>session</strong>兩種方法，本文要講的Cookie是前後端都可以做修改的，並且是會附屬在HTTP的連線請求上，後者是僅能在伺服器端上做的狀態紀錄。</p>
+<p>在Chrome上有兩種方法可以看到自己在網站上的Cookie</p>
+<ol>
+<li><strong>從網址列的左邊小i圖示</strong></li>
+</ol>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fwhere-cookie.png?alt=media&token=ee97e6da-443d-4a18-a1c4-aec0b7d372a5" alt></p>
+<ol start="2">
+<li><strong>F12開發人員工具&gt;Network</strong></li>
+</ol>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fwhere-cookie2.png?alt=media&token=04f5d1c2-d2eb-47bb-863e-1e7cf3c9b396" alt></p>
+<h2 id="如何使用Cookie儲存資料"><a href="#如何使用Cookie儲存資料" class="headerlink" title="如何使用Cookie儲存資料"></a>如何使用Cookie儲存資料</h2><p>那個，Cookie的欄位長成甚麼樣子呢?</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Cookie:key1=value1;key2=value2;</span><br></pre></td></tr></table></figure>
+
+<p>以分號分開的格式，但這樣的資料每次都要處理很麻煩，所以就藉由一個套件叫做<a href="https://github.com/js-cookie/js-cookie" target="_blank" rel="noopener">js-cookie</a>，這個套件主要是幫我們處理了一下Cookie的資料，讓我們能夠很簡單的編輯Cookie的內容。</p>
+<p>首先，在HTML中以CDN方式引入<a href="https://github.com/js-cookie/js-cookie" target="_blank" rel="noopener">js-cookie</a></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>當然也可以到Github的repo上找到其他使用的方法，看你喜歡哪種</p>
+<p>完成之後就可以來使用Cookie存放資料了</p>
+<h3 id="設定新的Cookie"><a href="#設定新的Cookie" class="headerlink" title="設定新的Cookie"></a>設定新的Cookie</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.set(<span class="string">'foo'</span>, <span class="string">'bar'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>由於<strong>Cookie是存放在你的瀏覽器上面</strong>，沒設定時效性的話，在瀏覽器關閉時Cookie就會同時失效，所以通常我們都會替他設一個時效性，過了時效瀏覽器就會自己幫他清除。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.set(<span class="string">'name'</span>, <span class="string">'value'</span>, &#123; <span class="attr">expires</span>: <span class="number">7</span> &#125;)</span><br><span class="line"><span class="comment">// 7天後這個Cookie就過期</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fresult.png?alt=media&token=daae8411-b8b0-4fc8-be5c-3678bea2188c" alt></p>
+<h3 id="取得Cookie的值"><a href="#取得Cookie的值" class="headerlink" title="取得Cookie的值"></a>取得Cookie的值</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.get(<span class="string">'foo'</span>)</span><br><span class="line"><span class="comment">// 'bar'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="刪除某個Cookie"><a href="#刪除某個Cookie" class="headerlink" title="刪除某個Cookie"></a>刪除某個Cookie</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.remove(<span class="string">'foo'</span>)</span><br><span class="line"><span class="comment">// 'bar'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="進階一點的用法"><a href="#進階一點的用法" class="headerlink" title="進階一點的用法"></a>進階一點的用法</h3><ul>
+<li><strong>路徑(path)</strong></li>
+</ul>
+<p>所謂路徑就是在你域名或IP之後的那一串字</p>
+<p>例如:</p>
+<ul>
+<li><a href="https://yourdomain.com/" target="_blank" rel="noopener">https://yourdomain.com/</a></li>
+</ul>
+<p>這個的路徑就是<code>/</code></p>
+<ul>
+<li><a href="https://yourdomain.com/car" target="_blank" rel="noopener">https://yourdomain.com/car</a></li>
+</ul>
+<p>這個的路徑就是<code>/car</code></p>
+<p>知道路徑的概念之後就可以做更進階的用法了，如果你只想要在購物車的頁面上才能讀取到物品的Cookie，那麼可以加入一個path的屬性(假設路徑是”/car”)，當然這是非必要，只是有些內容比較敏感，可能就需要限制能夠存取的路徑。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.set(<span class="string">'name3'</span>, <span class="string">'value'</span>, &#123; <span class="attr">path</span>: <span class="string">'/car'</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>如此一來只有在<code>https://yourdomain.com/car</code>這個網址下才能取得這個Cookie了</p>
+<ul>
+<li><strong>域名(domain)</strong></li>
+</ul>
+<p>域名簡單來說就是網址上通訊協定之後，第一個slash之前的區塊叫做域名，當然有些時候也有可能是IP，以下舉例</p>
+<ul>
+<li><a href="https://yourdomain.com/" target="_blank" rel="noopener">https://yourdomain.com/</a> - 域名是<code>yourdomain.com</code></li>
+<li><a href="https://yourdomain.tw/" target="_blank" rel="noopener">https://yourdomain.tw/</a> - 域名是<code>yourdomain.tw</code></li>
+</ul>
+<p>另外還要提到的一個東西叫做<strong>子網域</strong>，子網域是附屬在網域底下的名稱，假設我擁有一個域名叫做 yourdomain.com，那麼我就有權限能夠在這個域名底下掛上子網域，如下</p>
+<ul>
+<li>sub1.yourdomain.com</li>
+<li>sub2.yourdomain.com</li>
+</ul>
+<p>這兩個例子也是隸屬在yourdomain.com底下的網域</p>
+<p>網域的內容其實可以開獨立一篇文章來解釋，但這裡是Cookie的場，就不做太多講幾了。</p>
+<p>Cookie不只可以針對路徑去設定Cookie，也可以針對特定域名上去做設定，使用方式如下</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.set(<span class="string">'key'</span>, <span class="string">'value'</span>, &#123; <span class="attr">domain</span>: <span class="string">'sub.yourdomain.com'</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>這個Cookie設定之後就只能在<code>sub.yourdomain.com</code>底下存取，在<code>yourdomain.com</code>是無法成功取得的。</p>
+<p>但如果執行的是</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Cookies.set(<span class="string">'key'</span>, <span class="string">'value'</span>, &#123; <span class="attr">domain</span>: <span class="string">'yourdomain.com'</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>則在主網域(<code>yourdomain.com</code>)與子網域(<code>sub.yourdomain.com</code>)都是能夠存取到這個Cookiek的。</p>
+<h2 id="應用場景示範-餅乾電商"><a href="#應用場景示範-餅乾電商" class="headerlink" title="應用場景示範:餅乾電商"></a>應用場景示範:餅乾電商</h2><p>首先，我們先做個簡單的購物頁面如下圖，並透過localhost的方式將網頁打開</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fsample-page.png?alt=media&token=2a68a930-714d-44d3-944a-55876c00574d" alt></p>
+<p>接下來寫個JS function，等一下要讓加入購物車按鈕按下時能夠將品項放到Cookie中</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addToCar</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">        <span class="comment">//item為品項名稱，型態為字串</span></span><br><span class="line">    <span class="keyword">if</span>(Cookies.get(<span class="string">"carItem"</span>) == <span class="literal">undefined</span>)&#123;</span><br><span class="line">                <span class="comment">//若目前沒有carItem這個key的Cookie，直接新增一個，並只對購物車頁面設定Cookie</span></span><br><span class="line">        Cookies.set(<span class="string">"carItem"</span>, item, &#123; <span class="attr">path</span>: <span class="string">'/car.html'</span> &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//有的話就用逗號將品項做分隔再加入至carItem中</span></span><br><span class="line">        currentItem = Cookies.get(<span class="string">"carItem"</span>);</span><br><span class="line">        currentItem = currentItem+<span class="string">","</span>+item; </span><br><span class="line">        Cookies.set(<span class="string">"carItem"</span>, currentItem, &#123; <span class="attr">path</span>: <span class="string">'/car.html'</span> &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    alert(<span class="string">"已加入"</span>+item+<span class="string">"至購物車"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>寫好寫入Cookie的函式之後，就將該功能帶入至按紐當中</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary"</span> <span class="attr">onclick</span>=<span class="string">"addToCar('餅乾一號')"</span>&gt;</span>加入購物車<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>這樣就完成簡易購物車的功能了，夠簡單吧! 我們來按個按鈕試試看</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Falert.png?alt=media&token=6775638e-8d1a-431d-be8c-8eb0e009546f" alt></p>
+<p>看起來活得好好的，接下來我們創立一個<code>car.html</code>的頁面</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>我的購物車<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="comment">//若Cookies中沒有carItem這個key，提醒使用者快去買東西!!</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(Cookies.get(<span class="string">"carItem"</span>) == <span class="literal">undefined</span>)&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> element = <span class="built_in">document</span>.createElement(<span class="string">"p"</span>);</span></span><br><span class="line"><span class="javascript">            element.innerText = <span class="string">"購物車內沒有物品喔!趕快去選購"</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">document</span>.querySelector(<span class="string">"ul"</span>).appendChild(element);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">//藉由split方法將逗號切開來，即可把品項一個一個列出來</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> items = Cookies.get(<span class="string">"carItem"</span>);</span></span><br><span class="line"><span class="javascript">            items = items.split(<span class="string">","</span>);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> items)&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> element = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);</span></span><br><span class="line"><span class="undefined">                element.innerText = item;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">document</span>.querySelector(<span class="string">"ul"</span>).appendChild(element);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>進入car.html的頁面看看，應該就可以看到剛剛加入的品項了喔!</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fcar.png?alt=media&token=db42529d-06ae-46a7-b501-58bceab9f508" alt></p>
+<p>最後，可以順便看看Cookie中的內容，會發現他是被URL Encoded起來的</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fyo.png?alt=media&token=cc01e250-529f-4f3e-bcd8-53d21b963f17" alt></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>透過這篇稍微介紹了一下Cookie的概念與使用方法，這其中其實牽涉到許多電腦網路的概念，沒學過這一塊的人可能會不太了解其中的一些原理，希望能藉由這篇簡單的教學讓大家有稍微了解一下Cookie與其他相關的知識。另外，關於Cookie的資安議題其實也不少，所以使用Cookie時也需要多多注意，尤其是GDPR法案或是遭到篡改的可能性都有，底下會附上相關參考資訊。</p>
+<h2 id="延伸閱讀"><a href="#延伸閱讀" class="headerlink" title="延伸閱讀"></a>延伸閱讀</h2><ul>
+<li>GDPR : <a href="https://eugdpr.org/" target="_blank" rel="noopener">https://eugdpr.org/</a></li>
+<li>GDPR Wiki : <a href="https://zh.wikipedia.org/wiki/%E6%AD%90%E7%9B%9F%E4%B8%80%E8%88%AC%E8%B3%87%E6%96%99%E4%BF%9D%E8%AD%B7%E8%A6%8F%E7%AF%84" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/歐盟一般資料保護規範</a></li>
+<li>白話 Session 與 Cookie：從經營雜貨店開始 : <a href="https://medium.com/@hulitw/session-and-cookie-15e47ed838bc" target="_blank" rel="noopener">https://medium.com/@hulitw/session-and-cookie-15e47ed838bc</a></li>
+</ul>
+<h2 id="內容圖示版權聲明"><a href="#內容圖示版權聲明" class="headerlink" title="內容圖示版權聲明"></a>內容圖示版權聲明</h2><p>Icon made by <a href="https://www.flaticon.com/authors/smashicons" target="_blank" rel="noopener">Smashicons</a> from <a href="http://www.flaticon.com" target="_blank" rel="noopener">www.flaticon.com</a></p>
+
+        </div>
+        <footer class="article-footer">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <ins class="adsbygoogle"
+                    style="display:block; text-align:center;"
+                    data-ad-layout="in-article"
+                    data-ad-format="fluid"
+                    data-ad-client="ca-pub-3215972389999620"
+                    data-ad-slot="3927264463"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            
+
+
+
+    <a data-url="https://kaibaooo.github.io/2019/10/09/cookies-introduction/" data-id="ck1jbz49i0004zsthtcx7jpdk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+        
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Kaibao"
+        },
+        "headline": "透過購物車來了解Cookie的運作方式",
+        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fwhere-cookie.png?alt=media&token=ee97e6da-443d-4a18-a1c4-aec0b7d372a5",
+        "keywords": "Javascript",
+        "genre": "",
+        "datePublished": "2019-10-09",
+        "dateCreated": "2019-10-09",
+        "dateModified": "2019-10-09",
+        "url": "https://kaibaooo.github.io/2019/10/09/cookies-introduction/",
+        "description": "在電子商務網站中一定會有購物車這個功能，讓你能夠將喜歡的東西放在裡面，最後再一次結帳，這篇文章將簡單講解為什麼需要有Cookie以及前端技術上使用Cookie的方法。
+Cookie?紀錄你在網頁上的狀態在講解Cookie一來之前，先來聊聊HTTP這個東西，HTTP是一種網路通訊協定，主要用來傳輸網頁相關的內容(HTML、圖片、影片…)之類的檔案，在HTTP的世界中是沒有狀態可言的，也就是所謂的st",
+        "wordCount": 699
+    }
+</script>
+
+    
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>追蹤 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kaibaooo" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/10/01/raspberrypi3-static-ip/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Raspberry Pi 3 設定靜態IP方法</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目錄</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie-紀錄你在網頁上的狀態"><span class="toc-number">1.</span> <span class="toc-text">Cookie?紀錄你在網頁上的狀態</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何使用Cookie儲存資料"><span class="toc-number">2.</span> <span class="toc-text">如何使用Cookie儲存資料</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#設定新的Cookie"><span class="toc-number">2.1.</span> <span class="toc-text">設定新的Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取得Cookie的值"><span class="toc-number">2.2.</span> <span class="toc-text">取得Cookie的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#刪除某個Cookie"><span class="toc-number">2.3.</span> <span class="toc-text">刪除某個Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#進階一點的用法"><span class="toc-number">2.4.</span> <span class="toc-text">進階一點的用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#應用場景示範-餅乾電商"><span class="toc-number">3.</span> <span class="toc-text">應用場景示範:餅乾電商</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#結語"><span class="toc-number">4.</span> <span class="toc-text">結語</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延伸閱讀"><span class="toc-number">5.</span> <span class="toc-text">延伸閱讀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#內容圖示版權聲明"><span class="toc-number">6.</span> <span class="toc-text">內容圖示版權聲明</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/10/09/cookies-introduction/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cookie-js%2Fwhere-cookie.png?alt=media&token=ee97e6da-443d-4a18-a1c4-aec0b7d372a5)" alt="透過購物車來了解Cookie的運作方式" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/10/09/cookies-introduction/" class="title">透過購物車來了解Cookie的運作方式</a></p>
+                            <p class="item-date"><time datetime="2019-10-08T16:00:00.000Z" itemprop="datePublished">2019-10-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/10/01/raspberrypi3-static-ip/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Frsp-static-IP.jpg?alt=media&token=e4131d7c-d5bc-445f-8234-f11a1e7346ef)" alt="Raspberry Pi 3 設定靜態IP方法" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/10/01/raspberrypi3-static-ip/" class="title">Raspberry Pi 3 設定靜態IP方法</a></p>
+                            <p class="item-date"><time datetime="2019-09-30T16:00:00.000Z" itemprop="datePublished">2019-10-01</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/09/27/cplusplus/string-split-converter/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fgeneral.jpg?alt=media&token=deee28d2-4833-4f44-9736-933c8a448048)" alt="C++分割字串與轉型之方法" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/09/27/cplusplus/string-split-converter/" class="title">C++分割字串與轉型之方法</a></p>
+                            <p class="item-date"><time datetime="2019-09-26T16:00:00.000Z" itemprop="datePublished">2019-09-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-code/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-code-thumbnail.png?alt=media&token=da98d6da-d31d-4b22-85ab-285ab38885b5)" alt="CHIP8模擬器開發-來寫程式吧" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-code/" class="title">CHIP8模擬器開發-來寫程式吧</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/22/chip8emu-instruction-set/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493)" alt="CHIP8模擬器開發-指令集" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/22/chip8emu-instruction-set/" class="title">CHIP8模擬器開發-指令集</a></p>
+                            <p class="item-date"><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">所有文章</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cplusplus/">Cplusplus</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RaspberryPi/">RaspberryPi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cplusplus/">cplusplus</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emulator/">emulator</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frontend/">frontend</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/學習筆記/">學習筆記</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/嵌入式系統/">嵌入式系統</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/競程/">競程</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Kaibao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'kaibaogithubpage';
+    
+    
+    var disqus_url = 'https://kaibaooo.github.io/2019/10/09/cookies-introduction/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
