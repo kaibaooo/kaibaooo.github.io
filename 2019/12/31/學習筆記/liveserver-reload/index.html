@@ -6,18 +6,26 @@
     
 
     
-    <title>標籤: OpenCV | Kaibao的學習札記</title>
+    <title>VSCode LiveServer擴充功能造成的WS Reload問題 | Kaibao的學習札記</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="CSIE,cplusplus,javascript,python,coding,kaibao,kaibaooo,developer">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Kaibao的學習札記">
-<meta property="og:url" content="https://kaibaooo.github.io/tags/OpenCV/index.html">
+        <meta name="keywords" content="VSCode,websocket">
+    
+    <meta name="description" content="[TOC] 最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Block">
+<meta name="keywords" content="VSCode,websocket">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VSCode LiveServer擴充功能造成的WS Reload問題">
+<meta property="og:url" content="https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/index.html">
 <meta property="og:site_name" content="Kaibao的學習札記">
+<meta property="og:description" content="[TOC] 最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Block">
 <meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FMrDESIf.png?alt=media&token=dda6f84b-a7a1-486e-9dd3-a80c03973b76">
+<meta property="og:updated_time" content="2020-01-14T14:57:38.075Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kaibao的學習札記">
+<meta name="twitter:title" content="VSCode LiveServer擴充功能造成的WS Reload問題">
+<meta name="twitter:description" content="[TOC] 最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Block">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FMrDESIf.png?alt=media&token=dda6f84b-a7a1-486e-9dd3-a80c03973b76">
     
 
     
@@ -150,79 +158,202 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-tag"></i>標籤: <em>OpenCV</em>
+    未分類
     </h1>
 </div>
 
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-學習筆記/liveserver-reload" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2019" class="archive-year"><i class="icon fa fa-calendar-o"></i>2019</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/07/18/學習筆記/opencv-vs2019/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fopencvwithvs2019.png?alt=media&token=4e562b86-0259-4880-a480-2da426361d83)" alt="在Visual Studio 2019上使用OpenCV" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2019/07/18/學習筆記/opencv-vs2019/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            
-            </div>
-            <div class="date"><time datetime="2019-07-17T16:00:00.000Z" itemprop="datePublished">2019-07-18</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2019/07/18/學習筆記/opencv-vs2019/">在Visual Studio 2019上使用OpenCV</a>
+        VSCode LiveServer擴充功能造成的WS Reload問題
         </h1>
     
 
-        <p class="article-excerpt">
-            
-安裝OpenCV首先，到OpenCV的官網下載最新的版本，在此示範的版本為Windows 3.4.6
-下載完成後點擊安裝，建議路徑選擇在C槽底下，或是自己方便放Library的資料夾底下，確認後把路徑記下來然後解壓縮
-設定環境變數，在Path中加入C:\opencv\build\x64\vc15\bin
-建立專案在VS2019中開啟一個C++的空專案
-開啟完成後，對專案點右鍵&gt;屬性
-設定懶
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/12/31/學習筆記/liveserver-reload/" class="article-date">
+            <time datetime="2019-12-30T16:00:00.000Z" itemprop="datePublished">2019-12-31</time>
+        </a>
     </div>
-</article>
-    
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/VSCode/">VSCode</a>, <a class="tag-link" href="/tags/websocket/">websocket</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>[TOC]</p>
+<p>最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。</p>
+<h2 id="起初的解決方法"><a href="#起初的解決方法" class="headerlink" title="起初的解決方法"></a>起初的解決方法</h2><p>列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。</p>
+<ol>
+<li>WebSocket 後端寫檔時造成 Server Side Blocking ，前端重整(理論上不會)</li>
+<li>Server 的 Reveiver Buffer 不夠大</li>
+<li>Client 一次送出太大的 Packet</li>
+<li>查看 Websocket Protocol 中 Reload 事件會在何時發生</li>
+</ol>
+<h3 id="檢查Server-Side-Blocking"><a href="#檢查Server-Side-Blocking" class="headerlink" title="檢查Server Side Blocking"></a>檢查Server Side Blocking</h3><p>在 Socket 通訊當中，Client 傳送一則訊息之後應該是不會等待Server 回應才對，但擔心是 Java Websocket 套件的關係，所以先嘗試解決 Blocking 的問題。</p>
+<ol>
+<li>把寫檔丟入另一個 Thread</li>
+<li>用上 Java Non-BlockingIO</li>
+</ol>
+<p>最後結果不意外的失敗了，前端一樣重整。</p>
+<h3 id="Server-的-Reveiver-Buffer-不夠大"><a href="#Server-的-Reveiver-Buffer-不夠大" class="headerlink" title="Server 的 Reveiver Buffer 不夠大"></a>Server 的 Reveiver Buffer 不夠大</h3><p>由於主要傳送的檔案為影音檔案，一個檔案的大小約在900KB左右，算是比較大的單一檔案，所以我將Server Websocket的Buffer加到了16MB，但仍然前端重整。</p>
+<h3 id="Client-一次送出太大的-Packet"><a href="#Client-一次送出太大的-Packet" class="headerlink" title="Client 一次送出太大的 Packet"></a>Client 一次送出太大的 Packet</h3><p>前兩點將 Server Side 有可能的問題大概都解決完了，接下來開始懷疑前端，前端有使用到 RecordRTC ，將 Client 的畫面每3秒錄製下來並傳送到 Server，在前一點提到了檔案約在 900 KB 左右，所以前端改為每 100 ms 傳送一次，檔案雖然變小但仍然會重整(此時有機率送出 2 ~ 4 次檔案)。</p>
+<h3 id="Websocket-的-Protocol-定義"><a href="#Websocket-的-Protocol-定義" class="headerlink" title="Websocket 的 Protocol 定義"></a>Websocket 的 Protocol 定義</h3><p>到這一步我已經快黔驢技窮了，確認 Server 和 Client 都沒問題之後，透過Chrome的開發人員工具觀察到 Websocket 有送出 reload 的 event<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FMrDESIf.png?alt=media&token=dda6f84b-a7a1-486e-9dd3-a80c03973b76" alt></p>
+<p>因此就去查了一下 Websocket 的 reload event 會在何時發生，Websocket Protocol 定義在 <a href="https://tools.ietf.org/html/rfc6455" target="_blank" rel="noopener">RFC 6455</a> 當中，稍微翻了一下內容，但內容並沒有寫到 reload event 定義 Orz…</p>
+<h2 id="問題所在"><a href="#問題所在" class="headerlink" title="問題所在"></a>問題所在</h2><p>花了一整天的時間仍然無法解決，隔了 2 天之後才回來繼續解決這個問題，這次我將 Server 放在 A 電腦， Client 放在 B 電腦，並執行有之前仍然有問題的 Code，但是! 這次很順利的傳輸多個檔案了!!</p>
+<p>這時 <a href="https://github.com/iftnt" target="_blank" rel="noopener">iftnt</a> 提出了一個問題「你的後端寫檔位置是不是在LiveServer的路徑底下」</p>
+<p>這時候想了一下，好像真的蠻有可能是 LiveServer 造成的問題， LiveServer 會監聽底下路徑的所有檔案，一旦有任何變動都會 Auto Refresh ( 包含存檔、新增檔案 )，而且 LiveServer 也是以 Websocket 來實作 Local Server ，原來是開發工具我發出來的 event阿……</p>
+<p>大概的檔案結構如下</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FOmoetwo.png?alt=media&token=611b7984-3d55-4727-827d-2ba60dea077f" alt></p>
+<p>Server 會將前端傳過來的 webm 檔案存到前端的 ./uploads 資料夾底下，也就是 VSCode LiveServer 的作用範圍，造成 reload</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FjU21x68.png?alt=media&token=dcfbaacb-5bb6-4bf4-b4f2-6fbc07743e6f" alt></p>
+<p>最後將寫檔路徑換到非 Live Server 作用範圍底下之後就可以正常運作了。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>現在雖然許多開發工具相當好用，我也非常喜歡 Live Server 這個擴充元件，但若不了解其運作機制會造成的潛在風險的話，可能會遇到多個開發工具搭配下不可預期的例外狀況發生，雖然這次問題也算是我自己犯蠢，但也是分享出來給大家知道，使用 Live Server 時這裡會有的地雷要注意。</p>
+
         </div>
+        <footer class="article-footer">
+                <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <ins class="adsbygoogle"
+                    style="display:block; text-align:center;"
+                    data-ad-layout="in-article"
+                    data-ad-format="fluid"
+                    data-ad-client="ca-pub-3215972389999620"
+                    data-ad-slot="3927264463"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script> -->
+            
+
+
+
+    <a data-url="https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/" data-id="ck5e04ki9000y8kth8x99nsvk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+        
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Kaibao"
+        },
+        "headline": "VSCode LiveServer擴充功能造成的WS Reload問題",
+        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FMrDESIf.png?alt=media&token=dda6f84b-a7a1-486e-9dd3-a80c03973b76",
+        "keywords": "VSCode websocket",
+        "genre": "",
+        "datePublished": "2019-12-31",
+        "dateCreated": "2019-12-31",
+        "dateModified": "2020-01-14",
+        "url": "https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/",
+        "description": "[TOC]
+最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。
+起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。
+
+WebSocket 後端寫檔時造成 Server Side Block",
+        "wordCount": 190
+    }
+</script>
+
+
+</article>
+
+
+    <section id="comments">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- test -->
+    <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-3215972389999620"
+            data-ad-slot="8736923739"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+    <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
     
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
 
-
-    </div></section>
+    
+    </section>
 
 
 
@@ -245,10 +376,32 @@ ga('send', 'pageview');
         </ul>
     </div>
     
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/10/09/cookies-introduction/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">透過購物車來了解Cookie的運作方式</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
     <div class="widgets-container">
         
             
                 
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目錄</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#起初的解決方法"><span class="toc-number">1.</span> <span class="toc-text">起初的解決方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#檢查Server-Side-Blocking"><span class="toc-number">1.1.</span> <span class="toc-text">檢查Server Side Blocking</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Server-的-Reveiver-Buffer-不夠大"><span class="toc-number">1.2.</span> <span class="toc-text">Server 的 Reveiver Buffer 不夠大</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Client-一次送出太大的-Packet"><span class="toc-number">1.3.</span> <span class="toc-text">Client 一次送出太大的 Packet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Websocket-的-Protocol-定義"><span class="toc-number">1.4.</span> <span class="toc-text">Websocket 的 Protocol 定義</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#問題所在"><span class="toc-number">2.</span> <span class="toc-text">問題所在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#結語"><span class="toc-number">3.</span> <span class="toc-text">結語</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
 
             
                 
@@ -419,11 +572,13 @@ ga('send', 'pageview');
     var disqus_shortname = 'kaibaogithubpage';
     
     
+    var disqus_url = 'https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
