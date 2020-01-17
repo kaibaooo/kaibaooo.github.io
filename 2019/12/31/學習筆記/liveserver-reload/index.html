@@ -12,19 +12,19 @@
     
         <meta name="keywords" content="VSCode,websocket">
     
-    <meta name="description" content="[TOC] 最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Block">
+    <meta name="description" content="最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Blocking ，前">
 <meta name="keywords" content="VSCode,websocket">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VSCode LiveServer擴充功能造成的WS Reload問題">
 <meta property="og:url" content="https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/index.html">
 <meta property="og:site_name" content="Kaibao的學習札記">
-<meta property="og:description" content="[TOC] 最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Block">
+<meta property="og:description" content="最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Blocking ，前">
 <meta property="og:locale" content="zh-TW">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FMrDESIf.png?alt=media&token=dda6f84b-a7a1-486e-9dd3-a80c03973b76">
-<meta property="og:updated_time" content="2020-01-14T14:57:38.075Z">
+<meta property="og:updated_time" content="2020-01-14T15:02:13.806Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VSCode LiveServer擴充功能造成的WS Reload問題">
-<meta name="twitter:description" content="[TOC] 最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Block">
+<meta name="twitter:description" content="最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Blocking ，前">
 <meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FMrDESIf.png?alt=media&token=dda6f84b-a7a1-486e-9dd3-a80c03973b76">
     
 
@@ -197,8 +197,7 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>[TOC]</p>
-<p>最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。</p>
+            <p>最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。</p>
 <h2 id="起初的解決方法"><a href="#起初的解決方法" class="headerlink" title="起初的解決方法"></a>起初的解決方法</h2><p>列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。</p>
 <ol>
 <li>WebSocket 後端寫檔時造成 Server Side Blocking ，前端重整(理論上不會)</li>
@@ -242,7 +241,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/" data-id="ck5e04ki9000y8kth8x99nsvk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/" data-id="ck5i9cqws000pwcthzjqbde6s" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -321,11 +320,10 @@ ga('send', 'pageview');
         "dateCreated": "2019-12-31",
         "dateModified": "2020-01-14",
         "url": "https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/",
-        "description": "[TOC]
-最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。
+        "description": "最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。
 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。
 
-WebSocket 後端寫檔時造成 Server Side Block",
+WebSocket 後端寫檔時造成 Server Side Blocking ，前",
         "wordCount": 190
     }
 </script>

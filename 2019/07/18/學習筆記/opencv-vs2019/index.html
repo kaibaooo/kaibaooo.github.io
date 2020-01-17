@@ -21,7 +21,7 @@
 <meta property="og:description" content="安裝OpenCV首先，到OpenCV的官網下載最新的版本，在此示範的版本為Windows 3.4.6 下載完成後點擊安裝，建議路徑選擇在C槽底下，或是自己方便放Library的資料夾底下，確認後把路徑記下來然後解壓縮 設定環境變數，在Path中加入C:\opencv\build\x64\vc15\bin 建立專案在VS2019中開啟一個C++的空專案 開啟完成後，對專案點右鍵&amp;gt;屬性 設定懶">
 <meta property="og:locale" content="zh-TW">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fopencvwithvs2019.png?alt=media&token=4e562b86-0259-4880-a480-2da426361d83">
-<meta property="og:updated_time" content="2019-07-31T14:01:52.540Z">
+<meta property="og:updated_time" content="2020-01-17T14:27:05.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在Visual Studio 2019上使用OpenCV">
 <meta name="twitter:description" content="安裝OpenCV首先，到OpenCV的官網下載最新的版本，在此示範的版本為Windows 3.4.6 下載完成後點擊安裝，建議路徑選擇在C槽底下，或是自己方便放Library的資料夾底下，確認後把路徑記下來然後解壓縮 設定環境變數，在Path中加入C:\opencv\build\x64\vc15\bin 建立專案在VS2019中開啟一個C++的空專案 開啟完成後，對專案點右鍵&amp;gt;屬性 設定懶">
@@ -209,7 +209,7 @@ ga('send', 'pageview');
 <li>平台:x64</li>
 <li>VC++目錄&gt;Include目錄 : 加入<code>C:\opencv\build\include</code></li>
 <li>VC++目錄&gt;程式庫目錄 : 加入<code>C:\opencv\build\x64\vc15\lib</code></li>
-<li>連結器&gt;其他相依性 : 加入<code>opencv_world346d.lib</code></li>
+<li>連結器&gt;輸入&gt;其他相依性 : 加入<code>opencv_world346d.lib</code></li>
 </ul>
 <p>設定完成的圖<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/opencv-vs2019%2F7.png?alt=media&token=0e294415-cef8-4cf0-a546-be017eb8c824" alt></p>
 <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/opencv-vs2019%2F8.png?alt=media&token=8ce57c3d-1298-4e41-b29e-6dbd06f2ffe3" alt><br>此處的<code>opencv_world346d.lib</code>可能會依據安裝的OpenCV版本不同而有更動，請至<code>C:\opencv\build\x64\vc15\lib</code>中做確認<br><strong>帶有<code>d</code>字尾的.lib檔為Debug組態使用</strong>，<strong>未帶<code>d</code>字尾的.lib則為Release組態使用</strong>，請依據您的組態彈性調整，但請不要兩個都加進去設定中，執行程式時可能會出現兩個畫面</p>
@@ -237,7 +237,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="https://kaibaooo.github.io/2019/07/18/學習筆記/opencv-vs2019/" data-id="ck5e04khy000l8kthvcrmwii2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2019/07/18/學習筆記/opencv-vs2019/" data-id="ck5i9cqwx000xwcth0430qqsb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -314,7 +314,7 @@ ga('send', 'pageview');
         "genre": "",
         "datePublished": "2019-07-18",
         "dateCreated": "2019-07-18",
-        "dateModified": "2019-07-31",
+        "dateModified": "2020-01-17",
         "url": "https://kaibaooo.github.io/2019/07/18/學習筆記/opencv-vs2019/",
         "description": "
 安裝OpenCV首先，到OpenCV的官網下載最新的版本，在此示範的版本為Windows 3.4.6
@@ -376,11 +376,11 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2019/07/22/chip8emu-instruction-set/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2019/07/22/chip8emu-intro/" id="article-nav-newer" class="article-nav-link-wrap">
         <strong class="article-nav-caption">下一篇</strong>
         <p class="article-nav-title">
         
-            CHIP8模擬器開發-指令集
+            CHIP8模擬器開發-模擬器與CHIP8簡介
         
         </p>
         <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
