@@ -6,26 +6,26 @@
     
 
     
-    <title>CHIP8模擬器開發-模擬器與CHIP8簡介 | Kaibao的學習札記</title>
+    <title>簡易 malloc/free 實作筆記 | Kaibao的學習札記</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="cplusplus,學習筆記,emulator">
+        <meta name="keywords" content="學習筆記,c,system">
     
-    <meta name="description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指">
-<meta name="keywords" content="cplusplus,學習筆記,emulator">
+    <meta name="description" content="在C語言當中很常用到 malloc 來動態配置一塊記憶體，透過 malloc 宣告出來的記憶體是位在Heap當中，如下圖所示 因此，實作 malloc 的目標就是把Heap Top的指標往未分配的記憶體區段移動，這部分有很多不同的實作方法，在這裡會提到的是brk與sbrk，其定義如下 int brk(void *addr);void *sbrk(intptr_t x);   brk() 將Prog">
+<meta name="keywords" content="學習筆記,c,system">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CHIP8模擬器開發-模擬器與CHIP8簡介">
-<meta property="og:url" content="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/index.html">
+<meta property="og:title" content="簡易 malloc&#x2F;free 實作筆記">
+<meta property="og:url" content="https://kaibaooo.github.io/2020/03/07/simple-malloc-impl/index.html">
 <meta property="og:site_name" content="Kaibao的學習札記">
-<meta property="og:description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指">
+<meta property="og:description" content="在C語言當中很常用到 malloc 來動態配置一塊記憶體，透過 malloc 宣告出來的記憶體是位在Heap當中，如下圖所示 因此，實作 malloc 的目標就是把Heap Top的指標往未分配的記憶體區段移動，這部分有很多不同的實作方法，在這裡會提到的是brk與sbrk，其定義如下 int brk(void *addr);void *sbrk(intptr_t x);   brk() 將Prog">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559">
-<meta property="og:updated_time" content="2019-07-22T12:23:05.258Z">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fsimple-malloc.jpg?alt=media&token=74839ef0-f5b5-4a38-a94f-78ec55fe0adf">
+<meta property="og:updated_time" content="2020-03-07T08:22:10.384Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CHIP8模擬器開發-模擬器與CHIP8簡介">
-<meta name="twitter:description" content="模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。 電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指">
-<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559">
+<meta name="twitter:title" content="簡易 malloc&#x2F;free 實作筆記">
+<meta name="twitter:description" content="在C語言當中很常用到 malloc 來動態配置一塊記憶體，透過 malloc 宣告出來的記憶體是位在Heap當中，如下圖所示 因此，實作 malloc 的目標就是把Heap Top的指標往未分配的記憶體區段移動，這部分有很多不同的實作方法，在這裡會提到的是brk與sbrk，其定義如下 int brk(void *addr);void *sbrk(intptr_t x);   brk() 將Prog">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fsimple-malloc.jpg?alt=media&token=74839ef0-f5b5-4a38-a94f-78ec55fe0adf">
     
 
     
@@ -163,14 +163,14 @@ ga('send', 'pageview');
 </div>
 
                         <div class="main-body-content">
-                            <article id="post-chip8emu-intro" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-simple-malloc-impl" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        CHIP8模擬器開發-模擬器與CHIP8簡介
+        簡易 malloc/free 實作筆記
         </h1>
     
 
@@ -180,8 +180,8 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2019/07/22/chip8emu-intro/" class="article-date">
-            <time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished">2019-07-22</time>
+        <a href="/2020/03/07/simple-malloc-impl/" class="article-date">
+            <time datetime="2020-03-06T16:00:00.000Z" itemprop="datePublished">2020-03-07</time>
         </a>
     </div>
 
@@ -190,34 +190,51 @@ ga('send', 'pageview');
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/cplusplus/">cplusplus</a>, <a class="tag-link" href="/tags/emulator/">emulator</a>, <a class="tag-link" href="/tags/學習筆記/">學習筆記</a>
+        <a class="tag-link" href="/tags/c/">c</a>, <a class="tag-link" href="/tags/system/">system</a>, <a class="tag-link" href="/tags/學習筆記/">學習筆記</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559" alt></p>
-<h2 id="模擬器基本概念"><a href="#模擬器基本概念" class="headerlink" title="模擬器基本概念"></a>模擬器基本概念</h2><p>模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fsample.png?alt=media&token=4b36bc35-fb4c-47bb-aa03-26454382ae9c" alt></p>
-<h3 id="電腦怎麼執行指令"><a href="#電腦怎麼執行指令" class="headerlink" title="電腦怎麼執行指令?"></a>電腦怎麼執行指令?</h3><p>電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指令集是完全不同的，幾乎無法相容，這也就是為什麼要在電腦上玩手機遊戲需要藉由模擬器來”模擬”ARM架構的指令執行過程。電腦執行一連串的指令需要經過以下流程:</p>
+            <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fsimple-malloc.jpg?alt=media&token=74839ef0-f5b5-4a38-a94f-78ec55fe0adf" alt><br>在C語言當中很常用到 malloc 來動態配置一塊記憶體，透過 malloc 宣告出來的記憶體是位在Heap當中，如下圖所示<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/simple-malloc%2Fprocess_layer.png?alt=media&token=be8966fb-2865-4963-8703-1b95834761aa" alt></p>
+<p>因此，實作 malloc 的目標就是把Heap Top的指標往未分配的記憶體區段移動，這部分有很多不同的實作方法，在這裡會提到的是<code>brk</code>與<code>sbrk</code>，其定義如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">brk</span><span class="params">(<span class="keyword">void</span> *addr)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sbrk</span><span class="params">(<span class="keyword">intptr_t</span> x)</span></span>;</span><br></pre></td></tr></table></figure>
+
 <ol>
-<li>Fetch : 從記憶體中取出下一個要執行的指令</li>
-<li>Decode : 將指令解析成對應的資料格式</li>
-<li>Execute : 執行該指令</li>
-<li>Store : 儲存執行結果</li>
+<li>brk() 將Program Break的位置往指定的addr移動</li>
+<li>sbrk() 將目前的Program Break位置往上加 x Bytes，並回傳這塊記憶體的起點</li>
 </ol>
-<h2 id="Hello-CHIP-8"><a href="#Hello-CHIP-8" class="headerlink" title="Hello CHIP-8"></a>Hello CHIP-8</h2><h3 id="什麼是CHIP-8"><a href="#什麼是CHIP-8" class="headerlink" title="什麼是CHIP-8"></a>什麼是CHIP-8</h3><p>CHIP-8其實是一種程式語言，它需要執行在它專屬的模擬環境中，這套模擬環境是一個小型的系統架構，總共只有35個指令需要實作，非常適合第一次學習模擬器開發的一套系統。這一系列筆記將使用C語言開發CHIP-8模擬器。</p>
-<h3 id="CHIP-8-模擬環境規格"><a href="#CHIP-8-模擬環境規格" class="headerlink" title="CHIP-8 模擬環境規格"></a>CHIP-8 模擬環境規格</h3><h4 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h4><p>總共 4096 Bytes，其中前512Bytes(0x000~0x200)通常用來存放CHIP-8本身語言的interpreter(直譯器)，最末端的96Bytes(0xEA0-0xEFF) + 256Bytes(0xF00-0xFFF)前者是用來存放CallStack，後者是用來處理畫面刷新。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fchip8mem.png?alt=media&token=cad64575-b7d5-441e-969c-2d29042a67cd" alt></p>
-<h4 id="Registers"><a href="#Registers" class="headerlink" title="Registers"></a>Registers</h4><p>共 16 個 8 bits registers，個別的名稱為V0, V1, V2….VF，其中VF被拿來做為flag使用，當執行加法運算時VF為CarryFlag，減法運算為BorrowFlag，繪圖運算為CollisionFlag(像素碰撞旗標)<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fchip8%20reg.png?alt=media&token=67c47cf4-a760-4da8-8234-153895a51a5d" alt></p>
-<h4 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h4><p>Stack用來存放return addresses，與現行系統的概念一樣，目前設計通常以16層堆疊上限為原則。</p>
-<h4 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h4><p>輸入共有16個按鍵能使用(如下圖)，通常以2,8,4,6為上下左右，CHIP-8有三個關於鍵盤輸入的Opcode要實作，分別為某個鍵是否被按下、某個鍵是否沒被按、等待某個鍵被按下後存放至register中。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/emulator%2Fchip8KB.png?alt=media&token=23bb06e2-104b-432a-9a7e-78748f90fc69" alt></p>
-<h4 id="Graphics"><a href="#Graphics" class="headerlink" title="Graphics"></a>Graphics</h4><p>Chip-8的螢幕解析度為 64×32 pixels，螢幕色彩為Monochrome(單色)，繪製畫面到螢幕上顯示時以Sprite為單位，每個Sprite最多占15bytes的資料量，所以最大能繪製的單一大小為8x15 pixels</p>
-<h3 id="Sound-and-Timer"><a href="#Sound-and-Timer" class="headerlink" title="Sound and Timer"></a>Sound and Timer</h3><p>Timer有兩種<br>第一種是Delay timer用來控制整個系統的速率，其值非零時會持續以60Hz的頻率減少1。<br>第二種是Sound timer，主要是用來控制音效，當timer值為零時就會發出聲音，同樣是60Hz的頻率。</p>
-<h2 id="CHIP8模擬器開發系列文章"><a href="#CHIP8模擬器開發系列文章" class="headerlink" title="CHIP8模擬器開發系列文章"></a>CHIP8模擬器開發系列文章</h2><ol>
-<li><strong>CHIP8模擬器開發-模擬器與CHIP8簡介</strong></li>
-<li><strong><a href="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/">CHIP8模擬器開發-指令集</a></strong></li>
-<li><strong><a href="https://kaibaooo.github.io/2019/07/22/chip8emu-code/">CHIP8模擬器開發-來寫程式吧</a></strong></li>
-</ol>
+<p>最簡單的malloc可以透過以下程式碼來實作，若OS分配記憶體失敗則會回傳<code>(void *) -1</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">malloc</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">void</span> *start = sbrk(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">void</span> *request = sbrk(size);</span><br><span class="line">  <span class="keyword">if</span> (request == (<span class="keyword">void</span>*) <span class="number">-1</span>) &#123; <span class="comment">// OS分配失敗</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>malloc分配記憶體的方法最簡單就是這樣，但分配完之後還需要管理，在這裡是透過Linked-List的方式來做記憶體管理，每次分配記憶時額外加上一段header，讓我們能夠到這段分配的記憶體大小以及是否已經被釋放等等資訊，結構如下。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">header</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> size; <span class="comment">// 分配的記憶體大小</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="built_in">free</span>; <span class="comment">// 是否被釋放</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">header</span> *<span class="title">next</span>;</span> <span class="comment">// 下一段記憶體區塊在哪</span></span><br><span class="line">&#125;Header;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/simple-malloc%2Fheader.png?alt=media&token=285428c8-79a2-4882-8dec-3be4d8dc3091" alt></p>
+<blockquote>
+<p>這裡可能會有個疑問就是，heap上方的記憶體不就是連續給我們使用的嗎，為什麼還需要用到Linked-List?</p>
+</blockquote>
+<p>主要是因為程式其他部分也有可能會更動到Program Break指標的位置，因此使用上可能會出現不連續的情況。</p>
+<p>首先我們需要最一開始的Program Break起點</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> *global_base = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+
+<p>透過sbrk宣告一塊size+sizeof(Header)的記憶體，用來存放每一個區塊的資料，每次宣告完成都需更新header的資料，函式傳入的 <code>*last</code> 為最後一個node的位址，用來判斷global_base是否為NULL。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function">Header *<span class="title">request_memory</span><span class="params">(Header *last, <span class="keyword">unsigned</span> <span class="keyword">int</span> size)</span></span>&#123;</span><br><span class="line">    <span class="keyword">void</span> *heapBegin = sbrk(<span class="number">0</span>);</span><br><span class="line">    Header *block = sbrk(<span class="keyword">sizeof</span>(Header) + size);</span><br><span class="line">    <span class="keyword">if</span>(!block)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"sbrk error"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(last == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        last = block;</span><br><span class="line">    &#125;</span><br><span class="line">    block-&gt;size = size;</span><br><span class="line">    block-&gt;<span class="built_in">free</span> = <span class="number">0</span>;</span><br><span class="line">    block-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>malloc本體的部分設計為傳入一個無號整數，用來指定分配的大小，並將request_memory成功分配的位址放到對應的變數上。<br>在使用者的角度上，malloc回傳的位址應該是能直接存放資料的位址，而不是header起始的位址，因此需要+1之後再回傳(available_block型態為Header*，所以+1是移動16 Bytes)。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/simple-malloc%2Fheader_data.png?alt=media&token=da3dd507-f249-4d75-9924-073ef288c5b5" alt></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span>* _malloc(<span class="keyword">unsigned</span> <span class="keyword">int</span> size)&#123;</span><br><span class="line">    Header *available_block;</span><br><span class="line">    <span class="keyword">if</span>(!global_base)&#123;</span><br><span class="line">        available_block = request_memory(<span class="literal">NULL</span>, size);</span><br><span class="line">        global_base = available_block;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (available_block+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下來要處理的是<code>global_base</code>已經有資料，或是已經被釋放過記憶體的處理方法，在此我們需要寫一個在走訪malloc list的函式，檢查每個block是否有被釋放而且大小是我們所需要的空間，若找到足夠的空間則回傳該空間的位址。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">find_free_space</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> size)</span></span>&#123;</span><br><span class="line">    Header *current = global_base;</span><br><span class="line">    <span class="keyword">while</span>(current-&gt;next)&#123;</span><br><span class="line">        <span class="keyword">if</span>(current-&gt;size&gt;=size &amp;&amp; current-&gt;<span class="built_in">free</span> == <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> current;</span><br><span class="line">        &#125;</span><br><span class="line">        current = current-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> current;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之後把malloc做一點改寫，加入走訪malloc list與分配記憶體的方法</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span>* _malloc(<span class="keyword">unsigned</span> <span class="keyword">int</span> size)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"--&gt;_malloc\n"</span>);</span><br><span class="line">    Header *available_block;</span><br><span class="line">    <span class="keyword">if</span>(!global_base)&#123;</span><br><span class="line">        available_block = request_memory(<span class="literal">NULL</span>, size);</span><br><span class="line">        global_base = available_block;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        Header *block = find_free_space(size); <span class="comment">//檢查是否有適合的空間</span></span><br><span class="line">        <span class="keyword">if</span>(block-&gt;next == <span class="literal">NULL</span>)&#123; <span class="comment">// 若走到最後一個block，則直接宣告新空間</span></span><br><span class="line">            available_block = request_memory(block, size);</span><br><span class="line">            block-&gt;next = available_block; <span class="comment">// 把最後一個block連結到新的block上</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123; <span class="comment">//找到適合的空間直接使用</span></span><br><span class="line">            block-&gt;size = size;</span><br><span class="line">            block-&gt;<span class="built_in">free</span> = <span class="number">0</span>;</span><br><span class="line">            available_block = block;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (available_block+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最後要做的函式就是剛剛都沒提到的free，由於我們在malloc時回傳的都是+sizeof(Header)大小的位址，因此在free時需要減掉一次sizeof(Header)才是我們當初真正宣告的標頭位置，找到這個位置之後即可將free的內容改為1。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> _free(Header *target)&#123;</span><br><span class="line">    <span class="keyword">if</span>(target == <span class="literal">NULL</span>) <span class="keyword">return</span>;</span><br><span class="line">    Header *h = target<span class="number">-1</span>;</span><br><span class="line">    h-&gt;<span class="built_in">free</span> = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上就大概是最簡單的 malloc/free 實作方法，這個程式還有非常非常多的空間可以改，時做方法沒絕對，在此只是說個入門。</p>
 
         </div>
         <footer class="article-footer">
@@ -236,7 +253,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-intro/" data-id="ck7hc9zfm000c8othvo7zuw1l" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2020/03/07/simple-malloc-impl/" data-id="ck7hc9zg3000z8oth7wttwm3j" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -307,18 +324,21 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "Kaibao"
         },
-        "headline": "CHIP8模擬器開發-模擬器與CHIP8簡介",
-        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-intro-thumbbnail.png?alt=media&token=7bc08dcb-dcca-4cde-b9aa-ad4ee34e5559",
-        "keywords": "cplusplus 學習筆記 emulator",
+        "headline": "簡易 malloc/free 實作筆記",
+        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fsimple-malloc.jpg?alt=media&token=74839ef0-f5b5-4a38-a94f-78ec55fe0adf",
+        "keywords": "學習筆記 c system",
         "genre": "",
-        "datePublished": "2019-07-22",
-        "dateCreated": "2019-07-22",
-        "dateModified": "2019-07-22",
-        "url": "https://kaibaooo.github.io/2019/07/22/chip8emu-intro/",
-        "description": "
-模擬器基本概念模擬器主要是讓一台A電腦能夠模擬B電腦上執行的程式，其中B電腦是一款對於A電腦來說完全不同處理器架構的系統，例如我能夠在x86下執行ARM的程式。但畢竟是透過”模擬”出來的，與原電腦中間隔了一層模擬執行的階段，效能當然也就不比原生系統上快速。
-電腦怎麼執行指令?電腦的CPU有一套屬於自己的指令集，根據架構的不同，CPU所能接受的指令集也會有所不同，如x86架構與ARM架構的處理器指",
-        "wordCount": 94
+        "datePublished": "2020-03-07",
+        "dateCreated": "2020-03-07",
+        "dateModified": "2020-03-07",
+        "url": "https://kaibaooo.github.io/2020/03/07/simple-malloc-impl/",
+        "description": "在C語言當中很常用到 malloc 來動態配置一塊記憶體，透過 malloc 宣告出來的記憶體是位在Heap當中，如下圖所示
+因此，實作 malloc 的目標就是把Heap Top的指標往未分配的記憶體區段移動，這部分有很多不同的實作方法，在這裡會提到的是brk與sbrk，其定義如下
+int brk(void *addr);void *sbrk(intptr_t x);
+
+
+brk() 將Prog",
+        "wordCount": 721
     }
 </script>
 
@@ -371,20 +391,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2019/07/22/chip8emu-instruction-set/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            CHIP8模擬器開發-指令集
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/07/18/學習筆記/opencv-vs2019/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/12/31/學習筆記/liveserver-reload/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">在Visual Studio 2019上使用OpenCV</p>
+        <p class="article-nav-title">VSCode LiveServer擴充功能造成的WS Reload問題</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -399,7 +409,7 @@ ga('send', 'pageview');
     <h3 class="widget-title">目錄</h3>
     <div class="widget">
         <div id="toc" class="toc-article">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#模擬器基本概念"><span class="toc-number">1.</span> <span class="toc-text">模擬器基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#電腦怎麼執行指令"><span class="toc-number">1.1.</span> <span class="toc-text">電腦怎麼執行指令?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-CHIP-8"><span class="toc-number">2.</span> <span class="toc-text">Hello CHIP-8</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什麼是CHIP-8"><span class="toc-number">2.1.</span> <span class="toc-text">什麼是CHIP-8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CHIP-8-模擬環境規格"><span class="toc-number">2.2.</span> <span class="toc-text">CHIP-8 模擬環境規格</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Memory"><span class="toc-number">2.2.1.</span> <span class="toc-text">Memory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Registers"><span class="toc-number">2.2.2.</span> <span class="toc-text">Registers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stack"><span class="toc-number">2.2.3.</span> <span class="toc-text">Stack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Input"><span class="toc-number">2.2.4.</span> <span class="toc-text">Input</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Graphics"><span class="toc-number">2.2.5.</span> <span class="toc-text">Graphics</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sound-and-Timer"><span class="toc-number">2.3.</span> <span class="toc-text">Sound and Timer</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CHIP8模擬器開發系列文章"><span class="toc-number">3.</span> <span class="toc-text">CHIP8模擬器開發系列文章</span></a></li></ol>
+            
         </div>
     </div>
 </div>
@@ -574,7 +584,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'kaibaogithubpage';
     
     
-    var disqus_url = 'https://kaibaooo.github.io/2019/07/22/chip8emu-intro/';
+    var disqus_url = 'https://kaibaooo.github.io/2020/03/07/simple-malloc-impl/';
     
     (function() {
     var dsq = document.createElement('script');
