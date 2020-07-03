@@ -60,13 +60,13 @@ ga('send', 'pageview');
     
 
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
     (adsbygoogle = window.adsbygoogle || []).push({
         google_ad_client: "ca-pub-3215972389999620",
         enable_page_level_ads: true
     });
-    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    </script> --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 </head>
 </html>
@@ -205,9 +205,9 @@ ga('send', 'pageview');
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">deal</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (k) &#123;</span><br><span class="line">        sum += (k % <span class="number">10</span>) * (k % <span class="number">10</span>);</span><br><span class="line">        k /= <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cases = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> record[<span class="number">700</span>];</span><br><span class="line">    <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;cases);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= cases;j++) &#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>,flag = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;num);</span><br><span class="line">        temp = num;</span><br><span class="line">        <span class="keyword">while</span> (num != <span class="number">1</span>) &#123;</span><br><span class="line">            record[count] = num;</span><br><span class="line">            num = deal(num);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> idx = <span class="number">0</span>; idx &lt;= count; idx++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (record[idx] == num) &#123;</span><br><span class="line">                    flag = <span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (flag) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"Case #%d: %d is an Unhappy number.\n"</span>,j, temp);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(num == <span class="number">1</span>) </span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Case #%d: %d is a Happy number.\n"</span>,j, temp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
         <footer class="article-footer">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
             <!-- test -->
-            <ins class="adsbygoogle"
+            <!-- <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-3215972389999620"
                  data-ad-slot="8736923739"
@@ -215,12 +215,12 @@ ga('send', 'pageview');
                  data-full-width-responsive="true"></ins>
             <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            </script> -->
             
 
 
 
-    <a data-url="https://kaibaooo.github.io/2018/11/11/uva10591/" data-id="ck7hc9zg0000w8othakw30pu1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2018/11/11/uva10591/" data-id="ckc6e7380000zgg3mzihbtdat" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -357,20 +357,20 @@ Solution將執行過的數字記錄下來record[]，每次平方後做一次查�
         
 <nav id="article-nav">
     
-        <a href="/2018/11/11/uva10189/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/11/11/uva11292/" id="article-nav-newer" class="article-nav-link-wrap">
         <strong class="article-nav-caption">下一篇</strong>
         <p class="article-nav-title">
         
-            UVA10189-Minesweeper解法
+            UVA11292-Dragon of Loowater解法
         
         </p>
         <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
     </a>
     
     
-        <a href="/2018/11/11/uva11292/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/10/10/js-spread-operator/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">UVA11292-Dragon of Loowater解法</p>
+        <p class="article-nav-title">Javascript展開運算元</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
