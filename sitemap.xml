@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kaibaooo.github.io/2020/07/21/cuda-four-memory-access/</loc>
+    
+    <lastmod>2020-07-12T12:49:41.889Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kaibaooo.github.io/2020/03/07/simple-malloc-impl/</loc>
     
     <lastmod>2020-03-07T08:22:10.384Z</lastmod>

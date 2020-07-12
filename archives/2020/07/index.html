@@ -6,14 +6,14 @@
     
 
     
-    <title>標籤: system | Kaibao的學習札記</title>
+    <title>所有文章: 2020/7 | Kaibao的學習札記</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="keywords" content="CSIE,cplusplus,javascript,python,coding,kaibao,kaibaooo,developer">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Kaibao的學習札記">
-<meta property="og:url" content="https://kaibaooo.github.io/tags/system/index.html">
+<meta property="og:url" content="https://kaibaooo.github.io/archives/2020/07/index.html">
 <meta property="og:site_name" content="Kaibao的學習札記">
 <meta property="og:locale" content="zh-TW">
 <meta name="twitter:card" content="summary">
@@ -150,7 +150,7 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-tag"></i>標籤: <em>system</em>
+    <i class="icon fa fa-archive"></i>所有文章: 2020/7
     </h1>
 </div>
 
@@ -174,17 +174,17 @@ ga('send', 'pageview');
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2020/03/07/simple-malloc-impl/" class="thumbnail">
+        <a href="/2020/07/21/cuda-four-memory-access/" class="thumbnail">
     
     
-        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fsimple-malloc.jpg?alt=media&token=74839ef0-f5b5-4a38-a94f-78ec55fe0adf)" alt="簡易 malloc/free 實作筆記" class="thumbnail-image"></span>
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2FDPSen5s.png?alt=media&token=5154fcdd-447f-4533-b058-576c06739c59)" alt="探討CUDA的4種記憶體存取方式" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2020/03/07/simple-malloc-impl/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://kaibaooo.github.io/2020/07/21/cuda-four-memory-access/">0</span>
     
 </span>
 
@@ -197,22 +197,24 @@ ga('send', 'pageview');
             <div class="category">
             
             </div>
-            <div class="date"><time datetime="2020-03-06T16:00:00.000Z" itemprop="datePublished">2020-03-07</time></div>
+            <div class="date"><time datetime="2020-07-20T16:00:00.000Z" itemprop="datePublished">2020-07-21</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2020/03/07/simple-malloc-impl/">簡易 malloc/free 實作筆記</a>
+        <a href="/2020/07/21/cuda-four-memory-access/">探討CUDA的4種記憶體存取方式</a>
         </h1>
     
 
         <p class="article-excerpt">
-            在C語言當中很常用到 malloc 來動態配置一塊記憶體，透過 malloc 宣告出來的記憶體是位在Heap當中，如下圖所示
-因此，實作 malloc 的目標就是把Heap Top的指標往未分配的記憶體區段移動，這部分有很多不同的實作方法，在這裡會提到的是brk與sbrk，其定義如下
-int brk(void *addr);void *sbrk(intptr_t x);
+            本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法
 
+Pageable Memory
+Pinned Memory
+Zero Copy
+Unified Memory Access
 
-brk() 將Prog
+Pageable MemoryPageable Memo
         </p>
     </div>
 </article>

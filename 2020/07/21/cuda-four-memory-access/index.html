@@ -6,26 +6,26 @@
     
 
     
-    <title>VSCode LiveServer擴充功能造成的WS Reload問題 | Kaibao的學習札記</title>
+    <title>探討CUDA的4種記憶體存取方式 | Kaibao的學習札記</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="VSCode,websocket">
+        <meta name="keywords" content="cuda,學習筆記">
     
-    <meta name="description" content="最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Blocking ，前">
-<meta name="keywords" content="VSCode,websocket">
+    <meta name="description" content="本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法  Pageable Memory Pinned Memory Zero Copy Unified Memory Access  Pageable MemoryPageable Memo">
+<meta name="keywords" content="cuda, nvidia, memory access">
 <meta property="og:type" content="article">
-<meta property="og:title" content="VSCode LiveServer擴充功能造成的WS Reload問題">
-<meta property="og:url" content="https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/index.html">
+<meta property="og:title" content="探討CUDA的4種記憶體存取方式">
+<meta property="og:url" content="https://kaibaooo.github.io/2020/07/21/cuda-four-memory-access/index.html">
 <meta property="og:site_name" content="Kaibao的學習札記">
-<meta property="og:description" content="最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Blocking ，前">
+<meta property="og:description" content="本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法  Pageable Memory Pinned Memory Zero Copy Unified Memory Access  Pageable MemoryPageable Memo">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FMrDESIf.png?alt=media&token=dda6f84b-a7a1-486e-9dd3-a80c03973b76">
-<meta property="og:updated_time" content="2020-01-14T15:02:13.806Z">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2FDPSen5s.png?alt=media&token=5154fcdd-447f-4533-b058-576c06739c59">
+<meta property="og:updated_time" content="2020-07-12T12:49:41.889Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="VSCode LiveServer擴充功能造成的WS Reload問題">
-<meta name="twitter:description" content="最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。 起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。  WebSocket 後端寫檔時造成 Server Side Blocking ，前">
-<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FMrDESIf.png?alt=media&token=dda6f84b-a7a1-486e-9dd3-a80c03973b76">
+<meta name="twitter:title" content="探討CUDA的4種記憶體存取方式">
+<meta name="twitter:description" content="本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法  Pageable Memory Pinned Memory Zero Copy Unified Memory Access  Pageable MemoryPageable Memo">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2FDPSen5s.png?alt=media&token=5154fcdd-447f-4533-b058-576c06739c59">
     
 
     
@@ -163,14 +163,14 @@ ga('send', 'pageview');
 </div>
 
                         <div class="main-body-content">
-                            <article id="post-學習筆記/liveserver-reload" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-cuda-four-memory-access" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        VSCode LiveServer擴充功能造成的WS Reload問題
+        探討CUDA的4種記憶體存取方式
         </h1>
     
 
@@ -180,8 +180,8 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2019/12/31/學習筆記/liveserver-reload/" class="article-date">
-            <time datetime="2019-12-30T16:00:00.000Z" itemprop="datePublished">2019-12-31</time>
+        <a href="/2020/07/21/cuda-four-memory-access/" class="article-date">
+            <time datetime="2020-07-20T16:00:00.000Z" itemprop="datePublished">2020-07-21</time>
         </a>
     </div>
 
@@ -190,40 +190,47 @@ ga('send', 'pageview');
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/VSCode/">VSCode</a>, <a class="tag-link" href="/tags/websocket/">websocket</a>
+        <a class="tag-link" href="/tags/cuda/">cuda</a>, <a class="tag-link" href="/tags/學習筆記/">學習筆記</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。</p>
-<h2 id="起初的解決方法"><a href="#起初的解決方法" class="headerlink" title="起初的解決方法"></a>起初的解決方法</h2><p>列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。</p>
-<ol>
-<li>WebSocket 後端寫檔時造成 Server Side Blocking ，前端重整(理論上不會)</li>
-<li>Server 的 Reveiver Buffer 不夠大</li>
-<li>Client 一次送出太大的 Packet</li>
-<li>查看 Websocket Protocol 中 Reload 事件會在何時發生</li>
-</ol>
-<h3 id="檢查Server-Side-Blocking"><a href="#檢查Server-Side-Blocking" class="headerlink" title="檢查Server Side Blocking"></a>檢查Server Side Blocking</h3><p>在 Socket 通訊當中，Client 傳送一則訊息之後應該是不會等待Server 回應才對，但擔心是 Java Websocket 套件的關係，所以先嘗試解決 Blocking 的問題。</p>
-<ol>
-<li>把寫檔丟入另一個 Thread</li>
-<li>用上 Java Non-BlockingIO</li>
-</ol>
-<p>最後結果不意外的失敗了，前端一樣重整。</p>
-<h3 id="Server-的-Reveiver-Buffer-不夠大"><a href="#Server-的-Reveiver-Buffer-不夠大" class="headerlink" title="Server 的 Reveiver Buffer 不夠大"></a>Server 的 Reveiver Buffer 不夠大</h3><p>由於主要傳送的檔案為影音檔案，一個檔案的大小約在900KB左右，算是比較大的單一檔案，所以我將Server Websocket的Buffer加到了16MB，但仍然前端重整。</p>
-<h3 id="Client-一次送出太大的-Packet"><a href="#Client-一次送出太大的-Packet" class="headerlink" title="Client 一次送出太大的 Packet"></a>Client 一次送出太大的 Packet</h3><p>前兩點將 Server Side 有可能的問題大概都解決完了，接下來開始懷疑前端，前端有使用到 RecordRTC ，將 Client 的畫面每3秒錄製下來並傳送到 Server，在前一點提到了檔案約在 900 KB 左右，所以前端改為每 100 ms 傳送一次，檔案雖然變小但仍然會重整(此時有機率送出 2 ~ 4 次檔案)。</p>
-<h3 id="Websocket-的-Protocol-定義"><a href="#Websocket-的-Protocol-定義" class="headerlink" title="Websocket 的 Protocol 定義"></a>Websocket 的 Protocol 定義</h3><p>到這一步我已經快黔驢技窮了，確認 Server 和 Client 都沒問題之後，透過Chrome的開發人員工具觀察到 Websocket 有送出 reload 的 event<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FMrDESIf.png?alt=media&token=dda6f84b-a7a1-486e-9dd3-a80c03973b76" alt></p>
-<p>因此就去查了一下 Websocket 的 reload event 會在何時發生，Websocket Protocol 定義在 <a href="https://tools.ietf.org/html/rfc6455" target="_blank" rel="noopener">RFC 6455</a> 當中，稍微翻了一下內容，但內容並沒有寫到 reload event 定義 Orz…</p>
-<h2 id="問題所在"><a href="#問題所在" class="headerlink" title="問題所在"></a>問題所在</h2><p>花了一整天的時間仍然無法解決，隔了 2 天之後才回來繼續解決這個問題，這次我將 Server 放在 A 電腦， Client 放在 B 電腦，並執行有之前仍然有問題的 Code，但是! 這次很順利的傳輸多個檔案了!!</p>
-<p>這時 <a href="https://github.com/iftnt" target="_blank" rel="noopener">iftnt</a> 提出了一個問題「你的後端寫檔位置是不是在LiveServer的路徑底下」</p>
-<p>這時候想了一下，好像真的蠻有可能是 LiveServer 造成的問題， LiveServer 會監聽底下路徑的所有檔案，一旦有任何變動都會 Auto Refresh ( 包含存檔、新增檔案 )，而且 LiveServer 也是以 Websocket 來實作 Local Server ，原來是開發工具我發出來的 event阿……</p>
-<p>大概的檔案結構如下</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FOmoetwo.png?alt=media&token=611b7984-3d55-4727-827d-2ba60dea077f" alt></p>
-<p>Server 會將前端傳過來的 webm 檔案存到前端的 ./uploads 資料夾底下，也就是 VSCode LiveServer 的作用範圍，造成 reload</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FjU21x68.png?alt=media&token=dcfbaacb-5bb6-4bf4-b4f2-6fbc07743e6f" alt></p>
-<p>最後將寫檔路徑換到非 Live Server 作用範圍底下之後就可以正常運作了。</p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>現在雖然許多開發工具相當好用，我也非常喜歡 Live Server 這個擴充元件，但若不了解其運作機制會造成的潛在風險的話，可能會遇到多個開發工具搭配下不可預期的例外狀況發生，雖然這次問題也算是我自己犯蠢，但也是分享出來給大家知道，使用 Live Server 時這裡會有的地雷要注意。</p>
+            <p>本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法</p>
+<ul>
+<li>Pageable Memory</li>
+<li>Pinned Memory</li>
+<li>Zero Copy</li>
+<li>Unified Memory Access</li>
+</ul>
+<h2 id="Pageable-Memory"><a href="#Pageable-Memory" class="headerlink" title="Pageable Memory"></a>Pageable Memory</h2><p>Pageable Memory為大多數CUDA教學當中會使用到的基本存取方法，先在Host Memory上宣告一塊記憶體(透過malloc)，將要複製到Device Memory的資料先存放在此處，再經由cudaMemcpy()將該段記憶體空間的內容複製到事先宣告好的Device Memory上。</p>
+<p>透過<strong>malloc()所宣告出來的連續記憶體空間是透過作業系統的Page Table所管理</strong>的，因此記憶體內的資料是有可能會被寫入到Swap當中的，這種記憶體特性稱為<strong>Pageable Memory</strong>。為了不讓資料從Host複製到Device時被寫進去Swap，<strong>CUDA API會隱性的將malloc分配出來的空間先複製一份到所謂的Pinned Memory(Page-Lock)</strong>，最後Device才透過DMA(Direct Memory Access)的方式將資料從Host Pinned Memory搬動到Device Memory上。</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2FDPSen5s.png?alt=media&token=5154fcdd-447f-4533-b058-576c06739c59" alt><br><strong>本圖引用自參考連結1</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Allocation</span></span><br><span class="line"><span class="keyword">int</span> *host_input_arr = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize);</span><br><span class="line"><span class="keyword">int</span> *host_output_arr = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize);</span><br><span class="line"><span class="keyword">int</span> *device_arr;</span><br><span class="line">cudaMalloc((<span class="keyword">void</span>**)&amp;device_arr, <span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Data Transfer and Kernel Function</span></span><br><span class="line">cudaMemcpy(device_arr, host_input_arr, <span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize, cudaMemcpyHostToDevice);</span><br><span class="line">kernel&lt;&lt;&lt;blockSize, threadsPerBlock&gt;&gt;&gt;(device_arr, elementSize);</span><br><span class="line">cudaDeviceSynchronize();</span><br><span class="line">cudaMemcpy(host_output_arr, device_arr, <span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize, cudaMemcpyDeviceToHost);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Free</span></span><br><span class="line">cudaFree(device_arr);</span><br><span class="line"><span class="built_in">free</span>(host_input_arr);</span><br><span class="line"><span class="built_in">free</span>(host_output_arr);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Pinned-Memory"><a href="#Pinned-Memory" class="headerlink" title="Pinned Memory"></a>Pinned Memory</h2><p>Pageable Memory最主要的問題是Host端的記憶體會在內部多一次的資料複製，但其實這段時間是可以省略掉的，因此CUDA提供了直接使用Pinned Memory的機制，不使用原生的malloc()函式，<strong>直接透過CUDA API當中的cudaMallocHost()函式把要傳輸到Device資料直接放在Host Pinned Memory當中</strong>，<strong>執行cudaMemcpy()函式時就可以直接以DMA的方式搬動資料到Device上</strong>。</p>
+<p>聽起來Pinned Memory相較於Pageable Memory的存取方式只有好沒有壞，但魔鬼藏在細節裡!如前面所提到，<strong>Pinned Memory是屬於Page-Lock的記憶體</strong>，不會被寫到Swap當中，因此對於記憶體的消耗其實是相當大的，屬於稀缺資源的一種，若<strong>過度使用Pinned Memory會占用許多Host應有的記憶體空間</strong>。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2FBsCYjMC.png?alt=media&token=a9e9b0f1-6eb1-4b8d-a98d-4cb54068b9d1" alt><br><strong>本圖引用自參考連結1</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Allocation</span></span><br><span class="line"><span class="keyword">int</span> *host_input_arr;</span><br><span class="line"><span class="keyword">int</span> *host_output_arr;</span><br><span class="line"><span class="keyword">int</span> *device_arr;</span><br><span class="line">cudaMallocHost((<span class="keyword">void</span>**)&amp;host_input_arr, <span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize, cudaHostAllocDefault);</span><br><span class="line">cudaMallocHost((<span class="keyword">void</span>**)&amp;host_output_arr, <span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize, cudaHostAllocDefault);</span><br><span class="line">cudaMalloc((<span class="keyword">void</span>**)&amp;device_arr, <span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Data Transfer and Kernel Function</span></span><br><span class="line">cudaMemcpy(device_arr, host_input_arr, <span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize, cudaMemcpyHostToDevice);</span><br><span class="line">vecMultiply&lt;&lt;&lt;blockSize, threadsPerBlock&gt;&gt;&gt;(device_arr, elementSize);</span><br><span class="line">cudaDeviceSynchronize();</span><br><span class="line">cudaMemcpy(host_output_arr, device_arr, <span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize, cudaMemcpyDeviceToHost);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Free</span></span><br><span class="line">cudaFree(device_arr);</span><br><span class="line">cudaFreeHost(host_input_arr);</span><br><span class="line">cudaFreeHost(host_output_arr);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Zero-Copy"><a href="#Zero-Copy" class="headerlink" title="Zero Copy"></a>Zero Copy</h2><p>Zero Copy是<strong>透過Unified Virtual Addressing(UVA)的方式將Host端的位址空間映射到Device Memory上</strong>，GPU使用該段記憶體時會透過DMA的方式直接存取Host端上的記憶體空間，簡化了CPU和GPU間的記憶體機制。但Zero Copy有兩大缺點，第一點是相較於VRAM本身內部的高頻寬(200GB/s以上)，<strong>PCIE僅有15.8GB/s的頻寬(PCIE 3.0x16)</strong>，記憶體存取速度上顯然會在此出現瓶頸；第二點為<strong>Zero Copy的存取機制為on-demand，需要時才從Host Memory存取，存取後不會放在Device端的cache當中</strong>，在重複存取相同記憶體位址上效能會相當差，每次都須透過PCIE重新存取一次資料。</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2FZBNVzub.png?alt=media&token=9e0a856e-1300-41c6-bf12-9d6d327730e1" alt></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Allocation</span></span><br><span class="line"><span class="keyword">int</span> *host_input_arr;</span><br><span class="line">cudaHostAlloc((<span class="keyword">void</span>**)&amp;host_input_arr, <span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize, cudaHostAllocMapped);</span><br><span class="line">cudaHostGetDevicePointer((<span class="keyword">void</span> **)&amp;device_input_arr,  (<span class="keyword">void</span> *) host_input_arr , <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Kernel Function</span></span><br><span class="line">vecMultiply&lt;&lt;&lt;blockSize, threadsPerBlock&gt;&gt;&gt;(device_input_arr, elementSize);</span><br><span class="line">cudaDeviceSynchronize();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Free</span></span><br><span class="line">cudaFree(device_input_arr);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Unified-Memory-Access-UMA"><a href="#Unified-Memory-Access-UMA" class="headerlink" title="Unified Memory Access(UMA)"></a>Unified Memory Access(UMA)</h2><p>Unified Memory Access(UMA)使用到的記憶體定址技術與Zero Copy所使用的UVA相同，但細節上有所不同。<strong>UMA當中Host端與Device端都會各自管理一張Page Table</strong>，<strong>當需要某個Page但卻發生Page Fault時才會做Host與Device之間的資料交換(on-demand)</strong>，若Page Table中有需要的資料就可以直接從需求端自身的UVA位址當中取得資料，重複存取上相較起來就會快很多(類似Cache的概念)，詳細內容可以參考以下PPT。</p>
+<blockquote>
+<p><a href="https://on-demand.gputechconf.com/gtc/2018/presentation/s8430-everything-you-need-to-know-about-unified-memory.pdf" target="_blank" rel="noopener">https://on-demand.gputechconf.com/gtc/2018/presentation/s8430-everything-you-need-to-know-about-unified-memory.pdf</a></p>
+</blockquote>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2Fuma.png?alt=media&token=0b40eec3-9422-42d3-b1f5-71f4a630f6a1" alt></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Allocation</span></span><br><span class="line"><span class="keyword">int</span> *host_input_arr;</span><br><span class="line">cudaMallocManaged((<span class="keyword">void</span>**)&amp;host_input_arr, <span class="keyword">sizeof</span>(<span class="keyword">int</span>) * elementSize);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Kernel Function</span></span><br><span class="line">vecMultiply&lt;&lt;&lt;blockSize, threadsPerBlock&gt;&gt;&gt;(host_input_arr, elementSize);</span><br><span class="line">cudaDeviceSynchronize();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Free</span></span><br><span class="line">cudaFree(host_input_arr);</span><br></pre></td></tr></table></figure>
+
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>根據上述的介紹，我們可以整理出下表<br><img src="https://i.imgur.com/RqcCOk3.png" alt><br>以上四種方法各有特色，沒有最好的選擇，可依照自己開發的kernel function特性做適當的選擇。</p>
+<p>以上四種存取方法的完整程式碼也有放在我的Github，有興趣的人可以參考參考<br><a href="https://github.com/kaibaooo/CUDA-Memory-Access-Pattern-Sample" target="_blank" rel="noopener">https://github.com/kaibaooo/CUDA-Memory-Access-Pattern-Sample</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://developer.nvidia.com/blog/how-optimize-data-transfers-cuda-cc/" target="_blank" rel="noopener">How to Optimize Data Transfers in CUDA C/C++</a></li>
+<li><a href="https://on-demand.gputechconf.com/gtc/2018/presentation/s8430-everything-you-need-to-know-about-unified-memory.pdf" target="_blank" rel="noopener">EVERYTHING YOU NEED TO KNOW ABOUT UNIFIED MEMORY</a></li>
+<li><a href="https://news.developer.nvidia.com/maximizing-unified-memory-performance-in-cuda/" target="_blank" rel="noopener">Maximizing Unified Memory Performance in CUDA</a></li>
+</ul>
 
         </div>
         <footer class="article-footer">
@@ -242,7 +249,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/" data-id="ckcizkw2400223kk84vvldjej" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2020/07/21/cuda-four-memory-access/" data-id="ckcizkw0e00053kk8mrui4vj6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -313,19 +320,23 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "Kaibao"
         },
-        "headline": "VSCode LiveServer擴充功能造成的WS Reload問題",
-        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/liveserver-reload%2FMrDESIf.png?alt=media&token=dda6f84b-a7a1-486e-9dd3-a80c03973b76",
-        "keywords": "VSCode websocket",
+        "headline": "探討CUDA的4種記憶體存取方式",
+        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2FDPSen5s.png?alt=media&token=5154fcdd-447f-4533-b058-576c06739c59",
+        "keywords": "cuda 學習筆記",
         "genre": "",
-        "datePublished": "2019-12-31",
-        "dateCreated": "2019-12-31",
-        "dateModified": "2020-01-14",
-        "url": "https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/",
-        "description": "最近在撰寫前端透過 Websocket 傳輸檔案的系統時，發現後端 ( Java ) 每接收完一個檔案之後都會造成前端的 Reload ，無法連續傳送多個檔案，遇到這個問題時不太清楚為什麼會發生，以下列出我一開始嘗試的解決方法。
-起初的解決方法列出這些我嘗試過的方法，給大家一個參考，但這四點不是本文最主要的原因。
+        "datePublished": "2020-07-21",
+        "dateCreated": "2020-07-21",
+        "dateModified": "2020-07-12",
+        "url": "https://kaibaooo.github.io/2020/07/21/cuda-four-memory-access/",
+        "description": "本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法
 
-WebSocket 後端寫檔時造成 Server Side Blocking ，前",
-        "wordCount": 190
+Pageable Memory
+Pinned Memory
+Zero Copy
+Unified Memory Access
+
+Pageable MemoryPageable Memo",
+        "wordCount": 345
     }
 </script>
 
@@ -378,20 +389,10 @@ WebSocket 後端寫檔時造成 Server Side Blocking ，前",
         
 <nav id="article-nav">
     
-        <a href="/2020/03/07/simple-malloc-impl/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            簡易 malloc/free 實作筆記
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/10/09/cookies-introduction/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2020/03/07/simple-malloc-impl/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">透過購物車來了解Cookie的運作方式</p>
+        <p class="article-nav-title">簡易 malloc/free 實作筆記</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -406,7 +407,7 @@ WebSocket 後端寫檔時造成 Server Side Blocking ，前",
     <h3 class="widget-title">目錄</h3>
     <div class="widget">
         <div id="toc" class="toc-article">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#起初的解決方法"><span class="toc-number">1.</span> <span class="toc-text">起初的解決方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#檢查Server-Side-Blocking"><span class="toc-number">1.1.</span> <span class="toc-text">檢查Server Side Blocking</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Server-的-Reveiver-Buffer-不夠大"><span class="toc-number">1.2.</span> <span class="toc-text">Server 的 Reveiver Buffer 不夠大</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Client-一次送出太大的-Packet"><span class="toc-number">1.3.</span> <span class="toc-text">Client 一次送出太大的 Packet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Websocket-的-Protocol-定義"><span class="toc-number">1.4.</span> <span class="toc-text">Websocket 的 Protocol 定義</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#問題所在"><span class="toc-number">2.</span> <span class="toc-text">問題所在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#結語"><span class="toc-number">3.</span> <span class="toc-text">結語</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pageable-Memory"><span class="toc-number">1.</span> <span class="toc-text">Pageable Memory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pinned-Memory"><span class="toc-number">2.</span> <span class="toc-text">Pinned Memory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Zero-Copy"><span class="toc-number">3.</span> <span class="toc-text">Zero Copy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unified-Memory-Access-UMA"><span class="toc-number">4.</span> <span class="toc-text">Unified Memory Access(UMA)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#結論"><span class="toc-number">5.</span> <span class="toc-text">結論</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
         </div>
     </div>
 </div>
@@ -581,7 +582,7 @@ WebSocket 後端寫檔時造成 Server Side Blocking ，前",
     var disqus_shortname = 'kaibaogithubpage';
     
     
-    var disqus_url = 'https://kaibaooo.github.io/2019/12/31/學習筆記/liveserver-reload/';
+    var disqus_url = 'https://kaibaooo.github.io/2020/07/21/cuda-four-memory-access/';
     
     (function() {
     var dsq = document.createElement('script');
