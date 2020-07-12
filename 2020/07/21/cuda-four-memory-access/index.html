@@ -12,20 +12,20 @@
     
         <meta name="keywords" content="cuda,學習筆記">
     
-    <meta name="description" content="本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法  Pageable Memory Pinned Memory Zero Copy Unified Memory Access  Pageable MemoryPageable Memo">
+    <meta name="description" content="[TOC] 本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法  Pageable Memory Pinned Memory Zero Copy Unified Memory Access  Pageable MemoryPageabl">
 <meta name="keywords" content="cuda, nvidia, memory access">
 <meta property="og:type" content="article">
 <meta property="og:title" content="探討CUDA的4種記憶體存取方式">
 <meta property="og:url" content="https://kaibaooo.github.io/2020/07/21/cuda-four-memory-access/index.html">
 <meta property="og:site_name" content="Kaibao的學習札記">
-<meta property="og:description" content="本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法  Pageable Memory Pinned Memory Zero Copy Unified Memory Access  Pageable MemoryPageable Memo">
+<meta property="og:description" content="[TOC] 本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法  Pageable Memory Pinned Memory Zero Copy Unified Memory Access  Pageable MemoryPageabl">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2FDPSen5s.png?alt=media&token=5154fcdd-447f-4533-b058-576c06739c59">
-<meta property="og:updated_time" content="2020-07-12T12:49:41.889Z">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fcuda%20logo.png?alt=media&token=86c74c61-5c38-4be3-9351-cdcb487c50d8">
+<meta property="og:updated_time" content="2020-07-12T13:00:11.969Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探討CUDA的4種記憶體存取方式">
-<meta name="twitter:description" content="本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法  Pageable Memory Pinned Memory Zero Copy Unified Memory Access  Pageable MemoryPageable Memo">
-<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2FDPSen5s.png?alt=media&token=5154fcdd-447f-4533-b058-576c06739c59">
+<meta name="twitter:description" content="[TOC] 本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法  Pageable Memory Pinned Memory Zero Copy Unified Memory Access  Pageable MemoryPageabl">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fcuda%20logo.png?alt=media&token=86c74c61-5c38-4be3-9351-cdcb487c50d8">
     
 
     
@@ -197,7 +197,8 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法</p>
+            <p><img src="https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fcuda%20logo.png?alt=media&token=86c74c61-5c38-4be3-9351-cdcb487c50d8" alt><br>[TOC]</p>
+<p>本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法</p>
 <ul>
 <li>Pageable Memory</li>
 <li>Pinned Memory</li>
@@ -249,7 +250,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="https://kaibaooo.github.io/2020/07/21/cuda-four-memory-access/" data-id="ckcizkw0e00053kk8mrui4vj6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2020/07/21/cuda-four-memory-access/" data-id="ckcj35shn0005xkk84n60fdet" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -321,22 +322,23 @@ ga('send', 'pageview');
             "name": "Kaibao"
         },
         "headline": "探討CUDA的4種記憶體存取方式",
-        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2FDPSen5s.png?alt=media&token=5154fcdd-447f-4533-b058-576c06739c59",
+        "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fcuda%20logo.png?alt=media&token=86c74c61-5c38-4be3-9351-cdcb487c50d8",
         "keywords": "cuda 學習筆記",
         "genre": "",
         "datePublished": "2020-07-21",
         "dateCreated": "2020-07-21",
         "dateModified": "2020-07-12",
         "url": "https://kaibaooo.github.io/2020/07/21/cuda-four-memory-access/",
-        "description": "本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法
+        "description": "[TOC]
+本篇文章探討NVIDIA CUDA架構下的記憶體存取方式對程式效能的影響，以下將介紹不同的記憶體存取方法對於不同的Kernel Function的效能影響，目前的CUDA C/C++ API提供了以下記憶體存取方法
 
 Pageable Memory
 Pinned Memory
 Zero Copy
 Unified Memory Access
 
-Pageable MemoryPageable Memo",
-        "wordCount": 345
+Pageable MemoryPageabl",
+        "wordCount": 347
     }
 </script>
 
@@ -426,7 +428,7 @@ Pageable MemoryPageable Memo",
                             <a href="/2020/07/21/cuda-four-memory-access/" class="thumbnail">
     
     
-        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/cuda-four-memory-access%2FDPSen5s.png?alt=media&token=5154fcdd-447f-4533-b058-576c06739c59)" alt="探討CUDA的4種記憶體存取方式" class="thumbnail-image"></span>
+        <span style="background-image:url(https://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fcuda%20logo.png?alt=media&token=86c74c61-5c38-4be3-9351-cdcb487c50d8)" alt="探討CUDA的4種記憶體存取方式" class="thumbnail-image"></span>
     
     
 </a>
