@@ -2,7 +2,7 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><script>
-        window.location.href = "https://kaibaoom.tw/";
+        window.location.href = `https://kaibaoom.tw/${window.location.href.split(".io")[1]}`;
     </script>
     <meta charset="utf-8">
 
@@ -13,10 +13,10 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="學習筆記,cplusplus,emulator">
+        <meta name="keywords" content="cplusplus,學習筆記,emulator">
     
     <meta name="description" content="CHIP-8每個指令占2 Bytes並以big-endian的方式存放在記憶體當中，另外有10個額外的指令可加入，但本次筆記並沒有實作。 底下指令集的部分我也不知道為什麼心血來潮想把它翻成中文，建議還是去看原文版可能比較好懂啦(? NNN: 記憶體位址NN、N: 8bits或4bits的常數X and Y: register的名稱(0 ~ F)I: Index register 指令集1. 0N">
-<meta name="keywords" content="學習筆記,cplusplus,emulator">
+<meta name="keywords" content="cplusplus,學習筆記,emulator">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CHIP8模擬器開發-指令集">
 <meta property="og:url" content="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/index.html">
@@ -262,7 +262,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/" data-id="ckkxl6bam001150k8kfsa0adi" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://kaibaooo.github.io/2019/07/22/chip8emu-instruction-set/" data-id="ckkxlhcyl000m98k8sg4attc4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -335,7 +335,7 @@ ga('send', 'pageview');
         },
         "headline": "CHIP8模擬器開發-指令集",
         "image": "https://kaibaooo.github.iohttps://firebasestorage.googleapis.com/v0/b/blog-4ef8d.appspot.com/o/thumbnail%2Fchip8-is-thumbbnail.png?alt=media&token=e4e6d3ed-7509-4dbc-bc59-fb6819ac3493",
-        "keywords": "學習筆記 cplusplus emulator",
+        "keywords": "cplusplus 學習筆記 emulator",
         "genre": "",
         "datePublished": "2019-07-22",
         "dateCreated": "2019-07-22",
